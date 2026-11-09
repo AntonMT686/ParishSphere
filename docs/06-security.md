@@ -99,3 +99,23 @@ All parish routes resolve the tenant first (subdomain or `X-Parish-Code`).
 Session rules (`app/modules/identity/service.py`): every authenticated request checks the session is not revoked, not past its 12 h absolute expiry and not idle for more than 30 min; activity is recorded at most once a minute. Lockout: 5 failures → 15 min; per-IP: 30 failures/15 min across all usernames → `429 RATE_LIMITED`. Initial parish admins are created by `ps-admin provision-parish --admin-username … [--admin-email …|--admin-password …]` or `POST /platform/parishes` with `admin_username` + `admin_email` (a 72-hour "set your password" email is sent).
 
 Clients must not poll the API in the background, because API activity counts as session activity; the SPA idle timer (T6) decides when the user is idle.
+
+## 9. Implemented RBAC (T4)
+
+- Catalog: `backend/app/modules/rbac/catalog.py` (89 permissions, 15 parish roles); matrix in [11-permission-matrix.md](11-permission-matrix.md).
+- Seeding is idempotent and runs at provisioning **and** on every `ps-admin migrate-tenants`: missing permissions/roles are inserted; a permission introduced by a new release is granted to the system roles whose defaults include it; administrator edits are otherwise preserved.
+- Effective permissions = union of the user's active assignments (`ended_at` NULL and today within `valid_from…valid_to`). Parish-wide assignments grant everywhere; org-unit assignments only for that unit's records.
+- Endpoints declare `Depends(require_perm("module.action"))`, which returns a `PermissionScope` used to filter queries (`scope.filter(Model.org_unit_id)`) and check records (`scope.allows(id)`). Administration endpoints require parish-wide grants.
+- Guards: no self-modification of status/roles/deletion; the last active Parish Administrator cannot be deactivated, deleted or lose the role; the Parish Administrator role cannot lose `user.view/update/assign_role` and `role.view/manage`; system roles cannot be deleted; roles in use cannot be deleted. Assignments are ended, never deleted (history).
+
+| Endpoint | Permission |
+|---|---|
+| `GET /api/v1/users` (filters `q`, `is_active`, `role`; paging/sort) · `GET /users/{id}` | `user.view` |
+| `POST /api/v1/users` (password **or** emailed invitation; optional `role_codes`) | `user.create` (+ `user.assign_role` for roles) |
+| `PATCH /users/{id}` · `POST /users/{id}/deactivate|activate|unlock|send-password-reset` | `user.update` |
+| `DELETE /users/{id}` (archive) | `user.delete` |
+| `GET /users/{id}/roles?include_history=` · `POST /users/{id}/roles` · `DELETE /users/{id}/roles/{assignment}` | `user.view` / `user.assign_role` |
+| `GET /api/v1/permissions` · `GET /api/v1/roles[/{id}]` | `role.view` |
+| `POST/PATCH/DELETE /api/v1/roles` | `role.manage` |
+
+Org-unit scoped assignments (`org_unit_id`) are accepted once the organisation module (T7) registers its resolver; until then such requests return `422 ORG_UNITS_NOT_AVAILABLE`.

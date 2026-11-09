@@ -326,7 +326,7 @@ def change_password(
     )
 
 
-def _send_reset_link(
+def send_reset_link(
     session: Session, tenant: TenantDescriptor, user: User, request: Request | None, *, invite: bool = False
 ) -> str:
     settings = get_settings()
@@ -386,7 +386,7 @@ def request_password_reset(
     user = _find_user(session, login_name)
     if user is None or not user.is_active or not user.email:
         return None
-    return _send_reset_link(session, tenant, user, request)
+    return send_reset_link(session, tenant, user, request)
 
 
 def reset_password(session: Session, raw_token: str, new_password: str, request: Request | None) -> User:
@@ -499,6 +499,12 @@ def create_initial_admin(
         entity_id=user.public_id,
         new={"username": user.username, "bootstrap_admin": True},
     )
+    from app.modules.rbac.catalog import ADMIN_ROLE
+    from app.modules.rbac.service import assign_role, role_by_code
+
+    admin_role = role_by_code(session, ADMIN_ROLE)
+    if admin_role is not None:
+        assign_role(session, user, admin_role, remarks="initial parish administrator")
     if email:
-        _send_reset_link(session, tenant, user, None, invite=True)
+        send_reset_link(session, tenant, user, None, invite=True)
     return user, temp

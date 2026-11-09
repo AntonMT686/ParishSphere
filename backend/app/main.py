@@ -18,6 +18,8 @@ from app.core.logging import configure_logging
 from app.db.master import get_master_engine
 from app.master.router import router as platform_router
 from app.modules.identity.router import router as auth_router
+from app.modules.rbac.router import router as roles_router
+from app.modules.users.router import router as users_router
 from app.tenancy.router import router as tenant_router
 
 log = structlog.get_logger("app.request")
@@ -107,6 +109,8 @@ def create_app() -> FastAPI:
     app.include_router(platform_router, prefix=API_PREFIX)
     app.include_router(tenant_router, prefix=API_PREFIX)
     app.include_router(auth_router, prefix=API_PREFIX)
+    app.include_router(users_router, prefix=API_PREFIX)
+    app.include_router(roles_router, prefix=API_PREFIX)
     return app
 
 

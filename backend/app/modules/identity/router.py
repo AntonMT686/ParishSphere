@@ -3,17 +3,17 @@
 from __future__ import annotations
 
 import secrets
-from typing import Any
 
 from fastapi import APIRouter, Request, Response, status
 from sqlalchemy import select
+from sqlalchemy.orm import Session
 
 from app.common.audit import record_audit
 from app.core.config import get_settings
 from app.core.errors import AppError, NotFound
 from app.modules.identity import service
-from app.modules.identity.deps import Auth, CurrentUser
-from app.modules.identity.models import UserSession
+from app.modules.identity.deps import Auth
+from app.modules.identity.models import User, UserSession
 from app.modules.identity.schemas import (
     ChangePasswordIn,
     ForgotPasswordIn,
@@ -24,6 +24,7 @@ from app.modules.identity.schemas import (
     SessionOut,
     TokenOut,
 )
+from app.modules.rbac.service import EffectivePermissions, effective_permissions
 from app.tenancy.deps import CurrentTenant, TenantSession
 
 AUTH_PATH = "/api/v1/auth"
@@ -74,12 +75,20 @@ def _verify_csrf(request: Request) -> None:
         raise CsrfFailed()
 
 
-def _token_out(issued: service.IssuedTokens) -> TokenOut:
+def _me(db: Session, user: User, eff: EffectivePermissions | None = None) -> MeOut:
+    eff = eff or effective_permissions(db, user)
+    out = MeOut.model_validate(user)
+    out.roles = sorted(eff.role_codes)
+    out.permissions = sorted(eff.all_codes)
+    return out
+
+
+def _token_out(db: Session, issued: service.IssuedTokens) -> TokenOut:
     return TokenOut(
         access_token=issued.access_token,
         expires_in=issued.expires_in,
         idle_timeout_seconds=get_settings().idle_timeout_minutes * 60,
-        user=MeOut.model_validate(issued.user),
+        user=_me(db, issued.user),
     )
 
 
@@ -90,7 +99,7 @@ def login(
 ) -> TokenOut:
     issued = service.login(db, tenant, body.username, body.password, request)
     _set_auth_cookies(response, issued.refresh_token)
-    return _token_out(issued)
+    return _token_out(db, issued)
 
 
 @router.post("/refresh", response_model=TokenOut)
@@ -103,7 +112,7 @@ def refresh(request: Request, response: Response, tenant: CurrentTenant, db: Ten
         _clear_auth_cookies(response)
         raise
     _set_auth_cookies(response, issued.refresh_token)
-    return _token_out(issued)
+    return _token_out(db, issued)
 
 
 @router.post("/logout", status_code=status.HTTP_204_NO_CONTENT)
@@ -139,8 +148,8 @@ def logout_all(request: Request, auth: Auth, db: TenantSession) -> Response:
 
 
 @router.get("/me", response_model=MeOut)
-def me(user: CurrentUser) -> Any:
-    return user
+def me(auth: Auth) -> MeOut:
+    return _me(auth.db, auth.user, auth.permissions)
 
 
 @router.post("/password/change", response_model=MessageOut)

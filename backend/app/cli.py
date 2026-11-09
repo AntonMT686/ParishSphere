@@ -19,12 +19,15 @@ from sqlalchemy import select
 
 from app.core.errors import AppError
 from app.core.logging import configure_logging
+from app.core.security import generate_token
 from app.db import migrations
 from app.db.master import get_master_engine, master_session
 from app.db.tenant import tenant_session_scope
 from app.master.auth import create_platform_user
 from app.master.models import Diocese, PlatformUser
-from app.modules.identity.service import create_initial_admin, create_user
+from app.modules.identity.service import create_initial_admin, create_user, send_reset_link
+from app.modules.rbac.catalog import ADMIN_ROLE
+from app.modules.rbac.service import assign_role, role_by_code
 from app.tenancy.provisioning import (
     ParishRegistration,
     migrate_all_tenants,
@@ -126,31 +129,50 @@ def provision(
         _create_admin(tenant.code, admin_username, "Parish Administrator", admin_email, admin_password)
 
 
-def _create_admin(code: str, username: str, full_name: str, email: str | None, password: str | None) -> None:
+def _create_admin(
+    code: str,
+    username: str,
+    full_name: str,
+    email: str | None,
+    password: str | None,
+    roles: list[str] | None = None,
+) -> None:
+    """Create a parish user. ``roles=None`` means "initial administrator" (PARISH_ADMIN)."""
     tenant = resolve_tenant(code=code)
     if tenant is None:
         raise typer.BadParameter(f"Unknown parish {code}")
+    as_admin = roles is None
+    temp: str | None = None
     try:
         with tenant_session_scope(tenant) as tsession:
-            if password:
-                create_user(
+            if as_admin and not password:
+                user, temp = create_initial_admin(
+                    tsession, tenant, username=username, full_name=full_name, email=email
+                )
+            else:
+                user = create_user(
                     tsession,
                     username=username,
                     full_name=full_name,
                     email=email,
-                    password=password,
-                    must_change_password=False,
+                    password=password or (generate_token(18) + "-Aa1"),
+                    must_change_password=not password,
+                    enforce_policy=bool(password),
                 )
-                temp = None
-            else:
-                _, temp = create_initial_admin(
-                    tsession, tenant, username=username, full_name=full_name, email=email
-                )
+                if not password:
+                    temp = None if email else "(set via emailed link)"
+                    if email:
+                        send_reset_link(tsession, tenant, user, None, invite=True)
+                for role_code in [ADMIN_ROLE] if as_admin else roles or []:
+                    role = role_by_code(tsession, role_code)
+                    if role is None:
+                        raise typer.BadParameter(f"Unknown role {role_code}")
+                    assign_role(tsession, user, role, remarks="assigned via ps-admin")
     except AppError as exc:
         details = "; ".join(d["message"] for d in exc.details)
         raise typer.BadParameter(f"{exc.message}{': ' + details if details else ''}") from exc
     typer.echo(f"user {username.lower()} created in {tenant.code}")
-    if temp:
+    if temp and not temp.startswith("("):
         typer.echo(f"temporary password (must be changed at first login): {temp}")
     elif email and not password:
         typer.echo(f"a set-password link was emailed to {email}")
@@ -162,10 +184,17 @@ def create_parish_user(
     username: Annotated[str, typer.Option()],
     full_name: Annotated[str, typer.Option("--name")],
     email: Annotated[str | None, typer.Option()] = None,
-    password: Annotated[str | None, typer.Option(help="Omit to generate / email a set-password link")] = None,
+    password: Annotated[
+        str | None, typer.Option(help="Omit to email a set-password link (needs --email)")
+    ] = None,
+    role: Annotated[
+        list[str] | None, typer.Option("--role", help="Parish-wide role code (repeatable)")
+    ] = None,
 ) -> None:
-    """Create a user inside a parish database (roles are assigned from T4)."""
-    _create_admin(parish, username, full_name, email, password)
+    """Create a user inside a parish database, optionally with parish-wide roles."""
+    if not password and not email:
+        raise typer.BadParameter("Provide --password or --email")
+    _create_admin(parish, username, full_name, email, password, roles=[r.upper() for r in role or []])
 
 
 if __name__ == "__main__":

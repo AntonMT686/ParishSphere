@@ -3,11 +3,12 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Annotated
+from typing import TYPE_CHECKING, Annotated
 
 from fastapi import Depends, Request
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from sqlalchemy import select
+from sqlalchemy.orm import Session
 
 from app.core.context import set_user_id
 from app.core.errors import AppError, NotAuthenticated
@@ -16,6 +17,9 @@ from app.db.tenant import TenantDescriptor
 from app.modules.identity.models import User, UserSession
 from app.modules.identity.service import SessionExpired, check_session_alive, touch_session
 from app.tenancy.deps import CurrentTenant, TenantSession
+
+if TYPE_CHECKING:
+    from app.modules.rbac.service import EffectivePermissions
 
 bearer = HTTPBearer(auto_error=False)
 
@@ -31,6 +35,17 @@ class AuthContext:
     user: User
     session: UserSession
     tenant: TenantDescriptor
+    db: Session
+    _permissions: EffectivePermissions | None = None
+
+    @property
+    def permissions(self) -> EffectivePermissions:
+        """Effective permissions, resolved once per request."""
+        if self._permissions is None:
+            from app.modules.rbac.service import effective_permissions
+
+            self._permissions = effective_permissions(self.db, self.user)
+        return self._permissions
 
 
 def get_auth_context(
@@ -60,7 +75,9 @@ def get_auth_context(
     touch_session(sess)
     set_user_id(user.public_id)
     request.state.user = user
-    return AuthContext(user=user, session=sess, tenant=tenant)
+    ctx = AuthContext(user=user, session=sess, tenant=tenant, db=db)
+    request.state.auth = ctx
+    return ctx
 
 
 Auth = Annotated[AuthContext, Depends(get_auth_context)]

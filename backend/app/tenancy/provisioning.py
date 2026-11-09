@@ -22,6 +22,7 @@ import structlog
 from sqlalchemy import select
 from sqlalchemy.orm import Session, joinedload
 
+import app.db.registry  # noqa: F401  (all models + seeders)
 from app.core.config import get_settings
 from app.core.errors import Conflict, NotFound, ValidationFailed
 from app.core.security import decrypt_secret, encrypt_secret, generate_token
@@ -212,8 +213,12 @@ class MigrationResult:
 
 
 def _migrate_one(t: TenantDescriptor) -> MigrationResult:
+    """Upgrade one parish DB, then re-run the idempotent seeders (new permissions, roles …)."""
     try:
-        return MigrationResult(t.code, True, migrate_tenant(t))
+        revision = migrate_tenant(t)
+        with tenant_session_scope(t) as tsession:
+            run_seeders(tsession, {"parish_name": t.name, "parish_code": t.code})
+        return MigrationResult(t.code, True, revision)
     except Exception as exc:
         log.exception("tenant_migration_failed", parish=t.code)
         return MigrationResult(t.code, False, error=str(exc)[:4000])
