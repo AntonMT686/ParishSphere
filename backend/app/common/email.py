@@ -18,7 +18,7 @@ log = structlog.get_logger(__name__)
 OUTBOX: list[EmailMessage] = []
 
 
-def send_email(to: str, subject: str, body: str) -> None:
+def send_email(to: str, subject: str, body: str, *, raise_errors: bool = False) -> None:
     settings = get_settings()
     msg = EmailMessage()
     msg["From"] = settings.email_from
@@ -38,4 +38,7 @@ def send_email(to: str, subject: str, body: str) -> None:
             smtp.send_message(msg)
     except (OSError, smtplib.SMTPException):
         # Never fail the user's request (e.g. password reset) because mail is down; it is logged.
+        # Queue-based delivery passes raise_errors=True so the message can be retried.
         log.exception("email_send_failed", to=to, subject=subject)
+        if raise_errors:
+            raise

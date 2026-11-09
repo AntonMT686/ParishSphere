@@ -9,7 +9,12 @@ from app.core.config import get_settings
 _settings = get_settings()
 _broker = _settings.redis_url or "memory://"
 
-celery_app = Celery("parishsphere", broker=_broker, backend=_settings.redis_url or None)
+celery_app = Celery(
+    "parishsphere",
+    broker=_broker,
+    backend=_settings.redis_url or None,
+    include=["app.modules.notifications.tasks"],
+)
 celery_app.conf.update(
     task_serializer="json",
     accept_content=["json"],

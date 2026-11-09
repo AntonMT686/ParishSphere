@@ -1,13 +1,26 @@
-"""Import every model module so the metadata objects are complete (Alembic autogenerate, tests)."""
+"""Import every model module so the metadata objects are complete (Alembic autogenerate, tests),
+and every module that registers seeders or session hooks."""
 
 from __future__ import annotations
 
 import app.master.models
 import app.modules.core.models
 import app.modules.identity.models
+import app.modules.notifications.models
+import app.modules.notifications.service  # after_commit delivery hooks
 import app.modules.rbac.models
-import app.modules.rbac.service  # noqa: F401  (registers seeders)
+import app.modules.rbac.service  # RBAC seeder
 from app.db.base import MasterBase, TenantBase
+
+LOADED_MODULES = (
+    app.master.models,
+    app.modules.core.models,
+    app.modules.identity.models,
+    app.modules.notifications.models,
+    app.modules.notifications.service,
+    app.modules.rbac.models,
+    app.modules.rbac.service,
+)
 
 master_metadata = MasterBase.metadata
 tenant_metadata = TenantBase.metadata

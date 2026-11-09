@@ -44,7 +44,7 @@ def test_provisioning_is_idempotent(two_parishes: tuple[str, str]) -> None:
     tenant = resolve_tenant(code=two_parishes[0])
     assert tenant is not None
     with tenant_session_scope(tenant) as s:
-        assert len(s.scalars(select(Sequence)).all()) == 7
+        assert len([q for q in s.scalars(select(Sequence)) if ":" not in q.name]) == 7
 
 
 def test_tenant_databases_are_isolated(two_parishes: tuple[str, str]) -> None:

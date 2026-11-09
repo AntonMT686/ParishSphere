@@ -10,6 +10,8 @@ from fastapi import APIRouter, FastAPI, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import text
 
+import app.db.registry
+from app.common.files_router import router as files_router
 from app.core.config import get_settings
 from app.core.context import set_tenant_code, set_trace_id, set_user_id
 from app.core.errors import register_exception_handlers
@@ -17,7 +19,9 @@ from app.core.ids import new_public_id
 from app.core.logging import configure_logging
 from app.db.master import get_master_engine
 from app.master.router import router as platform_router
+from app.modules.audit.router import router as audit_router
 from app.modules.identity.router import router as auth_router
+from app.modules.notifications.router import router as notifications_router
 from app.modules.rbac.router import router as roles_router
 from app.modules.users.router import router as users_router
 from app.tenancy.router import router as tenant_router
@@ -111,6 +115,9 @@ def create_app() -> FastAPI:
     app.include_router(auth_router, prefix=API_PREFIX)
     app.include_router(users_router, prefix=API_PREFIX)
     app.include_router(roles_router, prefix=API_PREFIX)
+    app.include_router(notifications_router, prefix=API_PREFIX)
+    app.include_router(audit_router, prefix=API_PREFIX)
+    app.include_router(files_router, prefix=API_PREFIX)
     return app
 
 

@@ -5,7 +5,7 @@ from __future__ import annotations
 from datetime import datetime
 from typing import Any
 
-from sqlalchemy import JSON, BigInteger, DateTime, Integer, String, Text
+from sqlalchemy import JSON, BigInteger, Boolean, DateTime, Integer, String, Text, false
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.db.base import BigIntPK, IdMixin, TenantBase, utcnow
@@ -31,6 +31,11 @@ class Sequence(TenantBase):
     prefix: Mapped[str] = mapped_column(String(20), nullable=False)
     next_value: Mapped[int] = mapped_column(BigInteger, nullable=False, default=1)
     padding: Mapped[int] = mapped_column(Integer, nullable=False, default=6)
+    # Placeholders: {prefix} {year} {number}. Yearly sequences restart at 1 every calendar year.
+    format: Mapped[str] = mapped_column(
+        String(50), nullable=False, default="{prefix}{number}", server_default="{prefix}{number}"
+    )
+    yearly: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False, server_default=false())
 
 
 class AuditLog(IdMixin, TenantBase):

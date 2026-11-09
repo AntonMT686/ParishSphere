@@ -44,6 +44,8 @@ ignore = ["S101", "B008", "RUF001", "RUF002", "RUF003", "RUF012", "S105", "S106"
 "tests/**" = ["S105", "S106"]
 "migrations/**" = ["E501"]
 "scripts/**" = ["E501"]
+"app/modules/notifications/catalog.py" = ["E501"]
+"app/modules/rbac/catalog.py" = ["E501"]
 
 [tool.mypy]
 python_version = "3.12"

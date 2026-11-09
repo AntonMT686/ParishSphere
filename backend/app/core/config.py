@@ -78,6 +78,25 @@ class Settings(BaseSettings):
     smtp_starttls: bool = False
     email_from: str = "ParishSphere <no-reply@parishsphere.app>"
 
+    # --- file storage ---
+    storage_backend: Literal["local", "s3"] = "local"
+    storage_local_dir: Path = BACKEND_DIR / "data" / "files"
+    s3_endpoint_url: str | None = None  # e.g. http://minio:9000 ; None = AWS
+    # Host browsers use for presigned downloads when it differs from the internal endpoint (dev MinIO).
+    s3_public_endpoint_url: str | None = None
+    s3_region: str = "ap-south-1"
+    s3_bucket: str = "parishsphere"
+    s3_access_key: SecretStr | None = None
+    s3_secret_key: SecretStr | None = None
+    s3_auto_create_bucket: bool = False
+    download_url_ttl_seconds: int = 300
+    max_upload_mb: int = 25
+
+    # --- exports & notifications ---
+    max_export_rows: int = 10000
+    # None = auto: use Celery when a Redis broker is configured, otherwise deliver in-process after commit.
+    notifications_async: bool | None = None
+
     # --- infrastructure ---
     redis_url: str | None = None
     cors_origins: list[str] = Field(default_factory=lambda: ["http://localhost:5173"])
@@ -86,6 +105,10 @@ class Settings(BaseSettings):
     @property
     def is_production(self) -> bool:
         return self.env in ("production", "uat")
+
+    @property
+    def use_celery(self) -> bool:
+        return bool(self.redis_url) if self.notifications_async is None else self.notifications_async
 
     @property
     def secure_cookies(self) -> bool:

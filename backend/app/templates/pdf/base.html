@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="{{ language|default('en') }}">
+<head>
+<meta charset="utf-8">
+<title>{{ title }}</title>
+<style>
+  @page {
+    size: A4 {{ 'landscape' if landscape else 'portrait' }};
+    margin: 16mm 12mm 18mm 12mm;
+    @bottom-left { content: "{{ parish_name }} · ParishSphere"; font-size: 8pt; color: #5B6075; }
+    @bottom-right { content: "Page " counter(page) " of " counter(pages); font-size: 8pt; color: #5B6075; }
+  }
+  * { box-sizing: border-box; }
+  body { font-family: "Inter", "Noto Sans", "Noto Sans Tamil", "DejaVu Sans", sans-serif; font-size: 9pt; color: #1B1F3B; }
+  header { border-bottom: 2px solid #2F3E9E; padding-bottom: 6px; margin-bottom: 10px; }
+  header .parish { font-size: 9pt; color: #5B6075; text-transform: uppercase; letter-spacing: .06em; }
+  h1 { font-size: 15pt; margin: 2px 0 0; color: #2F3E9E; }
+  .subtitle { color: #5B6075; margin-top: 2px; }
+  .meta { color: #5B6075; font-size: 8pt; margin-top: 4px; }
+  table { width: 100%; border-collapse: collapse; }
+  th { background: #EEF0FA; color: #1B1F3B; text-align: left; font-weight: 600; padding: 5px 6px; border-bottom: 1px solid #C9CDE6; }
+  td { padding: 4px 6px; border-bottom: 1px solid #E4E6EF; vertical-align: top; }
+  tr:nth-child(even) td { background: #FAFBFE; }
+  td.num, th.num { text-align: right; white-space: nowrap; }
+  thead { display: table-header-group; }
+  tr { page-break-inside: avoid; }
+  .empty { padding: 24px; text-align: center; color: #5B6075; }
+  {% block style %}{% endblock %}
+</style>
+</head>
+<body>
+<header>
+  <div class="parish">{{ parish_name }}</div>
+  <h1>{{ title }}</h1>
+  {% if subtitle %}<div class="subtitle">{{ subtitle }}</div>{% endif %}
+  <div class="meta">Generated {{ generated_at }}{% if generated_by %} by {{ generated_by }}{% endif %}</div>
+</header>
+{% block content %}{% endblock %}
+</body>
+</html>

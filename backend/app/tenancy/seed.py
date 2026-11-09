@@ -27,14 +27,16 @@ def register_seeder(name: str, order: int = 100) -> Callable[[Seeder], Seeder]:
     return deco
 
 
-DEFAULT_SEQUENCES: dict[str, tuple[str, int]] = {
-    "FAMILY": ("FAM", 6),
-    "MEMBER": ("MEM", 6),
-    "ACTIVITY": ("ACT", 6),
-    "MEETING": ("MTG", 6),
-    "ACTION_ITEM": ("AI", 6),
-    "TRANSACTION": ("TXN", 6),
-    "NOTICE": ("NTC", 6),
+YEARLY = "{prefix}-{year}-{number}"
+# name → (prefix, padding, format, yearly)
+DEFAULT_SEQUENCES: dict[str, tuple[str, int, str, bool]] = {
+    "FAMILY": ("FAM", 6, "{prefix}{number}", False),
+    "MEMBER": ("MEM", 6, "{prefix}{number}", False),
+    "ACTIVITY": ("ACT", 4, YEARLY, True),
+    "MEETING": ("MTG", 4, YEARLY, True),
+    "ACTION_ITEM": ("AI", 5, YEARLY, True),
+    "TRANSACTION": ("TXN", 6, YEARLY, True),
+    "NOTICE": ("NTC", 4, YEARLY, True),
 }
 
 
@@ -57,9 +59,11 @@ def seed_settings(session: Session, ctx: dict[str, Any]) -> None:
 
 @register_seeder("core.sequences", order=11)
 def seed_sequences(session: Session, _: dict[str, Any]) -> None:
-    for name, (prefix, padding) in DEFAULT_SEQUENCES.items():
+    for name, (prefix, padding, fmt, yearly) in DEFAULT_SEQUENCES.items():
         if session.get(Sequence, name) is None:
-            session.add(Sequence(name=name, prefix=prefix, padding=padding, next_value=1))
+            session.add(
+                Sequence(name=name, prefix=prefix, padding=padding, format=fmt, yearly=yearly, next_value=1)
+            )
 
 
 def run_seeders(session: Session, ctx: dict[str, Any]) -> list[str]:

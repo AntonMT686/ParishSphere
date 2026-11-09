@@ -70,3 +70,27 @@ def record_audit(
     )
     session.add(entry)
     return entry
+
+
+def changes(obj: Any, *, exclude: set[str] | None = None) -> tuple[dict[str, Any], dict[str, Any]]:
+    """Pending column changes of an ORM object as ``(old, new)`` dicts — call before flush/commit.
+
+    Use with :func:`record_audit`::
+
+        old, new = changes(family)
+        record_audit(db, action="UPDATE", module="families", old=old, new=new, ...)
+    """
+    from sqlalchemy import inspect
+
+    skip = {"updated_at", "updated_by", "created_at", "created_by"} | (exclude or set())
+    old: dict[str, Any] = {}
+    new: dict[str, Any] = {}
+    state = inspect(obj)
+    for attr in state.mapper.column_attrs:
+        if attr.key in skip:
+            continue
+        hist = state.attrs[attr.key].history
+        if hist.has_changes():
+            old[attr.key] = hist.deleted[0] if hist.deleted else None
+            new[attr.key] = hist.added[0] if hist.added else None
+    return old, new

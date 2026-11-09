@@ -12,6 +12,14 @@ x-backend-env: &backend-env
   PS_TENANT_DB_SHARED_CREDENTIALS: "true"
   PS_BASE_DOMAIN: parishsphere.localhost
   PS_REDIS_URL: redis://redis:6379/0
+  PS_STORAGE_BACKEND: s3
+  PS_S3_ENDPOINT_URL: http://minio:9000
+  PS_S3_PUBLIC_ENDPOINT_URL: http://localhost:9000
+  PS_S3_REGION: us-east-1
+  PS_S3_BUCKET: parishsphere
+  PS_S3_ACCESS_KEY: parishsphere
+  PS_S3_SECRET_KEY: parishsphere-dev
+  PS_S3_AUTO_CREATE_BUCKET: "true"
   PS_SMTP_HOST: mailhog
   PS_SMTP_PORT: "1025"
   PS_CORS_ORIGINS: '["http://localhost:5173","http://parishsphere.localhost"]'
@@ -58,6 +66,7 @@ services:
     depends_on:
       mysql: { condition: service_healthy }
       redis: { condition: service_started }
+      minio: { condition: service_started }
     ports: ["8000:8000"]
 
   worker:

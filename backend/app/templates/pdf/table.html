@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+{% if rows %}
+<table>
+  <thead><tr>{% for c in columns %}<th class="{{ 'num' if c.numeric else '' }}">{{ c.header }}</th>{% endfor %}</tr></thead>
+  <tbody>
+  {% for row in rows %}
+    <tr>{% for c in columns %}<td class="{{ 'num' if c.numeric else '' }}">{{ row[loop.index0] }}</td>{% endfor %}</tr>
+  {% endfor %}
+  </tbody>
+</table>
+<p class="meta">{{ rows|length }} record(s)</p>
+{% else %}
+<div class="empty">No records match the selected filters.</div>
+{% endif %}
+{% endblock %}

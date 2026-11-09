@@ -23,7 +23,7 @@ from app.modules.rbac.catalog import (
     PERMISSION_CATALOG,
     SYSTEM_ROLES,
 )
-from app.modules.rbac.models import Permission, Role, UserRoleAssignment
+from app.modules.rbac.models import Permission, Role, UserRoleAssignment, role_permissions
 from app.tenancy.seed import register_seeder
 
 
@@ -264,3 +264,36 @@ def seed_rbac(session: Session, _: dict[str, Any]) -> None:
             # Grant only permissions introduced by this release; keep the parish's own edits.
             have = {p.code for p in role.permissions}
             role.permissions.extend(existing[c] for c in sorted(rd.permissions & new_codes - have))
+
+
+# ----------------------------------------------------------------------------- recipients
+def users_with_permission(
+    session: Session, code: str, org_unit_id: int | None = None, *, role_code: str | None = None
+) -> list[User]:
+    """Active users holding ``code`` for ``org_unit_id`` (parish-wide holders always qualify).
+
+    Used to find reviewers/approvers and notification recipients.
+    """
+    stmt = (
+        select(User)
+        .join(UserRoleAssignment, UserRoleAssignment.user_id == User.id)
+        .join(Role, Role.id == UserRoleAssignment.role_id)
+        .join(role_permissions, role_permissions.c.role_id == Role.id)
+        .join(Permission, Permission.id == role_permissions.c.permission_id)
+        .where(
+            Permission.code == code,
+            Role.is_deleted.is_(False),
+            assignment_active_clause(),
+            User.is_active.is_(True),
+            User.is_deleted.is_(False),
+        )
+    )
+    if org_unit_id is None:
+        stmt = stmt.where(UserRoleAssignment.org_unit_id.is_(None))
+    else:
+        stmt = stmt.where(
+            or_(UserRoleAssignment.org_unit_id.is_(None), UserRoleAssignment.org_unit_id == org_unit_id)
+        )
+    if role_code is not None:
+        stmt = stmt.where(Role.code == role_code)
+    return list(session.scalars(stmt.distinct()).unique())
