@@ -12,6 +12,8 @@ x-backend-env: &backend-env
   PS_TENANT_DB_SHARED_CREDENTIALS: "true"
   PS_BASE_DOMAIN: parishsphere.localhost
   PS_REDIS_URL: redis://redis:6379/0
+  PS_SMTP_HOST: mailhog
+  PS_SMTP_PORT: "1025"
   PS_CORS_ORIGINS: '["http://localhost:5173","http://parishsphere.localhost"]'
 
 services:

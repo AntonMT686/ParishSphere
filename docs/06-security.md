@@ -79,3 +79,23 @@ Events: login success/failure, logout, session revocation, CRUD on business reco
 - Login failures written in a separate transaction (so they persist).
 - Audit table append-only; production DB user lacks UPDATE/DELETE on it.
 - Searchable audit viewer for Parish Admin/Priest; export restricted.
+
+## 8. Implemented auth API (T3)
+
+All parish routes resolve the tenant first (subdomain or `X-Parish-Code`).
+
+| Endpoint | Auth | Notes |
+|---|---|---|
+| `POST /api/v1/auth/login` | — | `{username, password}` (username or email). Returns `access_token`, `expires_in` (900 s), `idle_timeout_seconds` (1800), `user`. Sets `ps_refresh` (HttpOnly, SameSite=Strict, Path=/api/v1/auth) and `ps_csrf` (readable) cookies |
+| `POST /api/v1/auth/refresh` | refresh cookie + `X-CSRF-Token` | Rotates the refresh token, touches the session (this is the "Continue session" call). Replay of a used token → `REFRESH_TOKEN_REUSED` and the session is revoked |
+| `POST /api/v1/auth/logout` | refresh cookie + `X-CSRF-Token` | Works with an expired access token; clears cookies |
+| `POST /api/v1/auth/logout-all` | bearer | Revokes every session of the user |
+| `GET /api/v1/auth/me` | bearer | Profile; `roles`/`permissions` filled by RBAC (T4) |
+| `GET /api/v1/auth/sessions`, `DELETE /api/v1/auth/sessions/{id}` | bearer | List / revoke own sessions |
+| `POST /api/v1/auth/password/change` | bearer | Requires current password; revokes other sessions |
+| `POST /api/v1/auth/password/forgot` | — | Always 202 (no enumeration); emails a 30-minute single-use link; 10 requests/IP/hour |
+| `POST /api/v1/auth/password/reset` | — | `{token, new_password}`; revokes all sessions, clears lockout |
+
+Session rules (`app/modules/identity/service.py`): every authenticated request checks the session is not revoked, not past its 12 h absolute expiry and not idle for more than 30 min; activity is recorded at most once a minute. Lockout: 5 failures → 15 min; per-IP: 30 failures/15 min across all usernames → `429 RATE_LIMITED`. Initial parish admins are created by `ps-admin provision-parish --admin-username … [--admin-email …|--admin-password …]` or `POST /platform/parishes` with `admin_username` + `admin_email` (a 72-hour "set your password" email is sent).
+
+Clients must not poll the API in the background, because API activity counts as session activity; the SPA idle timer (T6) decides when the user is idle.

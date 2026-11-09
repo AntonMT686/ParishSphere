@@ -17,6 +17,7 @@ from app.core.ids import new_public_id
 from app.core.logging import configure_logging
 from app.db.master import get_master_engine
 from app.master.router import router as platform_router
+from app.modules.identity.router import router as auth_router
 from app.tenancy.router import router as tenant_router
 
 log = structlog.get_logger("app.request")
@@ -105,6 +106,7 @@ def create_app() -> FastAPI:
     app.include_router(_health_router(), prefix=API_PREFIX)
     app.include_router(platform_router, prefix=API_PREFIX)
     app.include_router(tenant_router, prefix=API_PREFIX)
+    app.include_router(auth_router, prefix=API_PREFIX)
     return app
 
 

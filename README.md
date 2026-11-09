@@ -18,7 +18,7 @@ Multi-tenant parish management SaaS: families & members, configurable parish org
 
 ```bash
 make up          # MySQL, Redis, MinIO, MailHog, API, worker, Vite, Nginx
-make seed-demo   # super admin + diocese CHN + parish STMARYS
+make seed-demo   # super admin + diocese CHN + parish STMARYS with user admin / ChangeMe-Now1
 ```
 
 Open http://stmarys.parishsphere.localhost (or http://localhost:5173 and enter parish code `STMARYS`). API docs: http://localhost:8000/api/v1/docs.

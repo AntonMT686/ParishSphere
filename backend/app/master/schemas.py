@@ -82,6 +82,12 @@ class ParishCreate(_AddressIn):
     language: str = Field(default="en", pattern=r"^(en|ta)$")
     currency: str = Field(default="INR", min_length=3, max_length=3)
     fy_start_month: int = Field(default=4, ge=1, le=12)
+    # Initial parish administrator; an invitation ("set your password") email is sent.
+    admin_username: str | None = Field(
+        default=None, min_length=3, max_length=100, pattern=r"^[A-Za-z0-9._-]+$"
+    )
+    admin_full_name: str | None = Field(default=None, max_length=200)
+    admin_email: EmailStr | None = None
 
 
 class ParishStatusUpdate(BaseModel):
@@ -102,6 +108,7 @@ class ParishOut(_Out):
     schema_version: str | None
     last_error: str | None
     created_at: datetime
+    admin_username: str | None = None
 
 
 class TenantBrandingOut(BaseModel):

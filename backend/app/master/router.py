@@ -9,7 +9,8 @@ from sqlalchemy import or_, select
 from sqlalchemy.orm import joinedload
 
 from app.common.pagination import Page, PageQuery, apply_sort, paginate
-from app.core.errors import Conflict, NotFound
+from app.core.errors import Conflict, NotFound, ValidationFailed
+from app.db.tenant import tenant_session_scope
 from app.master.auth import (
     CurrentPlatformUser,
     MasterSession,
@@ -30,6 +31,7 @@ from app.master.schemas import (
     PlatformUserOut,
     TokenOut,
 )
+from app.modules.identity.service import create_initial_admin
 from app.tenancy.provisioning import ParishRegistration, provision_parish, register_parish
 from app.tenancy.resolver import invalidate_tenant
 
@@ -224,7 +226,13 @@ def create_parish(
     body: ParishCreate, session: MasterSession, user: SuperAdmin, request: Request
 ) -> ParishOut:
     """Register a parish and provision its dedicated database (migrate + seed)."""
-    reg = ParishRegistration(**body.model_dump(exclude={"address_line2", "country"}))
+    if body.admin_username and not body.admin_email:
+        raise ValidationFailed(details=[{"field": "admin_email", "message": "Required with admin_username"}])
+    reg = ParishRegistration(
+        **body.model_dump(
+            exclude={"address_line2", "country", "admin_username", "admin_full_name", "admin_email"}
+        )
+    )
     parish = register_parish(session, reg, actor_id=user.id)
     _audit(
         session,
@@ -238,10 +246,21 @@ def create_parish(
     )
     session.commit()
     try:
-        provision_parish(parish.code)
+        tenant = provision_parish(parish.code)
     finally:
         session.expire_all()
-    return _parish_out(_get_parish(session, parish.public_id, user))
+    if body.admin_username and body.admin_email:
+        with tenant_session_scope(tenant) as tsession:
+            create_initial_admin(
+                tsession,
+                tenant,
+                username=body.admin_username,
+                full_name=body.admin_full_name or "Parish Administrator",
+                email=str(body.admin_email),
+            )
+    out = _parish_out(_get_parish(session, parish.public_id, user))
+    out.admin_username = body.admin_username.lower() if body.admin_username else None
+    return out
 
 
 @router.get("/parishes/{parish_id}", response_model=ParishOut)

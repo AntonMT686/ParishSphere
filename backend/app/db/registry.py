@@ -3,7 +3,8 @@
 from __future__ import annotations
 
 import app.master.models
-import app.modules.core.models  # noqa: F401
+import app.modules.core.models
+import app.modules.identity.models  # noqa: F401
 from app.db.base import MasterBase, TenantBase
 
 master_metadata = MasterBase.metadata

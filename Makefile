@@ -16,7 +16,7 @@ logs:
 seed-demo:     ## Create a super admin, a diocese and the demo parish STMARYS (dev stack)
 	$(COMPOSE) exec api ps-admin create-superadmin --email admin@parishsphere.org --name "Platform Admin" --password "ChangeMe-Now1"
 	$(COMPOSE) exec api ps-admin create-diocese --code CHN --name "Archdiocese of Madras-Mylapore"
-	$(COMPOSE) exec api ps-admin provision-parish --diocese CHN --code STMARYS --name "St. Mary's Church"
+	$(COMPOSE) exec api ps-admin provision-parish --diocese CHN --code STMARYS --name "St. Mary's Church" --admin-username admin --admin-password "ChangeMe-Now1"
 
 backend-install:
 	$(BACKEND) python3 -m venv .venv && .venv/bin/pip install -r requirements-dev.txt && .venv/bin/pip install --no-deps -e .

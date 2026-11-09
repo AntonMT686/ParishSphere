@@ -58,6 +58,25 @@ class Settings(BaseSettings):
     idle_timeout_minutes: int = 30
     max_failed_logins: int = 5
     lockout_minutes: int = 15
+    # Failed logins allowed per client IP (all usernames) within ``lockout_minutes``.
+    max_failed_logins_per_ip: int = 30
+    password_min_length: int = 10
+    password_reset_ttl_minutes: int = 30
+    session_touch_interval_seconds: int = 60
+    refresh_cookie_name: str = "ps_refresh"
+    csrf_cookie_name: str = "ps_csrf"
+    # None → Secure cookies only in production/UAT.
+    cookie_secure: bool | None = None
+    # Used to build links in emails (password reset); {subdomain} is replaced per parish.
+    app_url_template: str = "http://{subdomain}.parishsphere.localhost"
+
+    # --- email (SMTP; when smtp_host is empty emails are logged instead of sent) ---
+    smtp_host: str | None = None
+    smtp_port: int = 587
+    smtp_username: str | None = None
+    smtp_password: SecretStr | None = None
+    smtp_starttls: bool = False
+    email_from: str = "ParishSphere <no-reply@parishsphere.app>"
 
     # --- infrastructure ---
     redis_url: str | None = None
@@ -67,6 +86,10 @@ class Settings(BaseSettings):
     @property
     def is_production(self) -> bool:
         return self.env in ("production", "uat")
+
+    @property
+    def secure_cookies(self) -> bool:
+        return self.is_production if self.cookie_secure is None else self.cookie_secure
 
     @model_validator(mode="after")
     def _check_production_secrets(self) -> Settings:

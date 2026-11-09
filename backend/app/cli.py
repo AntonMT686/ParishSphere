@@ -17,17 +17,21 @@ from typing import Annotated
 import typer
 from sqlalchemy import select
 
+from app.core.errors import AppError
 from app.core.logging import configure_logging
 from app.db import migrations
 from app.db.master import get_master_engine, master_session
+from app.db.tenant import tenant_session_scope
 from app.master.auth import create_platform_user
 from app.master.models import Diocese, PlatformUser
+from app.modules.identity.service import create_initial_admin, create_user
 from app.tenancy.provisioning import (
     ParishRegistration,
     migrate_all_tenants,
     provision_parish,
     register_parish,
 )
+from app.tenancy.resolver import resolve_tenant
 
 app = typer.Typer(help="ParishSphere administration CLI", no_args_is_help=True)
 
@@ -103,6 +107,9 @@ def provision(
     name: Annotated[str, typer.Option()],
     subdomain: Annotated[str | None, typer.Option()] = None,
     language: Annotated[str, typer.Option()] = "en",
+    admin_username: Annotated[str | None, typer.Option(help="Create the first parish admin")] = None,
+    admin_email: Annotated[str | None, typer.Option(help="Admin email (sends a set-password link)")] = None,
+    admin_password: Annotated[str | None, typer.Option(help="Set the admin password directly")] = None,
 ) -> None:
     """Register a parish (if new) and provision its dedicated database. Safe to re-run."""
     with master_session() as session:
@@ -115,6 +122,50 @@ def provision(
         session.commit()
     tenant = provision_parish(code)
     typer.echo(f"parish {tenant.code} provisioned → database {tenant.db_name} (subdomain {tenant.subdomain})")
+    if admin_username:
+        _create_admin(tenant.code, admin_username, "Parish Administrator", admin_email, admin_password)
+
+
+def _create_admin(code: str, username: str, full_name: str, email: str | None, password: str | None) -> None:
+    tenant = resolve_tenant(code=code)
+    if tenant is None:
+        raise typer.BadParameter(f"Unknown parish {code}")
+    try:
+        with tenant_session_scope(tenant) as tsession:
+            if password:
+                create_user(
+                    tsession,
+                    username=username,
+                    full_name=full_name,
+                    email=email,
+                    password=password,
+                    must_change_password=False,
+                )
+                temp = None
+            else:
+                _, temp = create_initial_admin(
+                    tsession, tenant, username=username, full_name=full_name, email=email
+                )
+    except AppError as exc:
+        details = "; ".join(d["message"] for d in exc.details)
+        raise typer.BadParameter(f"{exc.message}{': ' + details if details else ''}") from exc
+    typer.echo(f"user {username.lower()} created in {tenant.code}")
+    if temp:
+        typer.echo(f"temporary password (must be changed at first login): {temp}")
+    elif email and not password:
+        typer.echo(f"a set-password link was emailed to {email}")
+
+
+@app.command("create-parish-user")
+def create_parish_user(
+    parish: Annotated[str, typer.Option(help="Parish code")],
+    username: Annotated[str, typer.Option()],
+    full_name: Annotated[str, typer.Option("--name")],
+    email: Annotated[str | None, typer.Option()] = None,
+    password: Annotated[str | None, typer.Option(help="Omit to generate / email a set-password link")] = None,
+) -> None:
+    """Create a user inside a parish database (roles are assigned from T4)."""
+    _create_admin(parish, username, full_name, email, password)
 
 
 if __name__ == "__main__":
