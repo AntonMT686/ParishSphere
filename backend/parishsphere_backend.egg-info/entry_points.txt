@@ -1,0 +1,2 @@
+[console_scripts]
+ps-admin = app.cli:app
