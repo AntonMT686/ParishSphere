@@ -129,3 +129,16 @@ Other dashboards:
 ## 7. Responsiveness & accessibility
 
 Breakpoints xs/sm/md/lg/xl; tables become card lists < sm; touch targets ≥ 44px; WCAG 2.1 AA contrast; full keyboard navigation; `aria-live` for toasts; language switch at runtime (en/ta).
+
+## 8. Implemented frontend architecture (T6)
+
+| Concern | Implementation |
+|---|---|
+| API types | Generated from the backend's OpenAPI: `cd backend && python scripts/export_openapi.py`, then `cd frontend && npm run gen:api` (writes `src/api/schema.d.ts`; aliases in `src/api/types.ts`). Regenerate whenever an API changes. |
+| HTTP client | `src/api/client.ts` (axios): tenant header on localhost, bearer token held **in memory**, `X-CSRF-Token` copied from the `ps_csrf` cookie on unsafe requests, the error envelope mapped to `ApiError`. On `TOKEN_EXPIRED` it refreshes once and retries. Concurrent requests share one refresh, and refreshes across tabs are serialised with the Web Locks API, so a single-use refresh token is never replayed. |
+| Session | `src/auth/authStore.ts` (zustand): page load restores the session through the refresh cookie (skipped when no session cookie exists). Login and refresh responses carry the user's roles and permissions. Sign-out is broadcast to other tabs (`BroadcastChannel`). The query cache is cleared on sign-out. |
+| Idle timeout | `src/auth/IdleTimeoutDialog.tsx`: activity (mouse, keys, scroll, touch) is shared across tabs through `localStorage`. A warning with a countdown appears 2 minutes before the 30-minute limit. "Continue session" refreshes the session, which also extends the server's idle window. At the limit the user is signed out and sent to `/login?reason=timeout`. Access tokens are refreshed ahead of time only while the user is active. Nothing polls the API, because background calls would keep idle sessions alive. |
+| Guards | `RequireAuth` redirects to login and remembers `from`; it also forces `/change-password` when `must_change_password` is set. `RequirePermission` shows a 403 page and `PermissionGate` hides controls. Navigation items declare their `permission`. All of this is UX only: the API enforces every permission. |
+| Design system | `DataTable` (MUI X DataGrid with server-side paging and sorting), `FormTextField`/`FormSelect`/`FormSwitch` with `applyServerErrors` (backend field errors shown on the fields), `useFeedback()` (toasts and confirm dialogs), `ExportMenu` (authenticated XLSX/CSV/PDF downloads), `StatusBadge`, `StatCard`, `PageHeader`, `EmptyState`. |
+| Screens | Login, forgot password, reset/invite password, forced password change. Profile (details, password, signed-in devices, notification preferences). Notification bell and notifications page. Users (list, filters, create or invite, drawer with status actions and role history), roles (cards, permission editor), audit log (filters, change viewer, export). |
+| Tests | Vitest + Testing Library + MSW (`src/test/server.ts`): refresh single-flight and retry, CSRF header, session-ended handling, idle warning and expiry, guards and redirects, login, forced password change, permission-filtered navigation, server-paged users table. |

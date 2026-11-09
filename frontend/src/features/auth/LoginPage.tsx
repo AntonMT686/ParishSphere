@@ -1,47 +1,41 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import LockIcon from '@mui/icons-material/LockOutlined';
 import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
+import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
-import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
 import { useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { Link as RouterLink, useSearchParams } from 'react-router-dom';
 import { z } from 'zod';
-import { ApiError, api, setAccessToken } from '@/api/client';
 import { useTenantBranding } from '@/api/tenant';
+import { useAuthStore } from '@/auth/authStore';
+import { FormTextField, useErrorMessage } from '@/design-system';
 import { getStoredParishCode, setStoredParishCode, subdomainFromHost } from '@/lib/tenant';
+import { AuthCard } from './AuthCard';
 
 const schema = z.object({
   parishCode: z.string().trim().max(20).optional(),
-  username: z.string().trim().min(1),
-  password: z.string().min(1),
+  username: z.string().trim().min(1, 'Required'),
+  password: z.string().min(1, 'Required'),
 });
 type FormValues = z.infer<typeof schema>;
 
 export function LoginPage() {
   const { t } = useTranslation();
-  const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const login = useAuthStore((s) => s.login);
+  const errorMessage = useErrorMessage();
   const [params] = useSearchParams();
   const needsParishCode = subdomainFromHost(window.location.hostname) === null;
   const { data: branding, isError: unknownParish } = useTenantBranding();
-  const [error, setError] = useState<string | null>(
-    params.get('reason') === 'timeout' ? t('auth.sessionExpired') : null,
-  );
-  const {
-    register,
-    handleSubmit,
-    formState: { isSubmitting, errors },
-  } = useForm<FormValues>({
+  const reason = params.get('reason');
+  const [error, setError] = useState<string | null>(null);
+  const { control, handleSubmit, formState } = useForm<FormValues>({
     resolver: zodResolver(schema),
-    defaultValues: { parishCode: getStoredParishCode() ?? '' },
+    defaultValues: { parishCode: getStoredParishCode() ?? '', username: '', password: '' },
   });
 
   const onSubmit = async (values: FormValues) => {
@@ -51,64 +45,49 @@ export function LoginPage() {
       await queryClient.invalidateQueries({ queryKey: ['tenant'] });
     }
     try {
-      const { data } = await api.post<{ access_token: string }>('/auth/login', {
-        username: values.username,
-        password: values.password,
-      });
-      setAccessToken(data.access_token);
-      navigate('/', { replace: true });
+      await login(values.username, values.password);
+      // RedirectIfAuthenticated sends the user to `from` (or the dashboard).
     } catch (e) {
-      const code = e instanceof ApiError ? e.code : 'INTERNAL_ERROR';
-      setError(t(`errors.${code}`, { defaultValue: e instanceof Error ? e.message : t('errors.INTERNAL_ERROR') }));
+      setError(errorMessage(e));
     }
   };
 
   return (
-    <Card>
-      <CardContent sx={{ p: { xs: 3, sm: 4 } }}>
-        <Stack spacing={1} alignItems="center" sx={{ mb: 3 }}>
-          <Box sx={{ bgcolor: 'primary.main', color: 'primary.contrastText', borderRadius: '50%', p: 1.25, display: 'flex' }}>
-            <LockIcon />
-          </Box>
-          <Typography variant="h2" component="h1">
-            {t('auth.welcome')}
-          </Typography>
-          <Typography color="text.secondary" textAlign="center">
-            {branding ? t('auth.signInTo', { parish: branding.display_name }) : t('app.tagline')}
-          </Typography>
+    <AuthCard
+      title={t('auth.welcome')}
+      subtitle={branding ? t('auth.signInTo', { parish: branding.display_name }) : t('app.tagline')}
+    >
+      <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)}>
+        <Stack spacing={2}>
+          {reason === 'timeout' && !error && <Alert severity="info">{t('auth.sessionExpired')}</Alert>}
+          {reason === 'revoked' && !error && <Alert severity="warning">{t('auth.revoked')}</Alert>}
+          {error && <Alert severity="error">{error}</Alert>}
+          {unknownParish && !needsParishCode && <Alert severity="warning">{t('auth.unknownParish')}</Alert>}
+          {needsParishCode && (
+            <FormTextField
+              control={control}
+              name="parishCode"
+              label={t('auth.parishCode')}
+              autoComplete="organization"
+              slotProps={{ htmlInput: { style: { textTransform: 'uppercase' } } }}
+            />
+          )}
+          <FormTextField control={control} name="username" label={t('auth.username')} autoComplete="username" autoFocus />
+          <FormTextField
+            control={control}
+            name="password"
+            label={t('auth.password')}
+            type="password"
+            autoComplete="current-password"
+          />
+          <Button type="submit" variant="contained" size="large" disabled={formState.isSubmitting}>
+            {t('auth.signIn')}
+          </Button>
+          <Link component={RouterLink} to="/forgot-password" textAlign="center" variant="body2">
+            {t('auth.forgot')}
+          </Link>
         </Stack>
-        <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)}>
-          <Stack spacing={2}>
-            {error && <Alert severity="error">{error}</Alert>}
-            {unknownParish && !needsParishCode && <Alert severity="warning">{t('auth.unknownParish')}</Alert>}
-            {needsParishCode && (
-              <TextField
-                label={t('auth.parishCode')}
-                autoComplete="organization"
-                inputProps={{ style: { textTransform: 'uppercase' } }}
-                {...register('parishCode')}
-              />
-            )}
-            <TextField
-              label={t('auth.username')}
-              autoComplete="username"
-              autoFocus
-              error={Boolean(errors.username)}
-              {...register('username')}
-            />
-            <TextField
-              label={t('auth.password')}
-              type="password"
-              autoComplete="current-password"
-              error={Boolean(errors.password)}
-              {...register('password')}
-            />
-            <Button type="submit" variant="contained" size="large" disabled={isSubmitting}>
-              {t('auth.signIn')}
-            </Button>
-          </Stack>
-        </Box>
-      </CardContent>
-    </Card>
+      </Box>
+    </AuthCard>
   );
 }

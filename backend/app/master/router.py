@@ -28,8 +28,8 @@ from app.master.schemas import (
     ParishOut,
     ParishStatusUpdate,
     PlatformLoginIn,
+    PlatformTokenOut,
     PlatformUserOut,
-    TokenOut,
 )
 from app.modules.identity.service import create_initial_admin
 from app.tenancy.provisioning import ParishRegistration, provision_parish, register_parish
@@ -64,11 +64,11 @@ def _audit(
 
 
 # ------------------------------------------------------------------------------ auth
-@router.post("/auth/login", response_model=TokenOut)
-def platform_login(body: PlatformLoginIn, session: MasterSession, request: Request) -> TokenOut:
+@router.post("/auth/login", response_model=PlatformTokenOut)
+def platform_login(body: PlatformLoginIn, session: MasterSession, request: Request) -> PlatformTokenOut:
     user = authenticate_platform_user(session, body.email, body.password, request)
     token, expires_in = issue_platform_token(user)
-    return TokenOut(access_token=token, expires_in=expires_in)
+    return PlatformTokenOut(access_token=token, expires_in=expires_in)
 
 
 @router.get("/auth/me", response_model=PlatformUserOut)

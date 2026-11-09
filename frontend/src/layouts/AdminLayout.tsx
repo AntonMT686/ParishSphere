@@ -1,12 +1,9 @@
 import DarkModeIcon from '@mui/icons-material/DarkModeOutlined';
 import LightModeIcon from '@mui/icons-material/LightModeOutlined';
 import MenuIcon from '@mui/icons-material/Menu';
-import NotificationsIcon from '@mui/icons-material/NotificationsOutlined';
 import SearchIcon from '@mui/icons-material/Search';
 import TranslateIcon from '@mui/icons-material/Translate';
 import AppBar from '@mui/material/AppBar';
-import Avatar from '@mui/material/Avatar';
-import Badge from '@mui/material/Badge';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
@@ -28,8 +25,12 @@ import { useTranslation } from 'react-i18next';
 import { Outlet, Link as RouterLink, useLocation } from 'react-router-dom';
 import { useTenantBranding } from '@/api/tenant';
 import { useUiStore } from '@/app/uiStore';
+import { useCan } from '@/auth/authStore';
+import { IdleTimeoutDialog } from '@/auth/IdleTimeoutDialog';
+import { NotificationsBell } from '@/features/notifications/NotificationsBell';
 import { SUPPORTED_LANGUAGES } from '@/i18n';
-import { NAVIGATION } from './navigation';
+import { visibleNavigation } from './navigation';
+import { UserMenu } from './UserMenu';
 
 export const SIDEBAR_WIDTH = 264;
 
@@ -41,6 +42,7 @@ function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
   const { t } = useTranslation();
   const { pathname } = useLocation();
   const { data: branding } = useTenantBranding();
+  const can = useCan();
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
       <Box sx={{ px: 2.5, py: 2, display: 'flex', alignItems: 'center', gap: 1.5 }}>
@@ -55,7 +57,7 @@ function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
         </Box>
       </Box>
       <Box component="nav" aria-label="Main" sx={{ overflowY: 'auto', flexGrow: 1, px: 1.5, pb: 2 }}>
-        {NAVIGATION.map((section) => (
+        {visibleNavigation(can).map((section) => (
           <List
             key={section.key}
             dense
@@ -166,18 +168,15 @@ export function AdminLayout() {
                 {mode === 'light' ? <DarkModeIcon /> : <LightModeIcon />}
               </IconButton>
             </Tooltip>
-            <IconButton aria-label="Notifications">
-              <Badge color="error" variant="dot" invisible>
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
-            <Avatar sx={{ width: 34, height: 34, bgcolor: 'primary.main', fontSize: 14 }}>PS</Avatar>
+            <NotificationsBell />
+            <UserMenu />
           </Toolbar>
         </AppBar>
         <Box component="main" sx={{ p: { xs: 2, md: 3 }, flexGrow: 1, maxWidth: 1600, width: '100%', mx: 'auto' }}>
           <Outlet />
         </Box>
       </Box>
+      <IdleTimeoutDialog />
     </Box>
   );
 }

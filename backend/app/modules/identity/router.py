@@ -15,6 +15,7 @@ from app.modules.identity import service
 from app.modules.identity.deps import Auth
 from app.modules.identity.models import User, UserSession
 from app.modules.identity.schemas import (
+    AuthTokenOut,
     ChangePasswordIn,
     ForgotPasswordIn,
     LoginIn,
@@ -22,7 +23,6 @@ from app.modules.identity.schemas import (
     MessageOut,
     ResetPasswordIn,
     SessionOut,
-    TokenOut,
 )
 from app.modules.rbac.service import EffectivePermissions, effective_permissions
 from app.tenancy.deps import CurrentTenant, TenantSession
@@ -83,8 +83,8 @@ def _me(db: Session, user: User, eff: EffectivePermissions | None = None) -> MeO
     return out
 
 
-def _token_out(db: Session, issued: service.IssuedTokens) -> TokenOut:
-    return TokenOut(
+def _token_out(db: Session, issued: service.IssuedTokens) -> AuthTokenOut:
+    return AuthTokenOut(
         access_token=issued.access_token,
         expires_in=issued.expires_in,
         idle_timeout_seconds=get_settings().idle_timeout_minutes * 60,
@@ -93,17 +93,17 @@ def _token_out(db: Session, issued: service.IssuedTokens) -> TokenOut:
 
 
 # ----------------------------------------------------------------------------- endpoints
-@router.post("/login", response_model=TokenOut)
+@router.post("/login", response_model=AuthTokenOut)
 def login(
     body: LoginIn, request: Request, response: Response, tenant: CurrentTenant, db: TenantSession
-) -> TokenOut:
+) -> AuthTokenOut:
     issued = service.login(db, tenant, body.username, body.password, request)
     _set_auth_cookies(response, issued.refresh_token)
     return _token_out(db, issued)
 
 
-@router.post("/refresh", response_model=TokenOut)
-def refresh(request: Request, response: Response, tenant: CurrentTenant, db: TenantSession) -> TokenOut:
+@router.post("/refresh", response_model=AuthTokenOut)
+def refresh(request: Request, response: Response, tenant: CurrentTenant, db: TenantSession) -> AuthTokenOut:
     """Rotate the refresh token (cookie) and return a new access token. Also extends idle time."""
     _verify_csrf(request)
     try:

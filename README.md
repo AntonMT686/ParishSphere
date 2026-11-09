@@ -37,3 +37,17 @@ cd backend && PS_MASTER_DATABASE_URL=sqlite:///data/master.db PS_TENANT_DB_DRIVE
 | `ps-admin provision-parish --diocese CHN --code X --name "…"` | Register + create + migrate + seed a parish DB (idempotent) |
 | `ps-admin migrate-tenants --parallel 8` | Upgrade every parish database |
 | `make test` / `make lint` | Backend + frontend tests / linters |
+
+## Frontend development
+
+```bash
+cd frontend && npm install
+VITE_DEFAULT_PARISH_CODE=STMARYS npm run dev     # http://localhost:5173 (proxies /api to :8000)
+npm test && npm run lint && npm run typecheck
+```
+
+After changing backend APIs, regenerate the TypeScript types:
+
+```bash
+cd backend && .venv/bin/python scripts/export_openapi.py && cd ../frontend && npm run gen:api
+```
