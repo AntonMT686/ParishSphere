@@ -10,6 +10,7 @@ import app.modules.notifications.models
 import app.modules.notifications.service  # after_commit delivery hooks
 import app.modules.org_units.models
 import app.modules.org_units.service  # seeder + RBAC org-unit resolver
+import app.modules.people.models
 import app.modules.rbac.models
 import app.modules.rbac.service  # RBAC seeder
 from app.db.base import MasterBase, TenantBase
@@ -22,6 +23,7 @@ LOADED_MODULES = (
     app.modules.notifications.service,
     app.modules.org_units.models,
     app.modules.org_units.service,
+    app.modules.people.models,
     app.modules.rbac.models,
     app.modules.rbac.service,
 )

@@ -958,6 +958,380 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/org-units/{unit_id}/memberships": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Unit Memberships
+         * @description Members of an organisation. For an Anbiyam this lists its families.
+         */
+        get: operations["unit_memberships_api_v1_org_units__unit_id__memberships_get"];
+        put?: never;
+        /** Add Membership */
+        post: operations["add_membership_api_v1_org_units__unit_id__memberships_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/org-units/{unit_id}/memberships/{membership_id}/end": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** End Membership */
+        post: operations["end_membership_api_v1_org_units__unit_id__memberships__membership_id__end_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/families": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Families */
+        get: operations["list_families_api_v1_families_get"];
+        put?: never;
+        /** Register Family */
+        post: operations["register_family_api_v1_families_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/families/check-duplicates": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Check Duplicates */
+        post: operations["check_duplicates_api_v1_families_check_duplicates_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/families/export": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Export Families */
+        get: operations["export_families_api_v1_families_export_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/families/{family_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Family */
+        get: operations["get_family_api_v1_families__family_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Update Family */
+        patch: operations["update_family_api_v1_families__family_id__patch"];
+        trace?: never;
+    };
+    "/api/v1/families/{family_id}/members": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Add Member */
+        post: operations["add_member_api_v1_families__family_id__members_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/families/{family_id}/anbiyam": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Change Anbiyam */
+        post: operations["change_anbiyam_api_v1_families__family_id__anbiyam_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/families/{family_id}/head": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Set Head */
+        post: operations["set_head_api_v1_families__family_id__head_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/families/{family_id}/status": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Family Status */
+        post: operations["family_status_api_v1_families__family_id__status_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/families/{family_id}/transfer-out": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Transfer Out */
+        post: operations["transfer_out_api_v1_families__family_id__transfer_out_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/families/{family_id}/merge": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Merge
+         * @description Merge this family into another (e.g. a duplicate registration). Returns the surviving family.
+         */
+        post: operations["merge_api_v1_families__family_id__merge_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/families/{family_id}/split": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Split
+         * @description Move some members into a new family (e.g. a married son setting up his own household).
+         */
+        post: operations["split_api_v1_families__family_id__split_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/families/{family_id}/history": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Family History */
+        get: operations["family_history_api_v1_families__family_id__history_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/members": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Members */
+        get: operations["list_members_api_v1_members_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/members/export": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Export Members */
+        get: operations["export_members_api_v1_members_export_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/members/{member_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Member */
+        get: operations["get_member_api_v1_members__member_id__get"];
+        put?: never;
+        post?: never;
+        /**
+         * Delete Member
+         * @description Remove a member entered by mistake. Real-life changes use status, deceased or move instead.
+         */
+        delete: operations["delete_member_api_v1_members__member_id__delete"];
+        options?: never;
+        head?: never;
+        /** Update Member */
+        patch: operations["update_member_api_v1_members__member_id__patch"];
+        trace?: never;
+    };
+    "/api/v1/members/{member_id}/deceased": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Mark Deceased */
+        post: operations["mark_deceased_api_v1_members__member_id__deceased_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/members/{member_id}/status": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Member Status */
+        post: operations["member_status_api_v1_members__member_id__status_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/members/{member_id}/move": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Move Member */
+        post: operations["move_member_api_v1_members__member_id__move_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/members/{member_id}/memberships": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Member Memberships */
+        get: operations["member_memberships_api_v1_members__member_id__memberships_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/files/download": {
         parameters: {
             query?: never;
@@ -982,6 +1356,19 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /** AnbiyamHistoryOut */
+        AnbiyamHistoryOut: {
+            anbiyam: components["schemas"]["Ref"];
+            /**
+             * Valid From
+             * Format: date
+             */
+            valid_from: string;
+            /** Valid To */
+            valid_to: string | null;
+            /** Reason */
+            reason: string | null;
+        };
         /** AssignmentCreate */
         AssignmentCreate: {
             /** Role Code */
@@ -1089,6 +1476,11 @@ export interface components {
              */
             user_id?: string | null;
             /**
+             * Member Id
+             * @description Parish member public id (name taken from the register)
+             */
+            member_id?: string | null;
+            /**
              * Holder Name
              * @description For people without a login
              */
@@ -1115,6 +1507,8 @@ export interface components {
             position_name: string;
             /** User Id */
             user_id: string | null;
+            /** Member Id */
+            member_id?: string | null;
             /** Holder Name */
             holder_name: string;
             /**
@@ -1147,12 +1541,34 @@ export interface components {
             /** Link */
             link?: string | null;
         };
+        /** ChangeAnbiyamIn */
+        ChangeAnbiyamIn: {
+            /**
+             * Anbiyam Id
+             * @description Empty removes the family from its Anbiyam
+             */
+            anbiyam_id?: string | null;
+            /** Effective Date */
+            effective_date?: string | null;
+            /** Reason */
+            reason?: string | null;
+        };
         /** ChangePasswordIn */
         ChangePasswordIn: {
             /** Current Password */
             current_password: string;
             /** New Password */
             new_password: string;
+        };
+        /** DeceasedIn */
+        DeceasedIn: {
+            /**
+             * Date Of Death
+             * Format: date
+             */
+            date_of_death: string;
+            /** Remarks */
+            remarks?: string | null;
         };
         /** DioceseCreate */
         DioceseCreate: {
@@ -1244,11 +1660,212 @@ export interface components {
             /** Status */
             status?: string | null;
         };
+        /** DuplicateCheckIn */
+        DuplicateCheckIn: {
+            /** Family Name */
+            family_name?: string | null;
+            /** Phone */
+            phone?: string | null;
+            /** Members */
+            members?: components["schemas"]["MemberIn"][];
+        };
+        /** DuplicateOut */
+        DuplicateOut: {
+            /** Family Id */
+            family_id: string;
+            /** Family Code */
+            family_code: string;
+            /** Family Name */
+            family_name: string;
+            /** Status */
+            status: string;
+            /** Reasons */
+            reasons: string[];
+        };
         /**
          * ExportFormat
          * @enum {string}
          */
         ExportFormat: "csv" | "xlsx" | "pdf";
+        /** FamilyCreate */
+        FamilyCreate: {
+            /** Family Name */
+            family_name: string;
+            /** Family Name Local */
+            family_name_local?: string | null;
+            /** Address Line1 */
+            address_line1?: string | null;
+            /** Address Line2 */
+            address_line2?: string | null;
+            /** City */
+            city?: string | null;
+            /** State */
+            state?: string | null;
+            /** Postal Code */
+            postal_code?: string | null;
+            /** Phone */
+            phone?: string | null;
+            /** Email */
+            email?: string | null;
+            /** Previous Parish */
+            previous_parish?: string | null;
+            /** Previous Diocese */
+            previous_diocese?: string | null;
+            /** Remarks */
+            remarks?: string | null;
+            /**
+             * Anbiyam Id
+             * @description Anbiyam (org unit) public id; empty = pending
+             */
+            anbiyam_id?: string | null;
+            /** Registered On */
+            registered_on?: string | null;
+            /** Members */
+            members: components["schemas"]["MemberIn"][];
+            /**
+             * Confirm Not Duplicate
+             * @description Register even though similar families exist (after reviewing them)
+             * @default false
+             */
+            confirm_not_duplicate: boolean;
+        };
+        /** FamilyEventOut */
+        FamilyEventOut: {
+            /** Event Type */
+            event_type: string;
+            /**
+             * Occurred On
+             * Format: date
+             */
+            occurred_on: string;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            member: components["schemas"]["Ref"] | null;
+            related_family: components["schemas"]["Ref"] | null;
+            /** Details */
+            details: {
+                [key: string]: unknown;
+            };
+            /** Performed By */
+            performed_by: string | null;
+        };
+        /** FamilyHistoryOut */
+        FamilyHistoryOut: {
+            /** Events */
+            events: components["schemas"]["FamilyEventOut"][];
+            /** Anbiyam History */
+            anbiyam_history: components["schemas"]["AnbiyamHistoryOut"][];
+        };
+        /** FamilyListOut */
+        FamilyListOut: {
+            /** Id */
+            id: string;
+            /** Code */
+            code: string;
+            /** Family Name */
+            family_name: string;
+            /** Family Name Local */
+            family_name_local: string | null;
+            /** Head Name */
+            head_name: string | null;
+            anbiyam: components["schemas"]["Ref"] | null;
+            /** Member Count */
+            member_count: number;
+            /** Phone */
+            phone: string | null;
+            /** City */
+            city: string | null;
+            /** Status */
+            status: string;
+            /**
+             * Registered On
+             * Format: date
+             */
+            registered_on: string;
+        };
+        /** FamilyOut */
+        FamilyOut: {
+            /** Id */
+            id: string;
+            /** Code */
+            code: string;
+            /** Family Name */
+            family_name: string;
+            /** Family Name Local */
+            family_name_local: string | null;
+            /** Head Name */
+            head_name: string | null;
+            anbiyam: components["schemas"]["Ref"] | null;
+            /** Member Count */
+            member_count: number;
+            /** Phone */
+            phone: string | null;
+            /** City */
+            city: string | null;
+            /** Status */
+            status: string;
+            /**
+             * Registered On
+             * Format: date
+             */
+            registered_on: string;
+            /** Address Line1 */
+            address_line1: string | null;
+            /** Address Line2 */
+            address_line2: string | null;
+            /** State */
+            state: string | null;
+            /** Postal Code */
+            postal_code: string | null;
+            /** Email */
+            email: string | null;
+            /** Previous Parish */
+            previous_parish: string | null;
+            /** Previous Diocese */
+            previous_diocese: string | null;
+            /** Remarks */
+            remarks: string | null;
+            merged_into: components["schemas"]["Ref"] | null;
+            /** Head Member Id */
+            head_member_id: string | null;
+            /** Members */
+            members: components["schemas"]["MemberOut"][];
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+        };
+        /** FamilyUpdate */
+        FamilyUpdate: {
+            /** Family Name */
+            family_name?: string | null;
+            /** Family Name Local */
+            family_name_local?: string | null;
+            /** Address Line1 */
+            address_line1?: string | null;
+            /** Address Line2 */
+            address_line2?: string | null;
+            /** City */
+            city?: string | null;
+            /** State */
+            state?: string | null;
+            /** Postal Code */
+            postal_code?: string | null;
+            /** Phone */
+            phone?: string | null;
+            /** Email */
+            email?: string | null;
+            /** Previous Parish */
+            previous_parish?: string | null;
+            /** Previous Diocese */
+            previous_diocese?: string | null;
+            /** Remarks */
+            remarks?: string | null;
+        };
         /** ForgotPasswordIn */
         ForgotPasswordIn: {
             /**
@@ -1301,6 +1918,217 @@ export interface components {
              */
             permissions: string[];
         };
+        /** MemberIn */
+        MemberIn: {
+            /** First Name */
+            first_name: string;
+            /** Last Name */
+            last_name?: string | null;
+            /** Name Local */
+            name_local?: string | null;
+            /**
+             * Gender
+             * @enum {string}
+             */
+            gender: "M" | "F" | "O";
+            /** Date Of Birth */
+            date_of_birth?: string | null;
+            /**
+             * Relationship To Head
+             * @default OTHER
+             * @enum {string}
+             */
+            relationship_to_head: "HEAD" | "SPOUSE" | "SON" | "DAUGHTER" | "FATHER" | "MOTHER" | "BROTHER" | "SISTER" | "GRANDSON" | "GRANDDAUGHTER" | "SON_IN_LAW" | "DAUGHTER_IN_LAW" | "FATHER_IN_LAW" | "MOTHER_IN_LAW" | "GRANDFATHER" | "GRANDMOTHER" | "NEPHEW" | "NIECE" | "OTHER_RELATIVE" | "OTHER";
+            /** Phone */
+            phone?: string | null;
+            /** Email */
+            email?: string | null;
+            /** Education */
+            education?: string | null;
+            /** Occupation */
+            occupation?: string | null;
+            /** Marital Status */
+            marital_status?: ("SINGLE" | "MARRIED" | "WIDOWED" | "SEPARATED" | "RELIGIOUS") | null;
+            /** Baptism Date */
+            baptism_date?: string | null;
+            /** Baptism Place */
+            baptism_place?: string | null;
+            /** Baptism Register Ref */
+            baptism_register_ref?: string | null;
+            /** Communion Date */
+            communion_date?: string | null;
+            /** Communion Place */
+            communion_place?: string | null;
+            /** Confirmation Date */
+            confirmation_date?: string | null;
+            /** Confirmation Place */
+            confirmation_place?: string | null;
+            /** Marriage Date */
+            marriage_date?: string | null;
+            /** Marriage Place */
+            marriage_place?: string | null;
+            /** Marriage Register Ref */
+            marriage_register_ref?: string | null;
+            /** Remarks */
+            remarks?: string | null;
+        };
+        /** MemberOut */
+        MemberOut: {
+            /** Id */
+            id: string;
+            /** Code */
+            code: string;
+            family: components["schemas"]["Ref"];
+            anbiyam: components["schemas"]["Ref"] | null;
+            /** First Name */
+            first_name: string;
+            /** Last Name */
+            last_name: string | null;
+            /** Full Name */
+            full_name: string;
+            /** Name Local */
+            name_local: string | null;
+            /** Gender */
+            gender: string;
+            /** Age */
+            age: number | null;
+            /** Relationship To Head */
+            relationship_to_head: string;
+            /** Is Head */
+            is_head: boolean;
+            /** Status */
+            status: string;
+            /** Date Of Death */
+            date_of_death: string | null;
+            /** Sensitive Visible */
+            sensitive_visible: boolean;
+            /** Sacraments Visible */
+            sacraments_visible: boolean;
+            /** Date Of Birth */
+            date_of_birth?: string | null;
+            /** Phone */
+            phone?: string | null;
+            /** Email */
+            email?: string | null;
+            /** Education */
+            education?: string | null;
+            /** Occupation */
+            occupation?: string | null;
+            /** Marital Status */
+            marital_status?: string | null;
+            /** Remarks */
+            remarks?: string | null;
+            /** Baptism Date */
+            baptism_date?: string | null;
+            /** Baptism Place */
+            baptism_place?: string | null;
+            /** Baptism Register Ref */
+            baptism_register_ref?: string | null;
+            /** Communion Date */
+            communion_date?: string | null;
+            /** Communion Place */
+            communion_place?: string | null;
+            /** Confirmation Date */
+            confirmation_date?: string | null;
+            /** Confirmation Place */
+            confirmation_place?: string | null;
+            /** Marriage Date */
+            marriage_date?: string | null;
+            /** Marriage Place */
+            marriage_place?: string | null;
+            /** Marriage Register Ref */
+            marriage_register_ref?: string | null;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+        };
+        /** MemberUpdate */
+        MemberUpdate: {
+            /** First Name */
+            first_name?: string | null;
+            /** Last Name */
+            last_name?: string | null;
+            /** Name Local */
+            name_local?: string | null;
+            /** Gender */
+            gender?: ("M" | "F" | "O") | null;
+            /** Date Of Birth */
+            date_of_birth?: string | null;
+            /** Relationship To Head */
+            relationship_to_head?: ("HEAD" | "SPOUSE" | "SON" | "DAUGHTER" | "FATHER" | "MOTHER" | "BROTHER" | "SISTER" | "GRANDSON" | "GRANDDAUGHTER" | "SON_IN_LAW" | "DAUGHTER_IN_LAW" | "FATHER_IN_LAW" | "MOTHER_IN_LAW" | "GRANDFATHER" | "GRANDMOTHER" | "NEPHEW" | "NIECE" | "OTHER_RELATIVE" | "OTHER") | null;
+            /** Phone */
+            phone?: string | null;
+            /** Email */
+            email?: string | null;
+            /** Education */
+            education?: string | null;
+            /** Occupation */
+            occupation?: string | null;
+            /** Marital Status */
+            marital_status?: ("SINGLE" | "MARRIED" | "WIDOWED" | "SEPARATED" | "RELIGIOUS") | null;
+            /** Baptism Date */
+            baptism_date?: string | null;
+            /** Baptism Place */
+            baptism_place?: string | null;
+            /** Baptism Register Ref */
+            baptism_register_ref?: string | null;
+            /** Communion Date */
+            communion_date?: string | null;
+            /** Communion Place */
+            communion_place?: string | null;
+            /** Confirmation Date */
+            confirmation_date?: string | null;
+            /** Confirmation Place */
+            confirmation_place?: string | null;
+            /** Marriage Date */
+            marriage_date?: string | null;
+            /** Marriage Place */
+            marriage_place?: string | null;
+            /** Marriage Register Ref */
+            marriage_register_ref?: string | null;
+            /** Remarks */
+            remarks?: string | null;
+        };
+        /** MembershipEndIn */
+        MembershipEndIn: {
+            /** Left On */
+            left_on?: string | null;
+            /** Reason */
+            reason?: string | null;
+        };
+        /** MembershipIn */
+        MembershipIn: {
+            /** Member Id */
+            member_id?: string | null;
+            /** Family Id */
+            family_id?: string | null;
+            /** Joined On */
+            joined_on?: string | null;
+            /** Remarks */
+            remarks?: string | null;
+        };
+        /** MembershipOut */
+        MembershipOut: {
+            /** Id */
+            id: string | null;
+            org_unit: components["schemas"]["Ref"];
+            member: components["schemas"]["Ref"] | null;
+            family: components["schemas"]["Ref"] | null;
+            /** Gender */
+            gender?: string | null;
+            /** Age */
+            age?: number | null;
+            /** Joined On */
+            joined_on: string | null;
+            /** Left On */
+            left_on: string | null;
+            /** Current */
+            current: boolean;
+            /** Remarks */
+            remarks?: string | null;
+        };
         /** MembershipRules */
         MembershipRules: {
             /** Min Age */
@@ -1318,10 +2146,39 @@ export interface components {
              */
             max_units_per_member?: number | null;
         };
+        /** MergeIn */
+        MergeIn: {
+            /** Into Family Id */
+            into_family_id: string;
+            /** Effective Date */
+            effective_date?: string | null;
+            /** Reason */
+            reason?: string | null;
+        };
         /** MessageOut */
         MessageOut: {
             /** Message */
             message: string;
+        };
+        /** MoveMemberIn */
+        MoveMemberIn: {
+            /** Family Id */
+            family_id: string;
+            /**
+             * Relationship To Head
+             * @default OTHER
+             * @enum {string}
+             */
+            relationship_to_head: "HEAD" | "SPOUSE" | "SON" | "DAUGHTER" | "FATHER" | "MOTHER" | "BROTHER" | "SISTER" | "GRANDSON" | "GRANDDAUGHTER" | "SON_IN_LAW" | "DAUGHTER_IN_LAW" | "FATHER_IN_LAW" | "MOTHER_IN_LAW" | "GRANDFATHER" | "GRANDMOTHER" | "NEPHEW" | "NIECE" | "OTHER_RELATIVE" | "OTHER";
+            /**
+             * New Head Member Id
+             * @description Required when the head leaves a family
+             */
+            new_head_member_id?: string | null;
+            /** Effective Date */
+            effective_date?: string | null;
+            /** Reason */
+            reason?: string | null;
         };
         /** NotificationOut */
         NotificationOut: {
@@ -1366,6 +2223,45 @@ export interface components {
         Page_DioceseOut_: {
             /** Items */
             items: components["schemas"]["DioceseOut"][];
+            /** Page */
+            page: number;
+            /** Size */
+            size: number;
+            /** Total */
+            total: number;
+            /** Pages */
+            pages: number;
+        };
+        /** Page[FamilyListOut] */
+        Page_FamilyListOut_: {
+            /** Items */
+            items: components["schemas"]["FamilyListOut"][];
+            /** Page */
+            page: number;
+            /** Size */
+            size: number;
+            /** Total */
+            total: number;
+            /** Pages */
+            pages: number;
+        };
+        /** Page[MemberOut] */
+        Page_MemberOut_: {
+            /** Items */
+            items: components["schemas"]["MemberOut"][];
+            /** Page */
+            page: number;
+            /** Size */
+            size: number;
+            /** Total */
+            total: number;
+            /** Pages */
+            pages: number;
+        };
+        /** Page[MembershipOut] */
+        Page_MembershipOut_: {
+            /** Items */
+            items: components["schemas"]["MembershipOut"][];
             /** Page */
             page: number;
             /** Size */
@@ -1647,6 +2543,15 @@ export interface components {
             /** Default */
             default: boolean;
         };
+        /** Ref */
+        Ref: {
+            /** Id */
+            id: string;
+            /** Code */
+            code: string;
+            /** Name */
+            name: string;
+        };
         /** ResetPasswordIn */
         ResetPasswordIn: {
             /** Token */
@@ -1745,6 +2650,43 @@ export interface components {
             /** Current */
             current: boolean;
         };
+        /** SetHeadIn */
+        SetHeadIn: {
+            /** Member Id */
+            member_id: string;
+            /**
+             * Previous Head Relationship
+             * @default OTHER
+             * @enum {string}
+             */
+            previous_head_relationship: "HEAD" | "SPOUSE" | "SON" | "DAUGHTER" | "FATHER" | "MOTHER" | "BROTHER" | "SISTER" | "GRANDSON" | "GRANDDAUGHTER" | "SON_IN_LAW" | "DAUGHTER_IN_LAW" | "FATHER_IN_LAW" | "MOTHER_IN_LAW" | "GRANDFATHER" | "GRANDMOTHER" | "NEPHEW" | "NIECE" | "OTHER_RELATIVE" | "OTHER";
+        };
+        /** SplitIn */
+        SplitIn: {
+            /** Member Ids */
+            member_ids: string[];
+            /** Head Member Id */
+            head_member_id: string;
+            /** Remaining Head Member Id */
+            remaining_head_member_id?: string | null;
+            new_family?: components["schemas"]["FamilyUpdate"];
+            /**
+             * Anbiyam Id
+             * @description Defaults to the current Anbiyam
+             */
+            anbiyam_id?: string | null;
+            /** Effective Date */
+            effective_date?: string | null;
+            /** Reason */
+            reason?: string | null;
+        };
+        /** StatusIn */
+        StatusIn: {
+            /** Active */
+            active: boolean;
+            /** Reason */
+            reason?: string | null;
+        };
         /** TemplateIn */
         TemplateIn: {
             /** Subject */
@@ -1791,6 +2733,17 @@ export interface components {
             currency: string;
             /** Diocese Name */
             diocese_name: string;
+        };
+        /** TransferOutIn */
+        TransferOutIn: {
+            /** To Parish */
+            to_parish: string;
+            /** To Diocese */
+            to_diocese?: string | null;
+            /** Effective Date */
+            effective_date?: string | null;
+            /** Reason */
+            reason?: string | null;
         };
         /** TypeCreate */
         TypeCreate: {
@@ -4275,6 +5228,906 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["BearerOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    unit_memberships_api_v1_org_units__unit_id__memberships_get: {
+        parameters: {
+            query?: {
+                include_history?: boolean;
+                q?: string | null;
+                page?: number;
+                size?: number;
+                /** @description e.g. `name,-created_at` */
+                sort?: string | null;
+            };
+            header?: never;
+            path: {
+                unit_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Page_MembershipOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    add_membership_api_v1_org_units__unit_id__memberships_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                unit_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MembershipIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MembershipOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    end_membership_api_v1_org_units__unit_id__memberships__membership_id__end_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                unit_id: string;
+                membership_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MembershipEndIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MembershipOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_families_api_v1_families_get: {
+        parameters: {
+            query?: {
+                /** @description Code, family/member name, phone */
+                q?: string | null;
+                /** @description Anbiyam public id, or 'none' */
+                anbiyam?: string | null;
+                status?: string | null;
+                registered_from?: string | null;
+                registered_to?: string | null;
+                page?: number;
+                size?: number;
+                /** @description e.g. `name,-created_at` */
+                sort?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Page_FamilyListOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    register_family_api_v1_families_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["FamilyCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FamilyOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    check_duplicates_api_v1_families_check_duplicates_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DuplicateCheckIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DuplicateOut"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    export_families_api_v1_families_export_get: {
+        parameters: {
+            query?: {
+                q?: string | null;
+                anbiyam?: string | null;
+                status?: string | null;
+                format?: components["schemas"]["ExportFormat"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_family_api_v1_families__family_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                family_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FamilyOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_family_api_v1_families__family_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                family_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["FamilyUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FamilyOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    add_member_api_v1_families__family_id__members_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                family_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MemberIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MemberOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    change_anbiyam_api_v1_families__family_id__anbiyam_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                family_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ChangeAnbiyamIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FamilyOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    set_head_api_v1_families__family_id__head_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                family_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SetHeadIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FamilyOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    family_status_api_v1_families__family_id__status_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                family_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StatusIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FamilyOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    transfer_out_api_v1_families__family_id__transfer_out_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                family_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TransferOutIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FamilyOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    merge_api_v1_families__family_id__merge_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                family_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MergeIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FamilyOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    split_api_v1_families__family_id__split_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                family_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SplitIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FamilyOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    family_history_api_v1_families__family_id__history_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                family_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FamilyHistoryOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_members_api_v1_members_get: {
+        parameters: {
+            query?: {
+                q?: string | null;
+                gender?: string | null;
+                status?: string | null;
+                anbiyam?: string | null;
+                age_min?: number | null;
+                age_max?: number | null;
+                page?: number;
+                size?: number;
+                /** @description e.g. `name,-created_at` */
+                sort?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Page_MemberOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    export_members_api_v1_members_export_get: {
+        parameters: {
+            query?: {
+                q?: string | null;
+                gender?: string | null;
+                status?: string | null;
+                anbiyam?: string | null;
+                format?: components["schemas"]["ExportFormat"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_member_api_v1_members__member_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                member_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MemberOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_member_api_v1_members__member_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                member_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_member_api_v1_members__member_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                member_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MemberUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MemberOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    mark_deceased_api_v1_members__member_id__deceased_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                member_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DeceasedIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MemberOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    member_status_api_v1_members__member_id__status_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                member_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StatusIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MemberOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    move_member_api_v1_members__member_id__move_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                member_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MoveMemberIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MemberOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    member_memberships_api_v1_members__member_id__memberships_get: {
+        parameters: {
+            query?: {
+                include_history?: boolean;
+            };
+            header?: never;
+            path: {
+                member_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MembershipOut"][];
                 };
             };
             /** @description Validation Error */

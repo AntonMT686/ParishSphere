@@ -627,12 +627,20 @@ def appoint(
                 f"Appointing a {position.name} grants the parish-wide role {role.name}",
                 details=[{"field": "permission", "message": "user.assign_role"}],
             )
+    member_id = None
+    holder_name = body.holder_name
+    if body.member_id:
+        from app.modules.people.service import get_member  # avoid import cycle (people → org_units)
+
+        member = get_member(db, body.member_id)
+        member_id, holder_name = member.id, holder_name or member.full_name
     b = service.appoint(
         db,
         unit,
         position,
         user=user,
-        holder_name=body.holder_name,
+        holder_name=holder_name,
+        member_id=member_id,
         valid_from=body.valid_from,
         valid_to=body.valid_to,
         actor_id=auth.user.id,

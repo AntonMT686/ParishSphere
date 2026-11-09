@@ -91,6 +91,7 @@ class BearerOut(BaseModel):
     position_code: str
     position_name: str
     user_id: str | None
+    member_id: str | None = None
     holder_name: str
     valid_from: date
     valid_to: date | None
@@ -103,6 +104,9 @@ class BearerOut(BaseModel):
 class BearerCreate(BaseModel):
     position_code: str = Field(min_length=2, max_length=30)
     user_id: str | None = Field(default=None, description="User public id (grants the position's role)")
+    member_id: str | None = Field(
+        default=None, description="Parish member public id (name taken from the register)"
+    )
     holder_name: str | None = Field(default=None, max_length=200, description="For people without a login")
     valid_from: date | None = None
     valid_to: date | None = None

@@ -96,8 +96,7 @@ class OrgUnitOfficeBearer(IdMixin, PublicIdMixin, TenantBase):
     org_unit_id: Mapped[int] = mapped_column(ForeignKey("org_units.id"), nullable=False, index=True)
     position_id: Mapped[int] = mapped_column(ForeignKey("org_unit_positions.id"), nullable=False, index=True)
     user_id: Mapped[int | None] = mapped_column(ForeignKey("users.id"), index=True)
-    # Parish member record (FK added with the member registry, T8).
-    member_id: Mapped[int | None] = mapped_column(BigIntPK, index=True)
+    member_id: Mapped[int | None] = mapped_column(ForeignKey("members.id"), index=True)
     holder_name: Mapped[str] = mapped_column(String(200), nullable=False)
     valid_from: Mapped[date] = mapped_column(Date, nullable=False, default=date.today)
     valid_to: Mapped[date | None] = mapped_column(Date)

@@ -7,7 +7,7 @@ from datetime import datetime
 from sqlalchemy import Boolean, DateTime, ForeignKey, Integer, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from app.db.base import BigIntPK, IdMixin, PublicIdMixin, StandardMixin, TenantBase, utcnow
+from app.db.base import IdMixin, PublicIdMixin, StandardMixin, TenantBase, utcnow
 
 
 class User(StandardMixin, TenantBase):
@@ -18,8 +18,8 @@ class User(StandardMixin, TenantBase):
     full_name: Mapped[str] = mapped_column(String(200), nullable=False)
     phone: Mapped[str | None] = mapped_column(String(30))
     password_hash: Mapped[str] = mapped_column(String(255), nullable=False)
-    # Link to the parish member record (FK added when the members table exists – T8).
-    member_id: Mapped[int | None] = mapped_column(BigIntPK, index=True)
+    # The parish member record of this person, when known.
+    member_id: Mapped[int | None] = mapped_column(ForeignKey("members.id"), index=True)
     is_active: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
     must_change_password: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
     preferred_language: Mapped[str] = mapped_column(String(5), nullable=False, default="en")
