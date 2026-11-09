@@ -1,0 +1,54 @@
+name: CI
+
+on:
+  push:
+    branches: [main, "claude/**"]
+  pull_request:
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: backend } }
+    services:
+      mysql:
+        image: mysql:8.4
+        env: { MYSQL_ROOT_PASSWORD: root }
+        ports: ["3306:3306"]
+        options: >-
+          --health-cmd="mysqladmin ping -h localhost -proot" --health-interval=5s --health-retries=20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12", cache: pip, cache-dependency-path: backend/requirements*.txt }
+      - run: pip install -r requirements-dev.txt && pip install --no-deps -e .
+      - run: ruff check . && ruff format --check .
+      - name: Unit & API tests (SQLite tenants)
+        run: pytest
+      - name: Provision & migrate against MySQL 8
+        env:
+          PS_ENV: test
+          PS_MASTER_DATABASE_URL: mysql+pymysql://root:root@127.0.0.1:3306/ps_master?charset=utf8mb4
+          PS_TENANT_DB_DRIVER: mysql
+          PS_TENANT_DB_HOST: 127.0.0.1
+          PS_TENANT_DB_ADMIN_USER: root
+          PS_TENANT_DB_ADMIN_PASSWORD: root
+        run: |
+          mysql -h127.0.0.1 -uroot -proot -e "CREATE DATABASE ps_master CHARACTER SET utf8mb4"
+          ps-admin migrate-master
+          ps-admin create-diocese --code CHN --name "Test Diocese"
+          ps-admin provision-parish --diocese CHN --code CIA --name "CI Parish A"
+          ps-admin provision-parish --diocese CHN --code CIB --name "CI Parish B"
+          ps-admin migrate-tenants --parallel 2
+
+  frontend:
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: frontend } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: npm, cache-dependency-path: frontend/package-lock.json }
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run build

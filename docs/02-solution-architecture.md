@@ -81,7 +81,7 @@ backend/
 sequenceDiagram
   participant C as Client
   participant N as Nginx
-  participant MW as TenantMiddleware
+  participant MW as Tenant dependency
   participant D as Dependencies
   participant S as Service
   participant DB as Parish DB

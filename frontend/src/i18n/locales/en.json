@@ -1,0 +1,38 @@
+{
+  "app": { "name": "ParishSphere", "tagline": "One Digital Platform. Every Parish. Every Family. Every Ministry." },
+  "nav": {
+    "overview": "Overview", "dashboard": "Dashboard", "calendar": "Calendar",
+    "people": "People", "families": "Families", "members": "Members", "registers": "Registers",
+    "organisations": "Organisations", "council": "Parish Council", "committees": "Committees",
+    "anbiyam": "Anbiyam", "sabai": "Sabai", "societies": "Societies",
+    "activities": "Activities", "activityList": "Activities", "meetings": "Meetings & Minutes", "actionItems": "Action Items",
+    "approvals": "Approvals", "myApprovals": "My Approvals", "submitted": "Submitted by Me",
+    "finance": "Finance", "transactions": "Transactions", "statements": "Monthly Statements", "accounts": "Accounts",
+    "content": "Content", "notices": "Notices & News", "documents": "Documents",
+    "reports": "Reports",
+    "administration": "Administration", "users": "Users", "roles": "Roles & Permissions", "workflows": "Workflows",
+    "orgTypes": "Organisation Types", "priests": "Priests", "settings": "Parish Settings", "audit": "Audit Log"
+  },
+  "auth": {
+    "signIn": "Sign in", "username": "Username or email", "password": "Password", "parishCode": "Parish code",
+    "forgot": "Forgot password?", "welcome": "Welcome back", "signInTo": "Sign in to {{parish}}",
+    "unknownParish": "We couldn't find this parish. Check the parish code.",
+    "sessionExpired": "Your session expired after 30 minutes of inactivity. Please sign in again."
+  },
+  "dashboard": {
+    "greeting": "Welcome to {{parish}}", "families": "Families", "members": "Members", "anbiyam": "Anbiyam",
+    "societies": "Societies", "pendingApprovals": "Pending approvals", "pendingFinance": "Pending finance",
+    "comingSoon": "Live statistics appear here once families and activities are recorded."
+  },
+  "common": { "search": "Search…", "language": "Language", "profile": "Profile", "signOut": "Sign out", "toggleTheme": "Toggle theme" },
+  "status": {
+    "ACTIVE": "Active", "INACTIVE": "Inactive", "DRAFT": "Draft", "SUBMITTED": "Submitted", "IN_REVIEW": "In review",
+    "REWORK": "Rework", "APPROVED": "Approved", "REJECTED": "Rejected", "PUBLISHED": "Published", "PENDING": "Pending",
+    "COMPLETED": "Completed", "DECEASED": "Deceased", "SUSPENDED": "Suspended"
+  },
+  "errors": {
+    "INVALID_CREDENTIALS": "Incorrect username or password.", "ACCOUNT_LOCKED": "Too many failed attempts. Try again in 15 minutes.",
+    "TENANT_NOT_FOUND": "Parish not found.", "TENANT_SUSPENDED": "This parish account is not active.",
+    "NETWORK_ERROR": "Cannot reach the server. Check your connection.", "INTERNAL_ERROR": "Something went wrong. Please try again."
+  }
+}

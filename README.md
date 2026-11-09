@@ -13,3 +13,27 @@ Multi-tenant parish management SaaS: families & members, configurable parish org
 | Backend | Python, FastAPI, SQLAlchemy 2, Alembic, Celery |
 | Data | MySQL 8 (master + one DB per parish), Redis, S3-compatible storage |
 | Ops | Docker, Nginx |
+
+## Quick start (development)
+
+```bash
+make up          # MySQL, Redis, MinIO, MailHog, API, worker, Vite, Nginx
+make seed-demo   # super admin + diocese CHN + parish STMARYS
+```
+
+Open http://stmarys.parishsphere.localhost (or http://localhost:5173 and enter parish code `STMARYS`). API docs: http://localhost:8000/api/v1/docs.
+
+Without Docker (SQLite, for quick backend work):
+
+```bash
+make backend-install
+cd backend && PS_MASTER_DATABASE_URL=sqlite:///data/master.db PS_TENANT_DB_DRIVER=sqlite \
+  .venv/bin/ps-admin migrate-master
+```
+
+| Command | Purpose |
+|---|---|
+| `ps-admin migrate-master` | Upgrade the master database |
+| `ps-admin provision-parish --diocese CHN --code X --name "…"` | Register + create + migrate + seed a parish DB (idempotent) |
+| `ps-admin migrate-tenants --parallel 8` | Upgrade every parish database |
+| `make test` / `make lint` | Backend + frontend tests / linters |

@@ -28,7 +28,7 @@ Order of precedence (first match wins):
 2. **Header** `X-Parish-Code: STMARYS` — used by the login page when served from the shared domain or `localhost` in development.
 3. Requests to `/api/v1/platform/*` are **platform-scoped** (no tenant) and require a platform user token.
 
-Resolution steps (`TenantMiddleware`):
+Resolution steps (`get_current_tenant` dependency in `app/tenancy/deps.py`, applied to every tenant router; a dependency rather than middleware so the synchronous master lookup runs in FastAPI's threadpool and is easy to override in tests):
 
 ```
 code ← subdomain or header

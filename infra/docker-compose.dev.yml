@@ -1,0 +1,86 @@
+# Local development stack:  make up   →  http://stmarys.parishsphere.localhost
+name: parishsphere-dev
+
+x-backend-env: &backend-env
+  PS_ENV: development
+  PS_MASTER_DATABASE_URL: mysql+pymysql://ps_admin:ps_admin@mysql:3306/ps_master?charset=utf8mb4
+  PS_TENANT_DB_DRIVER: mysql
+  PS_TENANT_DB_HOST: mysql
+  PS_TENANT_DB_PORT: "3306"
+  PS_TENANT_DB_ADMIN_USER: ps_admin
+  PS_TENANT_DB_ADMIN_PASSWORD: ps_admin
+  PS_TENANT_DB_SHARED_CREDENTIALS: "true"
+  PS_BASE_DOMAIN: parishsphere.localhost
+  PS_REDIS_URL: redis://redis:6379/0
+  PS_CORS_ORIGINS: '["http://localhost:5173","http://parishsphere.localhost"]'
+
+services:
+  mysql:
+    image: mysql:8.4
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    command: ["--character-set-server=utf8mb4", "--collation-server=utf8mb4_0900_ai_ci"]
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./mysql/init.sql:/docker-entrypoint-initdb.d/00-init.sql:ro
+    ports: ["3306:3306"]
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-proot"]
+      interval: 5s
+      retries: 20
+
+  redis:
+    image: redis:7-alpine
+    ports: ["6379:6379"]
+
+  minio:
+    image: minio/minio:RELEASE.2025-01-20T14-49-07Z
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: parishsphere
+      MINIO_ROOT_PASSWORD: parishsphere-dev
+    volumes: [minio-data:/data]
+    ports: ["9000:9000", "9001:9001"]
+
+  mailhog:
+    image: mailhog/mailhog:v1.0.1
+    ports: ["8025:8025"]
+
+  api:
+    build: ../backend
+    environment: *backend-env
+    command: >
+      sh -c "ps-admin migrate-master &&
+             uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload"
+    volumes: ["../backend:/app"]
+    depends_on:
+      mysql: { condition: service_healthy }
+      redis: { condition: service_started }
+    ports: ["8000:8000"]
+
+  worker:
+    build: ../backend
+    environment: *backend-env
+    command: celery -A app.worker worker -l info -Q default,notifications,documents,workflow,maintenance
+    volumes: ["../backend:/app"]
+    depends_on: [api]
+
+  frontend:
+    image: node:22-alpine
+    working_dir: /src
+    command: sh -c "npm ci --no-audit --no-fund && npm run dev -- --host 0.0.0.0"
+    environment:
+      VITE_API_PROXY: http://api:8000
+    volumes: ["../frontend:/src", "frontend-node-modules:/src/node_modules"]
+    ports: ["5173:5173"]
+
+  nginx:
+    image: nginx:1.27-alpine
+    volumes: ["./nginx/dev.conf:/etc/nginx/conf.d/default.conf:ro"]
+    ports: ["80:80"]
+    depends_on: [api, frontend]
+
+volumes:
+  mysql-data:
+  minio-data:
+  frontend-node-modules:
