@@ -50,8 +50,7 @@ class UserRoleAssignment(IdMixin, PublicIdMixin, TenantBase):
 
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False, index=True)
     role_id: Mapped[int] = mapped_column(ForeignKey("roles.id"), nullable=False, index=True)
-    # FK to org_units is added with the organisation module (T7).
-    org_unit_id: Mapped[int | None] = mapped_column(BigIntPK, index=True)
+    org_unit_id: Mapped[int | None] = mapped_column(ForeignKey("org_units.id"), index=True)
     valid_from: Mapped[date] = mapped_column(Date, nullable=False, default=date.today)
     valid_to: Mapped[date | None] = mapped_column(Date)
     assigned_by: Mapped[int | None] = mapped_column(BigIntPK)

@@ -12,6 +12,9 @@ import { ResetPasswordPage } from '@/features/auth/ResetPasswordPage';
 import { DashboardPage } from '@/features/dashboard/DashboardPage';
 import { NotFoundPage } from '@/features/NotFoundPage';
 import { NotificationsPage } from '@/features/notifications/NotificationsPage';
+import { OrgTypesPage } from '@/features/org/OrgTypesPage';
+import { OrgUnitDetailPage } from '@/features/org/OrgUnitDetailPage';
+import { OrgUnitListPage } from '@/features/org/OrgUnitListPage';
 import { ScheduledModulePage } from '@/features/ScheduledModulePage';
 import { AdminLayout } from '@/layouts/AdminLayout';
 import { AuthLayout } from '@/layouts/AuthLayout';
@@ -44,6 +47,9 @@ export const routes: RouteObject[] = [
           { path: '/admin/roles', element: guarded('role.view', <RolesPage />) },
           { path: '/admin/roles/:roleId', element: guarded('role.view', <RoleDetailPage />) },
           { path: '/admin/audit', element: guarded('audit.view', <AuditLogPage />) },
+          { path: '/admin/org-types', element: guarded('org_unit.update', <OrgTypesPage />) },
+          { path: '/org/units/:unitId', element: guarded('org_unit.view', <OrgUnitDetailPage />) },
+          { path: '/org/:typeCode', element: guarded('org_unit.view', <OrgUnitListPage />) },
           ...ALL_NAV_ITEMS.filter((i) => i.task).map((item) => ({
             path: item.path,
             element: item.permission ? guarded(item.permission, <ScheduledModulePage item={item} />) : <ScheduledModulePage item={item} />,

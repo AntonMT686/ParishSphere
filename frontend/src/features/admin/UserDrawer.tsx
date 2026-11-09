@@ -23,6 +23,7 @@ import { api } from '@/api/client';
 import { useAuthStore, useCan } from '@/auth/authStore';
 import { StatusBadge, useFeedback } from '@/design-system';
 import { formatDate, formatDateTime } from '@/lib/format';
+import { OrgUnitPicker } from '@/features/org/pickers';
 import { useRoles, useUser, useUserRoles } from './api';
 
 export function UserDrawer({ userId, onClose }: { userId: string | null; onClose: () => void }) {
@@ -37,6 +38,7 @@ export function UserDrawer({ userId, onClose }: { userId: string | null; onClose
   const { data: roles } = useRoles(Boolean(userId));
   const [edit, setEdit] = useState({ full_name: '', email: '', phone: '' });
   const [newRole, setNewRole] = useState('');
+  const [newRoleUnit, setNewRoleUnit] = useState<{ id: string; name: string; code: string } | null>(null);
   const isSelf = me?.id === userId;
 
   useEffect(() => {
@@ -59,7 +61,9 @@ export function UserDrawer({ userId, onClose }: { userId: string | null; onClose
     await action.mutateAsync({ path, method: opts.method, body: opts.body });
   };
 
-  const assignable = (roles ?? []).filter((r) => r.scope_type !== 'ORG_UNIT');
+  const assignable = roles ?? [];
+  const newRoleScope = assignable.find((r) => r.code === newRole)?.scope_type;
+  const needsUnit = newRoleScope === 'ORG_UNIT';
 
   return (
     <Drawer anchor="right" open={Boolean(userId)} onClose={onClose} PaperProps={{ sx: { width: { xs: '100%', sm: 480 } } }}>
@@ -136,7 +140,7 @@ export function UserDrawer({ userId, onClose }: { userId: string | null; onClose
                 }
               >
                 <ListItemText
-                  primary={a.role_name}
+                  primary={a.org_unit_id ? `${a.role_name} · ${t('org.scoped')}` : a.role_name}
                   secondary={`${t('users.validFrom')} ${formatDate(a.valid_from)}${a.valid_to ? ` · ${t('users.validTo')} ${formatDate(a.valid_to)}` : ''}${a.ended_at ? ` · ${t('users.ended')} ${formatDate(a.ended_at)}` : ''}`}
                   sx={{ opacity: a.active ? 1 : 0.6 }}
                 />
@@ -144,24 +148,35 @@ export function UserDrawer({ userId, onClose }: { userId: string | null; onClose
             ))}
           </List>
           {can('user.assign_role') && !isSelf && (
-            <Stack direction="row" spacing={1} sx={{ mt: 1 }}>
-              <TextField select label={t('users.addRole')} value={newRole} onChange={(e) => setNewRole(e.target.value)}>
+            <Stack spacing={1} sx={{ mt: 1 }}>
+              <TextField select label={t('users.addRole')} value={newRole} onChange={(e) => { setNewRole(e.target.value); setNewRoleUnit(null); }}>
                 {assignable.map((r) => (
                   <MenuItem key={r.code} value={r.code}>
                     {r.name}
+                    {r.scope_type === 'ORG_UNIT' ? ` · ${t('roles.scope_ORG_UNIT')}` : ''}
                   </MenuItem>
                 ))}
               </TextField>
-              <Button
-                variant="outlined"
-                disabled={!newRole}
-                onClick={async () => {
-                  await run('/roles', { body: { role_code: newRole } });
-                  setNewRole('');
-                }}
-              >
-                {t('common.create')}
-              </Button>
+              {newRoleScope && newRoleScope !== 'PARISH' && (
+                <OrgUnitPicker
+                  label={needsUnit ? t('org.forOrganisation') : t('org.forOrganisationOptional')}
+                  value={newRoleUnit}
+                  onChange={setNewRoleUnit}
+                />
+              )}
+              <Box>
+                <Button
+                  variant="outlined"
+                  disabled={!newRole || (needsUnit && !newRoleUnit)}
+                  onClick={async () => {
+                    await run('/roles', { body: { role_code: newRole, org_unit_id: newRoleUnit?.id ?? null } });
+                    setNewRole('');
+                    setNewRoleUnit(null);
+                  }}
+                >
+                  {t('users.addRole')}
+                </Button>
+              </Box>
             </Stack>
           )}
 

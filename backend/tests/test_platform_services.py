@@ -33,7 +33,7 @@ from app.modules.notifications import service as notify
 from app.modules.notifications.models import Notification, OutboundMessage
 from app.modules.rbac.service import assign_role, role_by_code, users_with_permission
 from app.tenancy.resolver import resolve_tenant
-from tests.conftest import auth
+from tests.conftest import auth, make_org_unit
 
 HOST = {"Host": "svc.parishsphere.test"}
 PW = "Gl0ria-in-Excelsis"
@@ -500,10 +500,11 @@ def test_preferences(client: TestClient, tenant: TenantDescriptor) -> None:
 
 def test_users_with_permission_scope(tenant: TenantDescriptor) -> None:
     priest = make_user(tenant, "PARISH_PRIEST")
-    sec_a = make_user(tenant, "COMMITTEE_SECRETARY", org_unit_id=900)
-    sec_b = make_user(tenant, "COMMITTEE_SECRETARY", org_unit_id=901)
+    unit_a, unit_b = make_org_unit(tenant), make_org_unit(tenant)
+    sec_a = make_user(tenant, "COMMITTEE_SECRETARY", org_unit_id=unit_a)
+    sec_b = make_user(tenant, "COMMITTEE_SECRETARY", org_unit_id=unit_b)
     with tenant_session_scope(tenant) as s:
-        ids = {u.id for u in users_with_permission(s, "activity.create", 900)}
+        ids = {u.id for u in users_with_permission(s, "activity.create", unit_a)}
         assert priest.id in ids and sec_a.id in ids and sec_b.id not in ids
         assert sec_a.id not in {u.id for u in users_with_permission(s, "activity.create")}
         assert {u.id for u in users_with_permission(s, "activity.approve", role_code="PARISH_PRIEST")} >= {

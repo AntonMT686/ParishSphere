@@ -22,6 +22,8 @@ from app.master.router import router as platform_router
 from app.modules.audit.router import router as audit_router
 from app.modules.identity.router import router as auth_router
 from app.modules.notifications.router import router as notifications_router
+from app.modules.org_units.router import types_router as org_types_router
+from app.modules.org_units.router import units_router as org_units_router
 from app.modules.rbac.router import router as roles_router
 from app.modules.users.router import router as users_router
 from app.tenancy.router import router as tenant_router
@@ -117,6 +119,8 @@ def create_app() -> FastAPI:
     app.include_router(roles_router, prefix=API_PREFIX)
     app.include_router(notifications_router, prefix=API_PREFIX)
     app.include_router(audit_router, prefix=API_PREFIX)
+    app.include_router(org_types_router, prefix=API_PREFIX)
+    app.include_router(org_units_router, prefix=API_PREFIX)
     app.include_router(files_router, prefix=API_PREFIX)
     return app
 

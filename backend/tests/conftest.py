@@ -105,3 +105,24 @@ def super_token(client: TestClient) -> str:
 
 def auth(token: str) -> dict[str, str]:
     return {"Authorization": f"Bearer {token}"}
+
+
+def make_org_unit(
+    tenant, type_code: str = "COMMITTEE", name: str | None = None, parent_id: int | None = None
+) -> int:  # type: ignore[no-untyped-def]
+    """Create an organisation unit directly in a parish DB and return its internal id."""
+    from itertools import count
+
+    from app.db.tenant import tenant_session_scope
+    from app.modules.org_units import service
+    from app.modules.org_units.models import OrgUnit
+
+    seq = make_org_unit.__dict__.setdefault("_seq", count(1))
+    with tenant_session_scope(tenant) as s:
+        t = service.get_type(s, type_code)
+        u = OrgUnit(
+            type_id=t.id, parent_id=parent_id, code=f"T{next(seq):05d}", name=name or f"{t.name} unit"
+        )
+        s.add(u)
+        s.flush()
+        return u.id

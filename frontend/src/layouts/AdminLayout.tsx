@@ -3,6 +3,9 @@ import LightModeIcon from '@mui/icons-material/LightModeOutlined';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import TranslateIcon from '@mui/icons-material/Translate';
+import ChurchIcon from '@mui/icons-material/ChurchOutlined';
+import GroupsIcon from '@mui/icons-material/GroupsOutlined';
+import HubIcon from '@mui/icons-material/HubOutlined';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
@@ -29,7 +32,8 @@ import { useCan } from '@/auth/authStore';
 import { IdleTimeoutDialog } from '@/auth/IdleTimeoutDialog';
 import { NotificationsBell } from '@/features/notifications/NotificationsBell';
 import { SUPPORTED_LANGUAGES } from '@/i18n';
-import { visibleNavigation } from './navigation';
+import { useOrgTypes, typePath } from '@/features/org/api';
+import { visibleNavigation, type NavItem } from './navigation';
 import { UserMenu } from './UserMenu';
 
 export const SIDEBAR_WIDTH = 264;
@@ -43,6 +47,15 @@ function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
   const { pathname } = useLocation();
   const { data: branding } = useTenantBranding();
   const can = useCan();
+  const { i18n } = useTranslation();
+  const { data: orgTypes } = useOrgTypes();
+  const orgItems: NavItem[] = (orgTypes ?? []).map((ot) => ({
+    key: ot.code,
+    label: i18n.language === 'ta' && ot.name_local ? ot.name_local : ot.name_plural,
+    path: typePath(ot.code),
+    icon: ot.code === 'COUNCIL' ? <ChurchIcon /> : ot.code === 'COMMITTEE' ? <HubIcon /> : <GroupsIcon />,
+    permission: 'org_unit.view',
+  }));
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
       <Box sx={{ px: 2.5, py: 2, display: 'flex', alignItems: 'center', gap: 1.5 }}>
@@ -57,7 +70,7 @@ function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
         </Box>
       </Box>
       <Box component="nav" aria-label="Main" sx={{ overflowY: 'auto', flexGrow: 1, px: 1.5, pb: 2 }}>
-        {visibleNavigation(can).map((section) => (
+        {visibleNavigation(can, { organisations: orgItems }).map((section) => (
           <List
             key={section.key}
             dense
@@ -80,7 +93,7 @@ function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
                 sx={{ mb: 0.25 }}
               >
                 <ListItemIcon sx={{ minWidth: 36 }}>{item.icon}</ListItemIcon>
-                <ListItemText primary={t(`nav.${item.key}`)} primaryTypographyProps={{ fontSize: 14 }} />
+                <ListItemText primary={item.label ?? t(`nav.${item.key}`)} primaryTypographyProps={{ fontSize: 14 }} />
               </ListItemButton>
             ))}
           </List>

@@ -8,7 +8,6 @@ import DescriptionIcon from '@mui/icons-material/DescriptionOutlined';
 import EventIcon from '@mui/icons-material/EventOutlined';
 import FactCheckIcon from '@mui/icons-material/FactCheckOutlined';
 import FamilyIcon from '@mui/icons-material/FamilyRestroomOutlined';
-import GroupsIcon from '@mui/icons-material/GroupsOutlined';
 import HistoryIcon from '@mui/icons-material/HistoryOutlined';
 import HubIcon from '@mui/icons-material/HubOutlined';
 import MenuBookIcon from '@mui/icons-material/MenuBookOutlined';
@@ -22,6 +21,8 @@ import type { ReactNode } from 'react';
 
 export interface NavItem {
   key: string; // i18n key under `nav.`
+  /** Literal label (dynamic items) instead of the i18n key. */
+  label?: string;
   path: string;
   icon: ReactNode;
   /** Task in docs/09-roadmap-and-testing.md that delivers this screen (absent = implemented). */
@@ -51,16 +52,8 @@ export const NAVIGATION: NavSection[] = [
       { key: 'registers', path: '/registers', icon: <MenuBookIcon />, task: 'T21', permission: 'sacrament.view' },
     ],
   },
-  {
-    key: 'organisations',
-    items: [
-      { key: 'council', path: '/org/council', icon: <ChurchIcon />, task: 'T7', permission: 'org_unit.view' },
-      { key: 'committees', path: '/org/committees', icon: <HubIcon />, task: 'T7', permission: 'org_unit.view' },
-      { key: 'anbiyam', path: '/org/anbiyam', icon: <GroupsIcon />, task: 'T7', permission: 'org_unit.view' },
-      { key: 'sabai', path: '/org/sabai', icon: <GroupsIcon />, task: 'T7', permission: 'org_unit.view' },
-      { key: 'societies', path: '/org/societies', icon: <GroupsIcon />, task: 'T7', permission: 'org_unit.view' },
-    ],
-  },
+  // Items are generated from the parish's configured organisation types (see AdminLayout).
+  { key: 'organisations', items: [] },
   {
     key: 'activities',
     items: [
@@ -98,7 +91,7 @@ export const NAVIGATION: NavSection[] = [
       { key: 'users', path: '/admin/users', icon: <PeopleIcon />, permission: 'user.view' },
       { key: 'roles', path: '/admin/roles', icon: <SecurityIcon />, permission: 'role.view' },
       { key: 'workflows', path: '/admin/workflows', icon: <RouteIcon />, task: 'T10', permission: 'workflow.view' },
-      { key: 'orgTypes', path: '/admin/org-types', icon: <HubIcon />, task: 'T7', permission: 'org_unit.update' },
+      { key: 'orgTypes', path: '/admin/org-types', icon: <HubIcon />, permission: 'org_unit.update' },
       { key: 'priests', path: '/admin/priests', icon: <ChurchIcon />, task: 'T9', permission: 'priest.view' },
       { key: 'settings', path: '/admin/settings', icon: <SettingsIcon />, task: 'T9', permission: 'settings.view' },
       { key: 'audit', path: '/admin/audit', icon: <HistoryIcon />, permission: 'audit.view' },
@@ -109,8 +102,12 @@ export const NAVIGATION: NavSection[] = [
 export const ALL_NAV_ITEMS: NavItem[] = NAVIGATION.flatMap((s) => s.items);
 
 /** Sections and items the current user may see (empty sections are dropped). */
-export function visibleNavigation(can: (code: string | string[]) => boolean): NavSection[] {
-  return NAVIGATION.map((s) => ({ ...s, items: s.items.filter((i) => !i.permission || can(i.permission)) })).filter(
-    (s) => s.items.length > 0,
-  );
+export function visibleNavigation(
+  can: (code: string | string[]) => boolean,
+  dynamic: Record<string, NavItem[]> = {},
+): NavSection[] {
+  return NAVIGATION.map((s) => ({
+    ...s,
+    items: [...s.items, ...(dynamic[s.key] ?? [])].filter((i) => !i.permission || can(i.permission)),
+  })).filter((s) => s.items.length > 0);
 }

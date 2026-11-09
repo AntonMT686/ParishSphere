@@ -16,5 +16,6 @@
 | 10 | [Deployment](10-deployment.md) | Docker topology, environments, HTTPS, logging, monitoring, migration strategy |
 | 11 | [Role & Permission Matrix](11-permission-matrix.md) | Generated default grants for the 15 parish roles |
 | 12 | [Platform Services](12-platform-services.md) | Developer guide: codes, audit, storage, exports, notifications |
+| 13 | [Organisations](13-organisations.md) | Configurable council/committees/Anbiyam/Sabai/societies, office bearers → roles |
 
 Living documents: update them in the same PR as the code that changes the behaviour they describe.

@@ -12,6 +12,7 @@ from collections import defaultdict
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, Query, Request, Response, status
+from pydantic import BaseModel
 from sqlalchemy import or_, select
 from sqlalchemy.orm import Session
 
@@ -23,7 +24,7 @@ from app.modules.identity import service as identity
 from app.modules.identity.deps import Auth
 from app.modules.identity.models import User
 from app.modules.rbac.catalog import ADMIN_ROLE
-from app.modules.rbac.deps import require_perm
+from app.modules.rbac.deps import require_any, require_perm
 from app.modules.rbac.models import Role, UserRoleAssignment
 from app.modules.rbac.schemas import AssignmentCreate, AssignmentOut
 from app.modules.rbac.service import (
@@ -165,6 +166,34 @@ def _assign(
         },
     )
     return a
+
+
+# ----------------------------------------------------------------------------- lookup
+class UserLookupOut(BaseModel):
+    id: str
+    username: str
+    full_name: str
+
+
+@router.get("/lookup", response_model=list[UserLookupOut])
+def lookup_users(
+    _: Annotated[list[PermissionScope], Depends(require_any("user.view", "org_unit.manage_members"))],
+    db: TenantSession,
+    q: Annotated[str, Query(min_length=2, max_length=100)],
+) -> list[UserLookupOut]:
+    """Minimal active-user search for pickers (e.g. appointing office bearers). Names only."""
+    like = f"%{q.strip()}%"
+    rows = db.scalars(
+        select(User)
+        .where(
+            User.is_deleted.is_(False),
+            User.is_active.is_(True),
+            or_(User.username.ilike(like), User.full_name.ilike(like)),
+        )
+        .order_by(User.full_name)
+        .limit(20)
+    )
+    return [UserLookupOut(id=u.public_id, username=u.username, full_name=u.full_name) for u in rows]
 
 
 # ----------------------------------------------------------------------------- users

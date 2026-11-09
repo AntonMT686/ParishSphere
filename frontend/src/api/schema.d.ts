@@ -376,6 +376,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/users/lookup": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Lookup Users
+         * @description Minimal active-user search for pickers (e.g. appointing office bearers). Names only.
+         */
+        get: operations["lookup_users_api_v1_users_lookup_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/users": {
         parameters: {
             query?: never;
@@ -754,6 +774,190 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/org-unit-types": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Types */
+        get: operations["list_types_api_v1_org_unit_types_get"];
+        put?: never;
+        /** Create Type */
+        post: operations["create_type_api_v1_org_unit_types_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/org-unit-types/{type_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Type */
+        get: operations["get_type_api_v1_org_unit_types__type_id__get"];
+        put?: never;
+        post?: never;
+        /** Delete Type */
+        delete: operations["delete_type_api_v1_org_unit_types__type_id__delete"];
+        options?: never;
+        head?: never;
+        /** Update Type */
+        patch: operations["update_type_api_v1_org_unit_types__type_id__patch"];
+        trace?: never;
+    };
+    "/api/v1/org-unit-types/{type_id}/positions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Add Position */
+        post: operations["add_position_api_v1_org_unit_types__type_id__positions_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/org-unit-types/{type_id}/positions/{position_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Delete Position */
+        delete: operations["delete_position_api_v1_org_unit_types__type_id__positions__position_id__delete"];
+        options?: never;
+        head?: never;
+        /** Update Position */
+        patch: operations["update_position_api_v1_org_unit_types__type_id__positions__position_id__patch"];
+        trace?: never;
+    };
+    "/api/v1/org-units": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Units */
+        get: operations["list_units_api_v1_org_units_get"];
+        put?: never;
+        /** Create Unit */
+        post: operations["create_unit_api_v1_org_units_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/org-units/{unit_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Unit */
+        get: operations["get_unit_api_v1_org_units__unit_id__get"];
+        put?: never;
+        post?: never;
+        /**
+         * Delete Unit
+         * @description Remove an organisation created by mistake (only when it has no history).
+         */
+        delete: operations["delete_unit_api_v1_org_units__unit_id__delete"];
+        options?: never;
+        head?: never;
+        /** Update Unit */
+        patch: operations["update_unit_api_v1_org_units__unit_id__patch"];
+        trace?: never;
+    };
+    "/api/v1/org-units/{unit_id}/archive": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Archive Unit
+         * @description Deactivate an organisation (ends current office terms; history is kept).
+         */
+        post: operations["archive_unit_api_v1_org_units__unit_id__archive_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/org-units/{unit_id}/activate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Activate Unit */
+        post: operations["activate_unit_api_v1_org_units__unit_id__activate_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/org-units/{unit_id}/office-bearers": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Bearers */
+        get: operations["list_bearers_api_v1_org_units__unit_id__office_bearers_get"];
+        put?: never;
+        /** Appoint */
+        post: operations["appoint_api_v1_org_units__unit_id__office_bearers_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/org-units/{unit_id}/office-bearers/{bearer_id}/end": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** End Bearer */
+        post: operations["end_bearer_api_v1_org_units__unit_id__office_bearers__bearer_id__end_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/files/download": {
         parameters: {
             query?: never;
@@ -874,6 +1078,60 @@ export interface components {
             /** Idle Timeout Seconds */
             idle_timeout_seconds: number;
             user: components["schemas"]["MeOut"];
+        };
+        /** BearerCreate */
+        BearerCreate: {
+            /** Position Code */
+            position_code: string;
+            /**
+             * User Id
+             * @description User public id (grants the position's role)
+             */
+            user_id?: string | null;
+            /**
+             * Holder Name
+             * @description For people without a login
+             */
+            holder_name?: string | null;
+            /** Valid From */
+            valid_from?: string | null;
+            /** Valid To */
+            valid_to?: string | null;
+            /** Remarks */
+            remarks?: string | null;
+        };
+        /** BearerEnd */
+        BearerEnd: {
+            /** End Date */
+            end_date?: string | null;
+        };
+        /** BearerOut */
+        BearerOut: {
+            /** Id */
+            id: string;
+            /** Position Code */
+            position_code: string;
+            /** Position Name */
+            position_name: string;
+            /** User Id */
+            user_id: string | null;
+            /** Holder Name */
+            holder_name: string;
+            /**
+             * Valid From
+             * Format: date
+             */
+            valid_from: string;
+            /** Valid To */
+            valid_to: string | null;
+            /** Current */
+            current: boolean;
+            /** Ended At */
+            ended_at: string | null;
+            /** Grants Role */
+            grants_role: string | null;
+            /** Remarks */
+            remarks: string | null;
         };
         /** BroadcastIn */
         BroadcastIn: {
@@ -1043,6 +1301,23 @@ export interface components {
              */
             permissions: string[];
         };
+        /** MembershipRules */
+        MembershipRules: {
+            /** Min Age */
+            min_age?: number | null;
+            /** Max Age */
+            max_age?: number | null;
+            /**
+             * Genders
+             * @description Allowed genders, e.g. ['F']
+             */
+            genders?: string[] | null;
+            /**
+             * Max Units Per Member
+             * @description Units of this type per member
+             */
+            max_units_per_member?: number | null;
+        };
         /** MessageOut */
         MessageOut: {
             /** Message */
@@ -1117,6 +1392,19 @@ export interface components {
         Page_ParishOut_: {
             /** Items */
             items: components["schemas"]["ParishOut"][];
+            /** Page */
+            page: number;
+            /** Size */
+            size: number;
+            /** Total */
+            total: number;
+            /** Pages */
+            pages: number;
+        };
+        /** Page[UnitOut] */
+        Page_UnitOut_: {
+            /** Items */
+            items: components["schemas"]["UnitOut"][];
             /** Page */
             page: number;
             /** Size */
@@ -1283,6 +1571,59 @@ export interface components {
             is_super_admin: boolean;
             /** Is Active */
             is_active: boolean;
+        };
+        /** PositionIn */
+        PositionIn: {
+            /** Code */
+            code: string;
+            /** Name */
+            name: string;
+            /** Name Local */
+            name_local?: string | null;
+            /** Role Code */
+            role_code?: string | null;
+            /**
+             * Max Holders
+             * @default 1
+             */
+            max_holders: number | null;
+            /**
+             * Sort Order
+             * @default 100
+             */
+            sort_order: number;
+        };
+        /** PositionOut */
+        PositionOut: {
+            /** Id */
+            id: string;
+            /** Code */
+            code: string;
+            /** Name */
+            name: string;
+            /** Name Local */
+            name_local: string | null;
+            /** Role Code */
+            role_code: string | null;
+            /** Role Name */
+            role_name: string | null;
+            /** Max Holders */
+            max_holders: number | null;
+            /** Sort Order */
+            sort_order: number;
+        };
+        /** PositionUpdate */
+        PositionUpdate: {
+            /** Name */
+            name?: string | null;
+            /** Name Local */
+            name_local?: string | null;
+            /** Role Code */
+            role_code?: string | null;
+            /** Max Holders */
+            max_holders?: number | null;
+            /** Sort Order */
+            sort_order?: number | null;
         };
         /** PreferenceIn */
         PreferenceIn: {
@@ -1451,6 +1792,187 @@ export interface components {
             /** Diocese Name */
             diocese_name: string;
         };
+        /** TypeCreate */
+        TypeCreate: {
+            /** Code */
+            code: string;
+            /** Name */
+            name: string;
+            /** Name Plural */
+            name_plural: string;
+            /** Name Local */
+            name_local?: string | null;
+            /** Description */
+            description?: string | null;
+            /**
+             * Member Kind
+             * @default MEMBER
+             */
+            member_kind: string;
+            membership_rules?: components["schemas"]["MembershipRules"];
+            /**
+             * Allow Multiple Units
+             * @default true
+             */
+            allow_multiple_units: boolean;
+            /** Code Prefix */
+            code_prefix: string;
+            /**
+             * Sort Order
+             * @default 100
+             */
+            sort_order: number;
+            /** Positions */
+            positions?: components["schemas"]["PositionIn"][];
+        };
+        /** TypeOut */
+        TypeOut: {
+            /** Id */
+            id: string;
+            /** Code */
+            code: string;
+            /** Name */
+            name: string;
+            /** Name Plural */
+            name_plural: string;
+            /** Name Local */
+            name_local: string | null;
+            /** Description */
+            description: string | null;
+            /** Member Kind */
+            member_kind: string;
+            /** Membership Rules */
+            membership_rules: {
+                [key: string]: unknown;
+            };
+            /** Allow Multiple Units */
+            allow_multiple_units: boolean;
+            /** Code Prefix */
+            code_prefix: string;
+            /** Is System */
+            is_system: boolean;
+            /** Sort Order */
+            sort_order: number;
+            /** Unit Count */
+            unit_count: number;
+            /** Positions */
+            positions: components["schemas"]["PositionOut"][];
+        };
+        /** TypeUpdate */
+        TypeUpdate: {
+            /** Name */
+            name?: string | null;
+            /** Name Plural */
+            name_plural?: string | null;
+            /** Name Local */
+            name_local?: string | null;
+            /** Description */
+            description?: string | null;
+            membership_rules?: components["schemas"]["MembershipRules"] | null;
+            /** Allow Multiple Units */
+            allow_multiple_units?: boolean | null;
+            /** Sort Order */
+            sort_order?: number | null;
+        };
+        /** UnitBrief */
+        UnitBrief: {
+            /** Id */
+            id: string;
+            /** Code */
+            code: string;
+            /** Name */
+            name: string;
+        };
+        /** UnitCreate */
+        UnitCreate: {
+            /** Type Code */
+            type_code: string;
+            /** Name */
+            name: string;
+            /** Code */
+            code?: string | null;
+            /** Name Local */
+            name_local?: string | null;
+            /** Parent Id */
+            parent_id?: string | null;
+            /** Description */
+            description?: string | null;
+            /** Established On */
+            established_on?: string | null;
+            /** Meeting Place */
+            meeting_place?: string | null;
+            /** Meeting Schedule */
+            meeting_schedule?: string | null;
+            /** Contact Phone */
+            contact_phone?: string | null;
+            /** Contact Email */
+            contact_email?: string | null;
+        };
+        /** UnitOut */
+        UnitOut: {
+            /** Id */
+            id: string;
+            /** Code */
+            code: string;
+            /** Name */
+            name: string;
+            /** Name Local */
+            name_local: string | null;
+            /** Type Code */
+            type_code: string;
+            /** Type Name */
+            type_name: string;
+            parent: components["schemas"]["UnitBrief"] | null;
+            /** Description */
+            description: string | null;
+            /** Status */
+            status: string;
+            /** Established On */
+            established_on: string | null;
+            /** Meeting Place */
+            meeting_place: string | null;
+            /** Meeting Schedule */
+            meeting_schedule: string | null;
+            /** Contact Phone */
+            contact_phone: string | null;
+            /** Contact Email */
+            contact_email: string | null;
+            /** Sub Unit Count */
+            sub_unit_count: number;
+            /** Office Bearers */
+            office_bearers: components["schemas"]["BearerOut"][];
+            /** Can Manage */
+            can_manage: boolean;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+        };
+        /** UnitUpdate */
+        UnitUpdate: {
+            /** Name */
+            name?: string | null;
+            /** Name Local */
+            name_local?: string | null;
+            /**
+             * Parent Id
+             * @description Empty string removes the parent
+             */
+            parent_id?: string | null;
+            /** Description */
+            description?: string | null;
+            /** Established On */
+            established_on?: string | null;
+            /** Meeting Place */
+            meeting_place?: string | null;
+            /** Meeting Schedule */
+            meeting_schedule?: string | null;
+            /** Contact Phone */
+            contact_phone?: string | null;
+            /** Contact Email */
+            contact_email?: string | null;
+        };
         /** UnreadCountOut */
         UnreadCountOut: {
             /** Unread */
@@ -1481,6 +2003,15 @@ export interface components {
              * @description Parish-wide roles to assign immediately
              */
             role_codes?: string[];
+        };
+        /** UserLookupOut */
+        UserLookupOut: {
+            /** Id */
+            id: string;
+            /** Username */
+            username: string;
+            /** Full Name */
+            full_name: string;
         };
         /** UserOut */
         UserOut: {
@@ -2206,6 +2737,37 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    lookup_users_api_v1_users_lookup_get: {
+        parameters: {
+            query: {
+                q: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UserLookupOut"][];
+                };
             };
             /** @description Validation Error */
             422: {
@@ -3130,6 +3692,589 @@ export interface operations {
                 };
                 content: {
                     "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_types_api_v1_org_unit_types_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TypeOut"][];
+                };
+            };
+        };
+    };
+    create_type_api_v1_org_unit_types_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TypeCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TypeOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_type_api_v1_org_unit_types__type_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                type_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TypeOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_type_api_v1_org_unit_types__type_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                type_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_type_api_v1_org_unit_types__type_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                type_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TypeUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TypeOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    add_position_api_v1_org_unit_types__type_id__positions_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                type_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PositionIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TypeOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_position_api_v1_org_unit_types__type_id__positions__position_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                type_id: string;
+                position_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_position_api_v1_org_unit_types__type_id__positions__position_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                type_id: string;
+                position_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PositionUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TypeOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_units_api_v1_org_units_get: {
+        parameters: {
+            query?: {
+                /** @description Type code */
+                type?: string | null;
+                q?: string | null;
+                status?: string | null;
+                /** @description Parent unit public id; 'root' for top level */
+                parent?: string | null;
+                page?: number;
+                size?: number;
+                /** @description e.g. `name,-created_at` */
+                sort?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Page_UnitOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_unit_api_v1_org_units_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UnitCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UnitOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_unit_api_v1_org_units__unit_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                unit_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UnitOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_unit_api_v1_org_units__unit_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                unit_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_unit_api_v1_org_units__unit_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                unit_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UnitUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UnitOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    archive_unit_api_v1_org_units__unit_id__archive_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                unit_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UnitOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    activate_unit_api_v1_org_units__unit_id__activate_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                unit_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UnitOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_bearers_api_v1_org_units__unit_id__office_bearers_get: {
+        parameters: {
+            query?: {
+                include_history?: boolean;
+            };
+            header?: never;
+            path: {
+                unit_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BearerOut"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    appoint_api_v1_org_units__unit_id__office_bearers_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                unit_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BearerCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BearerOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    end_bearer_api_v1_org_units__unit_id__office_bearers__bearer_id__end_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                unit_id: string;
+                bearer_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BearerEnd"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BearerOut"];
                 };
             };
             /** @description Validation Error */

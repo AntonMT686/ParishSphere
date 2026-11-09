@@ -20,7 +20,7 @@ from app.modules.rbac.catalog import ADMIN_LOCKED_PERMISSIONS, ALL_PERMISSIONS, 
 from app.modules.rbac.models import Permission, Role, UserRoleAssignment
 from app.modules.rbac.service import PermissionScope, assign_role, effective_permissions, role_by_code
 from app.tenancy.seed import run_seeders
-from tests.conftest import auth
+from tests.conftest import auth, make_org_unit
 
 HOST = {"Host": "rbac.parishsphere.test"}
 PW = "Gl0ria-in-Excelsis"
@@ -145,17 +145,18 @@ def test_login_response_includes_permissions(client: TestClient, tenant: TenantD
 
 
 def test_org_unit_scoped_permissions(tenant: TenantDescriptor) -> None:
-    u = make_user(tenant, "COMMITTEE_SECRETARY", org_unit_id=501)
+    u501, u502 = make_org_unit(tenant), make_org_unit(tenant)
+    u = make_user(tenant, "COMMITTEE_SECRETARY", org_unit_id=u501)
     with tenant_session_scope(tenant) as s:
         user = s.scalars(select(User).where(User.username == u)).one()
         eff = effective_permissions(s, user)
-        assert eff.has("activity.create", 501)
-        assert not eff.has("activity.create", 502)
+        assert eff.has("activity.create", u501)
+        assert not eff.has("activity.create", u502)
         assert not eff.has("activity.create", None)  # parish-level records need a parish-wide grant
         assert eff.has("activity.create", anywhere=True)
         assert not eff.has("finance.approve", anywhere=True)
         scope = eff.scope("activity.view")
-        assert scope.org_unit_ids == {501} and not scope.parish_wide
+        assert scope.org_unit_ids == {u501} and not scope.parish_wide
 
 
 def test_assignment_validity_window(tenant: TenantDescriptor) -> None:
@@ -201,7 +202,7 @@ def test_org_scoped_holder_cannot_use_parish_wide_admin_endpoint(
         role = Role(code="ORG_USER_ADMIN", name="Org user admin", scope_type="ANY")
         role.permissions = list(s.scalars(select(Permission).where(Permission.code == "user.view")))
         s.add(role)
-    u = make_user(tenant, "ORG_USER_ADMIN", org_unit_id=77)
+    u = make_user(tenant, "ORG_USER_ADMIN", org_unit_id=make_org_unit(tenant))
     assert client.get("/api/v1/users", headers=token(client, u)).status_code == 403
 
 
@@ -283,7 +284,7 @@ def test_scope_type_validation(client: TestClient, tenant: TenantDescriptor, adm
     r = client.post(
         f"/api/v1/users/{uid}/roles", json={"role_code": "COMMITTEE_SECRETARY", "org_unit_id": "X"}, headers=h
     )
-    assert r.status_code == 422 and r.json()["error"]["code"] == "ORG_UNITS_NOT_AVAILABLE"
+    assert r.status_code == 422 and r.json()["error"]["details"][0]["field"] == "org_unit_id"
     r = client.post(f"/api/v1/users/{uid}/roles", json={"role_code": "NOPE"}, headers=h)
     assert r.status_code == 422
 

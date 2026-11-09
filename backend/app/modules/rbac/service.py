@@ -107,6 +107,12 @@ def effective_permissions(session: Session, user: User, today: date | None = Non
         else:
             for c in codes:
                 eff.by_org_unit.setdefault(c, set()).add(a.org_unit_id)
+    # A role held for an organisation also applies to its sub-units (e.g. Anbiyam zone → groups).
+    if eff.by_org_unit and _org_unit_descendants is not None:
+        roots = set().union(*eff.by_org_unit.values())
+        tree = _org_unit_descendants(session, roots)
+        for c, ids in eff.by_org_unit.items():
+            eff.by_org_unit[c] = set().union(*(tree.get(i, {i}) for i in ids))
     return eff
 
 
@@ -119,13 +125,26 @@ def assert_permission(eff: EffectivePermissions, code: str, org_unit_id: int | N
 # The organisation module (T7) registers a resolver mapping an org unit public id → (id, exists).
 OrgUnitResolver = Callable[[Session, str], int | None]
 OrgUnitPublicId = Callable[[Session, int], str | None]
+OrgUnitTree = Callable[[Session, set[int]], dict[int, set[int]]]
 _org_unit_resolver: OrgUnitResolver | None = None
 _org_unit_public_id: OrgUnitPublicId | None = None
+_org_unit_descendants: OrgUnitTree | None = None
+_org_unit_ancestors: OrgUnitTree | None = None
 
 
-def register_org_unit_resolver(resolve: OrgUnitResolver, public_id: OrgUnitPublicId) -> None:
-    global _org_unit_resolver, _org_unit_public_id
+def register_org_unit_resolver(
+    resolve: OrgUnitResolver,
+    public_id: OrgUnitPublicId,
+    descendants: OrgUnitTree | None = None,
+    ancestors: OrgUnitTree | None = None,
+) -> None:
+    """Called by the organisation module so RBAC can address and traverse organisation units.
+
+    ``descendants``/``ancestors`` map each given unit id to itself plus all sub-/parent units.
+    """
+    global _org_unit_resolver, _org_unit_public_id, _org_unit_descendants, _org_unit_ancestors
     _org_unit_resolver, _org_unit_public_id = resolve, public_id
+    _org_unit_descendants, _org_unit_ancestors = descendants, ancestors
 
 
 def org_unit_public_id(session: Session, org_unit_id: int | None) -> str | None:
@@ -291,8 +310,14 @@ def users_with_permission(
     if org_unit_id is None:
         stmt = stmt.where(UserRoleAssignment.org_unit_id.is_(None))
     else:
+        # Holders for this unit or any parent unit qualify (roles flow down the tree).
+        units = (
+            _org_unit_ancestors(session, {org_unit_id}).get(org_unit_id, {org_unit_id})
+            if _org_unit_ancestors is not None
+            else {org_unit_id}
+        )
         stmt = stmt.where(
-            or_(UserRoleAssignment.org_unit_id.is_(None), UserRoleAssignment.org_unit_id == org_unit_id)
+            or_(UserRoleAssignment.org_unit_id.is_(None), UserRoleAssignment.org_unit_id.in_(units))
         )
     if role_code is not None:
         stmt = stmt.where(Role.code == role_code)
