@@ -3,11 +3,13 @@ import Typography from '@mui/material/Typography';
 import { alpha, useTheme } from '@mui/material/styles';
 import { useTranslation } from 'react-i18next';
 import { Outlet } from 'react-router-dom';
+import { useTenantBranding } from '@/api/tenant';
 
 /** Split-screen layout for sign-in pages: brand panel + form panel. */
 export function AuthLayout() {
   const theme = useTheme();
   const { t } = useTranslation();
+  const { data: branding } = useTenantBranding();
   return (
     <Box sx={{ minHeight: '100vh', display: 'grid', gridTemplateColumns: { xs: '1fr', md: '1.1fr 1fr' } }}>
       <Box
@@ -20,7 +22,12 @@ export function AuthLayout() {
           background: `linear-gradient(150deg, ${theme.palette.primary.dark} 0%, ${theme.palette.primary.main} 60%, ${alpha(theme.palette.secondary.main, 0.85)} 140%)`,
         }}
       >
-        <Box component="img" src="/favicon.svg" alt="" sx={{ width: 56, height: 56, mb: 3 }} />
+        <Box
+          component="img"
+          src={branding?.logo_url ?? '/favicon.svg'}
+          alt={branding?.logo_url ? branding.display_name : ''}
+          sx={{ width: 72, height: 72, mb: 3, objectFit: 'contain', borderRadius: 2, bgcolor: branding?.logo_url ? '#fff' : 'transparent', p: branding?.logo_url ? 0.75 : 0 }}
+        />
         <Typography variant="h1" sx={{ color: 'inherit', maxWidth: 480 }}>
           {t('app.name')}
         </Typography>

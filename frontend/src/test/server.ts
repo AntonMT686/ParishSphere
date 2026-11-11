@@ -31,6 +31,7 @@ export const defaultHandlers = [
       logo_url: null, primary_color: null, default_language: 'en', currency: 'INR', diocese_name: 'Chennai Diocese',
     }),
   ),
+  http.get(`${API}/parish/clergy`, () => HttpResponse.json({ parish_priest: null, others: [] })),
   http.get(`${API}/notifications/unread-count`, () => HttpResponse.json({ unread: 2 })),
   http.get(`${API}/notifications`, () =>
     HttpResponse.json({

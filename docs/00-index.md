@@ -18,5 +18,6 @@
 | 12 | [Platform Services](12-platform-services.md) | Developer guide: codes, audit, storage, exports, notifications |
 | 13 | [Organisations](13-organisations.md) | Configurable council/committees/Anbiyam/Sabai/societies, office bearers → roles |
 | 14 | [Families & Members](14-families-members.md) | Parish register, life events with history, duplicates, scoping, memberships |
+| 15 | [Parish Profile & Priests](15-parish-priests.md) | Parish settings & branding, priests, assignment history with handover dates, role sync |
 
 Living documents: update them in the same PR as the code that changes the behaviour they describe.

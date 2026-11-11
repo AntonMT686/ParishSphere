@@ -112,7 +112,8 @@
     "lastLogin": "Last sign-in",
     "never": "Never",
     "saved": "Saved",
-    "viewAll": "View all"
+    "viewAll": "View all",
+    "remarks": "Remarks"
   },
   "status": {
     "ACTIVE": "Active",
@@ -130,7 +131,9 @@
     "SUSPENDED": "Suspended",
     "PENDING_ANBIYAM": "Pending Anbiyam",
     "TRANSFERRED_OUT": "Transferred out",
-    "MERGED": "Merged"
+    "MERGED": "Merged",
+    "RETIRED": "Retired",
+    "LEFT": "Left"
   },
   "errors": {
     "INVALID_CREDENTIALS": "Incorrect username or password.",
@@ -164,7 +167,13 @@
     "FAMILY_HEAD_REQUIRED": "Choose a head of family.",
     "MEMBERSHIP_RULES": "The member does not meet this organisation's rules",
     "ALREADY_MEMBER": "Already a member of this organisation.",
-    "INVALID_STATE": "This action is not possible in the current state."
+    "INVALID_STATE": "This action is not possible in the current state.",
+    "NOT_FOUND": "Not found",
+    "CURRENT_PARISH_PRIEST_EXISTS": "The parish already has a Parish Priest. Tick \"Relieve the current Parish Priest\" to hand over.",
+    "ALREADY_ASSIGNED": "This priest already holds this appointment.",
+    "USER_ALREADY_LINKED": "This user account is already linked to another priest.",
+    "FILE_TOO_LARGE": "The file is too large.",
+    "INVALID_FILE_TYPE": "This file type is not allowed."
   },
   "session": {
     "expiringTitle": "Your session is about to expire",
@@ -443,5 +452,82 @@
       "SPLIT": "New family split off",
       "SPLIT_FROM": "Split from family"
     }
+  },
+  "parish": {
+    "readOnly": "You can view these settings; only the parish administrator can change them.",
+    "details": "Parish details",
+    "name": "Parish name",
+    "nameLocal": "Name (Tamil)",
+    "patronSaint": "Patron saint",
+    "about": "About the parish",
+    "contact": "Address & contact",
+    "website": "Website",
+    "branding": "Branding",
+    "logo": "Parish logo",
+    "uploadLogo": "Upload logo",
+    "removeLogo": "Remove logo",
+    "logoHint": "PNG or JPEG, up to 2 MB. Shown on the sign-in page, the menu bar and printed reports.",
+    "primaryColor": "Theme colour",
+    "resetColor": "Default",
+    "regional": "Regional settings",
+    "fyStart": "Financial year starts in",
+    "fyHint": "Used for receipts, budgets and yearly numbering.",
+    "currency": "Currency",
+    "language": "Default language",
+    "timezone": "Time zone"
+  },
+  "priests": {
+    "subtitle": "Priests who serve or have served the parish, with their appointments.",
+    "add": "Add priest",
+    "edit": "Edit priest",
+    "title": "Title",
+    "ordination": "Ordination date",
+    "clergyType": "Clergy",
+    "clergy": {
+      "DIOCESAN": "Diocesan",
+      "RELIGIOUS": "Religious"
+    },
+    "homeDiocese": "Home diocese",
+    "congregation": "Congregation / order",
+    "search": "Search priests",
+    "serving": "Serving now",
+    "servingOnly": "Serving now only",
+    "details": "Details",
+    "account": "User account",
+    "linkAccount": "Link account",
+    "changeAccount": "Change",
+    "noAccount": "Not linked to a user account.",
+    "accountHint": "While this priest is Parish Priest, the linked account automatically holds the Parish Priest role.",
+    "userAccount": "User account",
+    "unlink": "Unlink",
+    "assignments": "Appointments",
+    "appoint": "Appoint",
+    "appointTitle": "Appoint {{name}}",
+    "noAssignments": "No appointments recorded yet.",
+    "roleLabel": "Role",
+    "role": {
+      "PARISH_PRIEST": "Parish Priest",
+      "ASSISTANT_PRIEST": "Assistant Priest",
+      "RESIDENT_PRIEST": "Resident Priest",
+      "DEACON": "Deacon",
+      "OTHER": "Other"
+    },
+    "from": "From",
+    "until": "Handed over on",
+    "untilOptional": "Handover date (optional)",
+    "handoverHint": "The first day the priest no longer serves; the successor can start on this date.",
+    "untilHint": "\"Handed over on\" is the first day of the successor; the priest served until the day before.",
+    "current": "Current",
+    "ref": "Appointment letter no.",
+    "responsibilities": "Responsibilities",
+    "parishPriestInfo": "A parish has only one Parish Priest at a time.",
+    "relieveCurrent": "Relieve the current Parish Priest (handover on {{date}})",
+    "relieve": "Relieve",
+    "relieveTitle": "Relieve from appointment",
+    "handoverDate": "Handover date",
+    "reason": "Reason",
+    "reasonPlaceholder": "e.g. Transferred to St. Mary's",
+    "changeStatus": "Change status",
+    "statusWarning": "Any current or future appointments will end today."
   }
 }

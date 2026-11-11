@@ -19,6 +19,9 @@ import { MembersPage } from '@/features/people/MembersPage';
 import { RegisterFamilyPage } from '@/features/people/RegisterFamilyPage';
 import { OrgUnitDetailPage } from '@/features/org/OrgUnitDetailPage';
 import { OrgUnitListPage } from '@/features/org/OrgUnitListPage';
+import { ParishSettingsPage } from '@/features/parish/ParishSettingsPage';
+import { PriestDetailPage } from '@/features/parish/PriestDetailPage';
+import { PriestsPage } from '@/features/parish/PriestsPage';
 import { ScheduledModulePage } from '@/features/ScheduledModulePage';
 import { AdminLayout } from '@/layouts/AdminLayout';
 import { AuthLayout } from '@/layouts/AuthLayout';
@@ -55,6 +58,9 @@ export const routes: RouteObject[] = [
           { path: '/families/new', element: guarded('family.create', <RegisterFamilyPage />) },
           { path: '/families/:familyId', element: guarded('family.view', <FamilyDetailPage />) },
           { path: '/members', element: guarded('member.view', <MembersPage />) },
+          { path: '/admin/priests', element: guarded('priest.view', <PriestsPage />) },
+          { path: '/admin/priests/:priestId', element: guarded('priest.view', <PriestDetailPage />) },
+          { path: '/admin/settings', element: guarded('settings.view', <ParishSettingsPage />) },
           { path: '/admin/org-types', element: guarded('org_unit.update', <OrgTypesPage />) },
           { path: '/org/units/:unitId', element: guarded('org_unit.view', <OrgUnitDetailPage />) },
           { path: '/org/:typeCode', element: guarded('org_unit.view', <OrgUnitListPage />) },

@@ -24,6 +24,7 @@ from app.modules.identity.router import router as auth_router
 from app.modules.notifications.router import router as notifications_router
 from app.modules.org_units.router import types_router as org_types_router
 from app.modules.org_units.router import units_router as org_units_router
+from app.modules.parish.router import parish_router, priests_router
 from app.modules.people.router import families as families_router
 from app.modules.people.router import members as members_router
 from app.modules.people.router import memberships as memberships_router
@@ -127,6 +128,8 @@ def create_app() -> FastAPI:
     app.include_router(memberships_router, prefix=API_PREFIX)
     app.include_router(families_router, prefix=API_PREFIX)
     app.include_router(members_router, prefix=API_PREFIX)
+    app.include_router(parish_router, prefix=API_PREFIX)
+    app.include_router(priests_router, prefix=API_PREFIX)
     app.include_router(files_router, prefix=API_PREFIX)
     return app
 

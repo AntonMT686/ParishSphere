@@ -200,6 +200,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/tenant/logo": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Tenant Logo
+         * @description The parish logo for the login page and sidebar (public, cacheable; versioned by ``?v=``).
+         */
+        get: operations["tenant_logo_api_v1_tenant_logo_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/auth/login": {
         parameters: {
             query?: never;
@@ -1332,6 +1352,174 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/parish/profile": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Profile
+         * @description Basic parish information – visible to every signed-in user.
+         */
+        get: operations["get_profile_api_v1_parish_profile_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Update Profile */
+        patch: operations["update_profile_api_v1_parish_profile_patch"];
+        trace?: never;
+    };
+    "/api/v1/parish/profile/logo": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Upload Logo */
+        post: operations["upload_logo_api_v1_parish_profile_logo_post"];
+        /** Delete Logo */
+        delete: operations["delete_logo_api_v1_parish_profile_logo_delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/parish/clergy": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Clergy
+         * @description Priests serving the parish today (names and roles only) – for every signed-in user.
+         */
+        get: operations["clergy_api_v1_parish_clergy_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/priests": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Priests */
+        get: operations["list_priests_api_v1_priests_get"];
+        put?: never;
+        /** Create Priest */
+        post: operations["create_priest_api_v1_priests_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/priests/{priest_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Priest */
+        get: operations["get_priest_api_v1_priests__priest_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Update Priest */
+        patch: operations["update_priest_api_v1_priests__priest_id__patch"];
+        trace?: never;
+    };
+    "/api/v1/priests/{priest_id}/status": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Priest Status */
+        post: operations["priest_status_api_v1_priests__priest_id__status_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/priests/{priest_id}/user": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Link User
+         * @description Link the priest's user account.
+         *
+         *     A current Parish Priest assignment then grants the PARISH_PRIEST role.
+         */
+        post: operations["link_user_api_v1_priests__priest_id__user_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/priests/{priest_id}/assignments": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Appoint */
+        post: operations["appoint_api_v1_priests__priest_id__assignments_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/priests/{priest_id}/assignments/{assignment_id}/relieve": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Relieve */
+        post: operations["relieve_api_v1_priests__priest_id__assignments__assignment_id__relieve_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/files/download": {
         parameters: {
             query?: never;
@@ -1368,6 +1556,33 @@ export interface components {
             valid_to: string | null;
             /** Reason */
             reason: string | null;
+        };
+        /** AppointIn */
+        AppointIn: {
+            /** Role */
+            role: string;
+            /**
+             * Appointed On
+             * Format: date
+             */
+            appointed_on: string;
+            /** Relieved On */
+            relieved_on?: string | null;
+            /** Responsibilities */
+            responsibilities?: string | null;
+            /**
+             * Appointment Ref
+             * @description Appointment letter no.
+             */
+            appointment_ref?: string | null;
+            /** Remarks */
+            remarks?: string | null;
+            /**
+             * Relieve Current
+             * @description Relieve the current Parish Priest the day before
+             * @default false
+             */
+            relieve_current: boolean;
         };
         /** AssignmentCreate */
         AssignmentCreate: {
@@ -1527,6 +1742,15 @@ export interface components {
             /** Remarks */
             remarks: string | null;
         };
+        /** Body_upload_logo_api_v1_parish_profile_logo_post */
+        Body_upload_logo_api_v1_parish_profile_logo_post: {
+            /**
+             * File
+             * Format: binary
+             * @description PNG or JPEG, max 2 MB
+             */
+            file: string;
+        };
         /** BroadcastIn */
         BroadcastIn: {
             /** Title */
@@ -1559,6 +1783,20 @@ export interface components {
             current_password: string;
             /** New Password */
             new_password: string;
+        };
+        /**
+         * ClergyOut
+         * @description Who serves the parish today – visible to every signed-in user.
+         */
+        ClergyOut: {
+            /** Parish Priest */
+            parish_priest: {
+                [key: string]: string;
+            } | null;
+            /** Others */
+            others: {
+                [key: string]: string;
+            }[];
         };
         /** DeceasedIn */
         DeceasedIn: {
@@ -1878,6 +2116,14 @@ export interface components {
         HTTPValidationError: {
             /** Detail */
             detail?: components["schemas"]["ValidationError"][];
+        };
+        /** LinkUserIn */
+        LinkUserIn: {
+            /**
+             * User Id
+             * @description User public id; null unlinks
+             */
+            user_id?: string | null;
         };
         /** LoginIn */
         LoginIn: {
@@ -2297,6 +2543,19 @@ export interface components {
             /** Pages */
             pages: number;
         };
+        /** Page[PriestOut] */
+        Page_PriestOut_: {
+            /** Items */
+            items: components["schemas"]["PriestOut"][];
+            /** Page */
+            page: number;
+            /** Size */
+            size: number;
+            /** Total */
+            total: number;
+            /** Pages */
+            pages: number;
+        };
         /** Page[UnitOut] */
         Page_UnitOut_: {
             /** Items */
@@ -2543,6 +2802,228 @@ export interface components {
             /** Default */
             default: boolean;
         };
+        /** PriestAssignmentOut */
+        PriestAssignmentOut: {
+            /** Id */
+            id: string;
+            /** Role */
+            role: string;
+            /**
+             * Appointed On
+             * Format: date
+             */
+            appointed_on: string;
+            /** Relieved On */
+            relieved_on: string | null;
+            /** Current */
+            current: boolean;
+            /** Responsibilities */
+            responsibilities: string | null;
+            /** Appointment Ref */
+            appointment_ref: string | null;
+            /** Relieving Reason */
+            relieving_reason: string | null;
+            /** Remarks */
+            remarks: string | null;
+            /** Grants Role */
+            grants_role: boolean;
+        };
+        /** PriestIn */
+        PriestIn: {
+            /**
+             * Title
+             * @default Rev. Fr.
+             */
+            title: string;
+            /** Full Name */
+            full_name: string;
+            /** Name Local */
+            name_local?: string | null;
+            /** Date Of Birth */
+            date_of_birth?: string | null;
+            /** Ordination Date */
+            ordination_date?: string | null;
+            /**
+             * Clergy Type
+             * @default DIOCESAN
+             */
+            clergy_type: string;
+            /** Home Diocese */
+            home_diocese?: string | null;
+            /** Congregation */
+            congregation?: string | null;
+            /** Phone */
+            phone?: string | null;
+            /** Email */
+            email?: string | null;
+            /** Remarks */
+            remarks?: string | null;
+        };
+        /** PriestOut */
+        PriestOut: {
+            /** Id */
+            id: string;
+            /** Title */
+            title: string;
+            /** Full Name */
+            full_name: string;
+            /** Display Name */
+            display_name: string;
+            /** Name Local */
+            name_local: string | null;
+            /** Date Of Birth */
+            date_of_birth: string | null;
+            /** Ordination Date */
+            ordination_date: string | null;
+            /** Clergy Type */
+            clergy_type: string;
+            /** Home Diocese */
+            home_diocese: string | null;
+            /** Congregation */
+            congregation: string | null;
+            /** Phone */
+            phone: string | null;
+            /** Email */
+            email: string | null;
+            /** Status */
+            status: string;
+            /** User */
+            user: {
+                [key: string]: string;
+            } | null;
+            /** Remarks */
+            remarks: string | null;
+            /** Current Roles */
+            current_roles: string[];
+            /** Assignments */
+            assignments: components["schemas"]["PriestAssignmentOut"][];
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+        };
+        /** PriestStatusIn */
+        PriestStatusIn: {
+            /** Status */
+            status: string;
+        };
+        /** PriestUpdate */
+        PriestUpdate: {
+            /** Title */
+            title?: string | null;
+            /** Full Name */
+            full_name?: string | null;
+            /** Name Local */
+            name_local?: string | null;
+            /** Date Of Birth */
+            date_of_birth?: string | null;
+            /** Ordination Date */
+            ordination_date?: string | null;
+            /** Clergy Type */
+            clergy_type?: string | null;
+            /** Home Diocese */
+            home_diocese?: string | null;
+            /** Congregation */
+            congregation?: string | null;
+            /** Phone */
+            phone?: string | null;
+            /** Email */
+            email?: string | null;
+            /** Remarks */
+            remarks?: string | null;
+        };
+        /** ProfileOut */
+        ProfileOut: {
+            /** Name */
+            name: string;
+            /** Name Local */
+            name_local: string | null;
+            /** Patron Saint */
+            patron_saint: string | null;
+            /** Established On */
+            established_on: string | null;
+            /** Address Line1 */
+            address_line1: string | null;
+            /** Address Line2 */
+            address_line2: string | null;
+            /** City */
+            city: string | null;
+            /** State */
+            state: string | null;
+            /** Postal Code */
+            postal_code: string | null;
+            /** Phone */
+            phone: string | null;
+            /** Email */
+            email: string | null;
+            /** Website */
+            website: string | null;
+            /** About */
+            about: string | null;
+            /** Logo Url */
+            logo_url: string | null;
+            /** Primary Color */
+            primary_color: string | null;
+            /** Default Language */
+            default_language: string;
+            /** Currency */
+            currency: string;
+            /** Timezone */
+            timezone: string;
+            /** Fy Start Month */
+            fy_start_month: number;
+            /** Code */
+            code: string;
+            /** Diocese Name */
+            diocese_name: string;
+            /** Parish Priest */
+            parish_priest: string | null;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+        };
+        /** ProfileUpdate */
+        ProfileUpdate: {
+            /** Name */
+            name?: string | null;
+            /** Name Local */
+            name_local?: string | null;
+            /** Patron Saint */
+            patron_saint?: string | null;
+            /** Established On */
+            established_on?: string | null;
+            /** Address Line1 */
+            address_line1?: string | null;
+            /** Address Line2 */
+            address_line2?: string | null;
+            /** City */
+            city?: string | null;
+            /** State */
+            state?: string | null;
+            /** Postal Code */
+            postal_code?: string | null;
+            /** Phone */
+            phone?: string | null;
+            /** Email */
+            email?: string | null;
+            /** Website */
+            website?: string | null;
+            /** About */
+            about?: string | null;
+            /** Primary Color */
+            primary_color?: string | null;
+            /** Default Language */
+            default_language?: string | null;
+            /** Currency */
+            currency?: string | null;
+            /** Timezone */
+            timezone?: string | null;
+            /** Fy Start Month */
+            fy_start_month?: number | null;
+        };
         /** Ref */
         Ref: {
             /** Id */
@@ -2551,6 +3032,16 @@ export interface components {
             code: string;
             /** Name */
             name: string;
+        };
+        /** RelieveIn */
+        RelieveIn: {
+            /**
+             * Relieved On
+             * @description Handover date (first day no longer serving); default today
+             */
+            relieved_on?: string | null;
+            /** Reason */
+            reason?: string | null;
         };
         /** ResetPasswordIn */
         ResetPasswordIn: {
@@ -3441,6 +3932,26 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["TenantBrandingOut"];
+                };
+            };
+        };
+    };
+    tenant_logo_api_v1_tenant_logo_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
                 };
             };
         };
@@ -6128,6 +6639,410 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["MembershipOut"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_profile_api_v1_parish_profile_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProfileOut"];
+                };
+            };
+        };
+    };
+    update_profile_api_v1_parish_profile_patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ProfileUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProfileOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    upload_logo_api_v1_parish_profile_logo_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["Body_upload_logo_api_v1_parish_profile_logo_post"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProfileOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_logo_api_v1_parish_profile_logo_delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProfileOut"];
+                };
+            };
+        };
+    };
+    clergy_api_v1_parish_clergy_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ClergyOut"];
+                };
+            };
+        };
+    };
+    list_priests_api_v1_priests_get: {
+        parameters: {
+            query?: {
+                q?: string | null;
+                status?: string | null;
+                /** @description Only priests with a current assignment */
+                serving?: boolean | null;
+                page?: number;
+                size?: number;
+                /** @description e.g. `name,-created_at` */
+                sort?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Page_PriestOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_priest_api_v1_priests_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PriestIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PriestOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_priest_api_v1_priests__priest_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                priest_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PriestOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_priest_api_v1_priests__priest_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                priest_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PriestUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PriestOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    priest_status_api_v1_priests__priest_id__status_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                priest_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PriestStatusIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PriestOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    link_user_api_v1_priests__priest_id__user_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                priest_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LinkUserIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PriestOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    appoint_api_v1_priests__priest_id__assignments_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                priest_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AppointIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PriestOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    relieve_api_v1_priests__priest_id__assignments__assignment_id__relieve_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                priest_id: string;
+                assignment_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RelieveIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PriestOut"];
                 };
             };
             /** @description Validation Error */

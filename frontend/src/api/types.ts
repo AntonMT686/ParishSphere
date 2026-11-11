@@ -31,3 +31,7 @@ export type DuplicateCandidate = S['DuplicateOut'];
 export type FamilyHistory = S['FamilyHistoryOut'];
 export type Membership = S['MembershipOut'];
 export type Ref = S['Ref'];
+export type ParishProfile = S['ProfileOut'];
+export type Priest = S['PriestOut'];
+export type PriestAssignment = S['PriestAssignmentOut'];
+export type Clergy = S['ClergyOut'];
