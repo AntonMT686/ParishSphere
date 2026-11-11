@@ -12,14 +12,10 @@ x-backend-env: &backend-env
   PS_TENANT_DB_SHARED_CREDENTIALS: "true"
   PS_BASE_DOMAIN: parishsphere.localhost
   PS_REDIS_URL: redis://redis:6379/0
-  PS_STORAGE_BACKEND: s3
-  PS_S3_ENDPOINT_URL: http://minio:9000
-  PS_S3_PUBLIC_ENDPOINT_URL: http://localhost:9000
-  PS_S3_REGION: us-east-1
-  PS_S3_BUCKET: parishsphere
-  PS_S3_ACCESS_KEY: parishsphere
-  PS_S3_SECRET_KEY: parishsphere-dev
-  PS_S3_AUTO_CREATE_BUCKET: "true"
+  # Uploaded files (logos, attachments, exports) on a shared volume. Production uses an
+  # S3-compatible service instead: PS_STORAGE_BACKEND=s3 + PS_S3_* (see docs/10-deployment.md).
+  PS_STORAGE_BACKEND: local
+  PS_STORAGE_LOCAL_DIR: /data/files
   PS_SMTP_HOST: mailhog
   PS_SMTP_PORT: "1025"
   PS_CORS_ORIGINS: '["http://localhost:5173","http://parishsphere.localhost"]'
@@ -43,15 +39,6 @@ services:
     image: redis:7-alpine
     ports: ["6379:6379"]
 
-  minio:
-    image: minio/minio:RELEASE.2025-01-20T14-49-07Z
-    command: server /data --console-address ":9001"
-    environment:
-      MINIO_ROOT_USER: parishsphere
-      MINIO_ROOT_PASSWORD: parishsphere-dev
-    volumes: [minio-data:/data]
-    ports: ["9000:9000", "9001:9001"]
-
   mailhog:
     image: mailhog/mailhog:v1.0.1
     ports: ["8025:8025"]
@@ -62,18 +49,17 @@ services:
     command: >
       sh -c "ps-admin migrate-master &&
              uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload"
-    volumes: ["../backend:/app"]
+    volumes: ["../backend:/app", "files:/data/files"]
     depends_on:
       mysql: { condition: service_healthy }
       redis: { condition: service_started }
-      minio: { condition: service_started }
     ports: ["8000:8000"]
 
   worker:
     build: ../backend
     environment: *backend-env
     command: celery -A app.worker worker -l info -Q default,notifications,documents,workflow,maintenance
-    volumes: ["../backend:/app"]
+    volumes: ["../backend:/app", "files:/data/files"]
     depends_on: [api]
 
   frontend:
@@ -93,5 +79,5 @@ services:
 
 volumes:
   mysql-data:
-  minio-data:
+  files:
   frontend-node-modules:

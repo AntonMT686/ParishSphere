@@ -2,7 +2,7 @@
 
 * ``LocalStorage`` – filesystem (development/tests). Downloads use short-lived signed tokens served by
   ``GET /api/v1/files/download``.
-* ``S3Storage`` – any S3-compatible service (MinIO in development, S3/R2/… in production). Downloads use
+* ``S3Storage`` – any S3-compatible service (S3, R2, a self-hosted S3 server, …). Downloads use
   presigned URLs.
 
 Keys are always ``{tenant_code}/{category}/{yyyy}/{mm}/{ulid}{ext}``: the original filename is metadata

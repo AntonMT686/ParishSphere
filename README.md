@@ -17,7 +17,7 @@ Multi-tenant parish management SaaS: families & members, configurable parish org
 ## Quick start (development)
 
 ```bash
-make up          # MySQL, Redis, MinIO, MailHog, API, worker, Vite, Nginx
+make up          # MySQL, Redis, MailHog, API, worker, Vite, Nginx
 make seed-demo   # super admin + diocese CHN + parish STMARYS with user admin / ChangeMe-Now1
 ```
 

@@ -81,8 +81,8 @@ class Settings(BaseSettings):
     # --- file storage ---
     storage_backend: Literal["local", "s3"] = "local"
     storage_local_dir: Path = BACKEND_DIR / "data" / "files"
-    s3_endpoint_url: str | None = None  # e.g. http://minio:9000 ; None = AWS
-    # Host browsers use for presigned downloads when it differs from the internal endpoint (dev MinIO).
+    s3_endpoint_url: str | None = None  # e.g. an S3-compatible endpoint; None = AWS
+    # Host browsers use for presigned downloads when it differs from the internal endpoint.
     s3_public_endpoint_url: str | None = None
     s3_region: str = "ap-south-1"
     s3_bucket: str = "parishsphere"

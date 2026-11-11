@@ -22,7 +22,7 @@ flowchart TB
     T2[(parish_a2_db)]
     TN[(parish_…_db)]
     R[(Redis)]
-    S[(Object storage<br/>MinIO / S3)]
+    S[(Object storage<br/>Local disk (dev) / S3)]
   end
   A & P --> N --> API
   API --> M & T1 & T2 & TN & R & S
@@ -40,7 +40,7 @@ flowchart TB
 | Migrations | **Alembic**, two environments (`master`, `tenant`) | Tenant env is applied to every parish DB by the `ps-admin migrate-tenants` command |
 | Background jobs | **Celery + Redis** | Notifications, PDF/XLSX generation, SLA escalation, stats snapshots, backups |
 | Cache / rate limit | **Redis** | Tenant lookup cache, dashboard cache, login lockout counters |
-| Files | **S3-compatible object storage (MinIO in dev)** | Per-tenant key prefix, presigned downloads, versioning |
+| Files | **S3-compatible object storage (local disk in dev)** | Per-tenant key prefix, presigned downloads, versioning |
 | PDF / Excel | WeasyPrint (HTML→PDF), openpyxl | Templated, i18n-friendly (Tamil fonts) |
 | Password hashing | Argon2id (`argon2-cffi`) | Current OWASP recommendation |
 | Frontend | React 18 + TypeScript + Vite + **MUI 6** + MUI X DataGrid + TanStack Query + React Router 6 + React Hook Form + Zod + react-i18next + Recharts | Mature enterprise component set; strongly-typed forms |

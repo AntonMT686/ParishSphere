@@ -10,7 +10,7 @@
 | `beat` | same image | `celery -A app.worker beat` (single instance) |
 | `mysql` | mysql:8.4 | master + parish DBs (prod: managed MySQL / dedicated hosts) |
 | `redis` | redis:7-alpine | cache, broker, rate limits |
-| `minio` | minio/minio | dev/UAT object storage (prod: S3-compatible service) |
+| `files` volume | — | dev: uploaded files on local disk (`PS_STORAGE_BACKEND=local`); UAT/prod: an S3-compatible service (`PS_STORAGE_BACKEND=s3`) |
 | `frontend` (dev only) | node:22 | Vite dev server with HMR |
 
 ## 2. Environments
