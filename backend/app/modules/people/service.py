@@ -278,8 +278,19 @@ def set_head(
     if family.head_member_id == member.id:
         return
     old = db.get(Member, family.head_member_id) if family.head_member_id else None
-    if old is not None and old.relationship_to_head == "HEAD":
-        old.relationship_to_head = previous_head_relationship
+    # Demote every other member still marked HEAD: the current head, and also a former head whose
+    # head_member_id link was already cleared (deceased, deactivated) – otherwise two members would be HEAD.
+    for other in db.scalars(
+        select(Member).where(
+            Member.family_id == family.id,
+            Member.id != member.id,
+            Member.relationship_to_head == "HEAD",
+            Member.is_deleted.is_(False),
+        )
+    ):
+        other.relationship_to_head = previous_head_relationship
+        if old is None:
+            old = other
     family.head_member_id = member.id
     member.relationship_to_head = "HEAD"
     event(

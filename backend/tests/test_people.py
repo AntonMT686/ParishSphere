@@ -353,6 +353,9 @@ def test_head_deceased_and_new_head(
     assert again.status_code == 409
     r = client_module.post(f"/api/v1/families/{f['id']}/head", headers=sec, json={"member_id": wife["id"]})
     assert r.json()["head_name"] == "Mother"
+    # The deceased former head no longer counts as HEAD: exactly one HEAD remains.
+    rels = {m["first_name"]: m["relationship_to_head"] for m in r.json()["members"]}
+    assert rels == {"Father": "OTHER", "Mother": "HEAD"}
     dead = client_module.post(f"/api/v1/families/{f['id']}/head", headers=sec, json={"member_id": head["id"]})
     assert dead.status_code == 422
 

@@ -47,8 +47,8 @@ export const NAVIGATION: NavSection[] = [
   {
     key: 'people',
     items: [
-      { key: 'families', path: '/families', icon: <FamilyIcon />, task: 'T8', permission: 'family.view' },
-      { key: 'members', path: '/members', icon: <PeopleIcon />, task: 'T8', permission: 'member.view' },
+      { key: 'families', path: '/families', icon: <FamilyIcon />, permission: 'family.view' },
+      { key: 'members', path: '/members', icon: <PeopleIcon />, permission: 'member.view' },
       { key: 'registers', path: '/registers', icon: <MenuBookIcon />, task: 'T21', permission: 'sacrament.view' },
     ],
   },

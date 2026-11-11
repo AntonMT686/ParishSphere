@@ -21,8 +21,18 @@ Object.defineProperty(window, 'matchMedia', {
 
 const initialAuth = useAuthStore.getState();
 
+// MSW only logs unhandled requests made through XHR (axios); collect them and fail the test instead,
+// so a missing mock can never pass silently.
+const unhandled: string[] = [];
+server.events.on('request:unhandled', ({ request }) => {
+  unhandled.push(`${request.method} ${new URL(request.url).pathname}${new URL(request.url).search}`);
+});
+
 beforeAll(() => server.listen({ onUnhandledRequest: 'error' }));
 afterEach(() => {
+  const missing = unhandled.splice(0);
+  if (missing.length) throw new Error(`Unmocked API request(s) in this test:\n${missing.join('\n')}`);
+
   cleanup();
   server.resetHandlers();
   setAccessToken(null);

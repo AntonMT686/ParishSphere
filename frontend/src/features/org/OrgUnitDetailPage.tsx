@@ -29,6 +29,7 @@ import { PageHeader, StatusBadge, useFeedback } from '@/design-system';
 import { formatDate } from '@/lib/format';
 import { orgKeys, typePath, useBearers, useOrgTypes, useUnit } from './api';
 import { AppointDialog } from './AppointDialog';
+import { MembershipsCard } from './MembershipsCard';
 import { OrgUnitDialog } from './OrgUnitDialog';
 
 function Field({ label, value }: { label: string; value?: string | null }) {
@@ -170,6 +171,11 @@ export function OrgUnitDetailPage() {
             </List>
           </Card>
         </Grid>
+        {type && (
+          <Grid size={12}>
+            <MembershipsCard unit={unit} type={type} />
+          </Grid>
+        )}
         <Grid size={12}>
           <Card>
             <CardHeader

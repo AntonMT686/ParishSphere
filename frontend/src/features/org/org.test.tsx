@@ -36,6 +36,14 @@ function handlers() {
     }),
     http.get(`${API}/org-units/U1`, () => HttpResponse.json(youth)),
     http.get(`${API}/org-units/U1/office-bearers`, () => HttpResponse.json(youth.office_bearers)),
+    http.get(`${API}/org-units/U1/memberships`, () =>
+      HttpResponse.json({
+        items: [{ id: 'MS1', org_unit: { id: 'U1', code: 'SOC-001', name: 'Youth Society' },
+          member: { id: 'M9', code: 'MEM000009', name: 'Anitha Mary' }, family: { id: 'F9', code: 'FAM000009', name: 'Selvaraj' },
+          gender: 'F', age: 19, joined_on: '2026-02-01', left_on: null, current: true, remarks: null }],
+        page: 1, size: 20, total: 1, pages: 1,
+      }),
+    ),
   );
 }
 
@@ -63,6 +71,11 @@ describe('organisations', () => {
     expect(screen.getByText(/grants Society Leader/)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Appoint office bearer' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'End term' })).toBeInTheDocument();
+    // Members card (memberships of the society)
+    expect(await screen.findByText('Anitha Mary · MEM000009')).toBeInTheDocument();
+    expect(screen.getByText(/Selvaraj · 19 years/)).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Add member' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'End membership' })).toBeInTheDocument();
   });
 
   it('shows the Tamil name of the type in Tamil', async () => {

@@ -13,6 +13,10 @@ import { DashboardPage } from '@/features/dashboard/DashboardPage';
 import { NotFoundPage } from '@/features/NotFoundPage';
 import { NotificationsPage } from '@/features/notifications/NotificationsPage';
 import { OrgTypesPage } from '@/features/org/OrgTypesPage';
+import { FamiliesPage } from '@/features/people/FamiliesPage';
+import { FamilyDetailPage } from '@/features/people/FamilyDetailPage';
+import { MembersPage } from '@/features/people/MembersPage';
+import { RegisterFamilyPage } from '@/features/people/RegisterFamilyPage';
 import { OrgUnitDetailPage } from '@/features/org/OrgUnitDetailPage';
 import { OrgUnitListPage } from '@/features/org/OrgUnitListPage';
 import { ScheduledModulePage } from '@/features/ScheduledModulePage';
@@ -47,6 +51,10 @@ export const routes: RouteObject[] = [
           { path: '/admin/roles', element: guarded('role.view', <RolesPage />) },
           { path: '/admin/roles/:roleId', element: guarded('role.view', <RoleDetailPage />) },
           { path: '/admin/audit', element: guarded('audit.view', <AuditLogPage />) },
+          { path: '/families', element: guarded('family.view', <FamiliesPage />) },
+          { path: '/families/new', element: guarded('family.create', <RegisterFamilyPage />) },
+          { path: '/families/:familyId', element: guarded('family.view', <FamilyDetailPage />) },
+          { path: '/members', element: guarded('member.view', <MembersPage />) },
           { path: '/admin/org-types', element: guarded('org_unit.update', <OrgTypesPage />) },
           { path: '/org/units/:unitId', element: guarded('org_unit.view', <OrgUnitDetailPage />) },
           { path: '/org/:typeCode', element: guarded('org_unit.view', <OrgUnitListPage />) },
