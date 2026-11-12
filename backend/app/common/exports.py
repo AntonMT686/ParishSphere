@@ -138,12 +138,23 @@ def to_xlsx(matrix: list[list[Any]], columns: Sequence[Column], title: str) -> b
 def _jinja_env():  # type: ignore[no-untyped-def]
     from jinja2 import Environment, FileSystemLoader, select_autoescape
 
-    return Environment(
+    env = Environment(
         loader=FileSystemLoader(str(TEMPLATE_DIR / "pdf")),
         autoescape=select_autoescape(["html"]),
         trim_blocks=True,
         lstrip_blocks=True,
     )
+    env.filters["css_string"] = css_string
+    return env
+
+
+def css_string(value: Any) -> Any:
+    """Text for a CSS ``content: "…"`` string: HTML entities are not decoded there, so the value is
+    CSS-escaped instead (quotes, backslashes and ``<`` cannot end the string or the style element)."""
+    from markupsafe import Markup
+
+    text = str(value or "")
+    return Markup("".join(ch if ch.isalnum() or ch in " .,-·()&'" else f"\\{ord(ch):06x}" for ch in text))  # noqa: S704 (escaped above)
 
 
 def render_pdf(template: str, context: dict[str, Any]) -> bytes:

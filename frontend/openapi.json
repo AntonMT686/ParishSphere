@@ -3509,6 +3509,57 @@
         }
       }
     },
+    "/api/v1/org-units/mine": {
+      "get": {
+        "tags": [
+          "organisations"
+        ],
+        "summary": "My Units",
+        "description": "Organisations the current user can act for with ``permission`` (for pickers in record forms).",
+        "operationId": "my_units_api_v1_org_units_mine_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "permission",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 80,
+              "description": "e.g. activity.create",
+              "title": "Permission"
+            },
+            "description": "e.g. activity.create"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MyUnitsOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/org-units/{unit_id}": {
       "get": {
         "tags": [
@@ -7540,6 +7591,2465 @@
         }
       }
     },
+    "/api/v1/activities/categories": {
+      "get": {
+        "tags": [
+          "activities"
+        ],
+        "summary": "Activity Categories",
+        "operationId": "activity_categories_api_v1_activities_categories_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array",
+                  "title": "Response Activity Categories Api V1 Activities Categories Get"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/activities": {
+      "get": {
+        "tags": [
+          "activities"
+        ],
+        "summary": "List Activities",
+        "operationId": "list_activities_api_v1_activities_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 100
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Q"
+            }
+          },
+          {
+            "name": "org_unit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 26
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Unit id, or PARISH",
+              "title": "Org Unit"
+            },
+            "description": "Unit id, or PARISH"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 100
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Status"
+            }
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 30
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Category"
+            }
+          },
+          {
+            "name": "date_from",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Date From"
+            }
+          },
+          {
+            "name": "date_to",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Date To"
+            }
+          },
+          {
+            "name": "mine",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Mine"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1,
+              "title": "Page"
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "default": 25,
+              "title": "Size"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 200
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "e.g. `name,-created_at`",
+              "title": "Sort"
+            },
+            "description": "e.g. `name,-created_at`"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Page_ActivityListOut_"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "activities"
+        ],
+        "summary": "Create Activity",
+        "operationId": "create_activity_api_v1_activities_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ActivityIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActivityOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/activities/export": {
+      "get": {
+        "tags": [
+          "activities"
+        ],
+        "summary": "Export Activities",
+        "operationId": "export_activities_api_v1_activities_export_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 100
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Q"
+            }
+          },
+          {
+            "name": "org_unit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 26
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Org Unit"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 100
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Status"
+            }
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 30
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Category"
+            }
+          },
+          {
+            "name": "date_from",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Date From"
+            }
+          },
+          {
+            "name": "date_to",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Date To"
+            }
+          },
+          {
+            "name": "format",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/ExportFormat",
+              "default": "xlsx"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/activities/{activity_id}": {
+      "get": {
+        "tags": [
+          "activities"
+        ],
+        "summary": "Get Activity",
+        "operationId": "get_activity_api_v1_activities__activity_id__get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "activity_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Activity Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActivityOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "activities"
+        ],
+        "summary": "Update Activity",
+        "operationId": "update_activity_api_v1_activities__activity_id__put",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "activity_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Activity Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ActivityUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActivityOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "activities"
+        ],
+        "summary": "Delete Activity",
+        "operationId": "delete_activity_api_v1_activities__activity_id__delete",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "activity_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Activity Id"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/activities/{activity_id}/submit": {
+      "post": {
+        "tags": [
+          "activities"
+        ],
+        "summary": "Submit Activity",
+        "operationId": "submit_activity_api_v1_activities__activity_id__submit_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "activity_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Activity Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubmitIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActivityOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/activities/{activity_id}/complete": {
+      "post": {
+        "tags": [
+          "activities"
+        ],
+        "summary": "Complete Activity",
+        "description": "Record what actually happened after an approved activity took place.",
+        "operationId": "complete_activity_api_v1_activities__activity_id__complete_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "activity_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Activity Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompleteIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActivityOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/activities/{activity_id}/cancel": {
+      "post": {
+        "tags": [
+          "activities"
+        ],
+        "summary": "Cancel Activity",
+        "operationId": "cancel_activity_api_v1_activities__activity_id__cancel_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "activity_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Activity Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReasonIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActivityOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/activities/{activity_id}/attachments": {
+      "get": {
+        "tags": [
+          "activities"
+        ],
+        "summary": "Activity Files",
+        "operationId": "activity_files_api_v1_activities__activity_id__attachments_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "activity_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Activity Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AttachmentOut"
+                  },
+                  "title": "Response Activity Files Api V1 Activities  Activity Id  Attachments Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "activities"
+        ],
+        "summary": "Add Activity File",
+        "operationId": "add_activity_file_api_v1_activities__activity_id__attachments_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "activity_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Activity Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_add_activity_file_api_v1_activities__activity_id__attachments_post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AttachmentOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/activities/{activity_id}/attachments/{file_id}": {
+      "delete": {
+        "tags": [
+          "activities"
+        ],
+        "summary": "Remove Activity File",
+        "operationId": "remove_activity_file_api_v1_activities__activity_id__attachments__file_id__delete",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "activity_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Activity Id"
+            }
+          },
+          {
+            "name": "file_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "File Id"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/meetings": {
+      "get": {
+        "tags": [
+          "meetings"
+        ],
+        "summary": "List Meetings",
+        "operationId": "list_meetings_api_v1_meetings_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 100
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Q"
+            }
+          },
+          {
+            "name": "org_unit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 26
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Org Unit"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 60
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Status"
+            }
+          },
+          {
+            "name": "when",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "pattern": "^(upcoming|past)$"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "When"
+            }
+          },
+          {
+            "name": "date_from",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Date From"
+            }
+          },
+          {
+            "name": "date_to",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Date To"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1,
+              "title": "Page"
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "default": 25,
+              "title": "Size"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 200
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "e.g. `name,-created_at`",
+              "title": "Sort"
+            },
+            "description": "e.g. `name,-created_at`"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Page_MeetingListOut_"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "meetings"
+        ],
+        "summary": "Create Meeting",
+        "operationId": "create_meeting_api_v1_meetings_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MeetingIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MeetingOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/meetings/export": {
+      "get": {
+        "tags": [
+          "meetings"
+        ],
+        "summary": "Export Meetings",
+        "operationId": "export_meetings_api_v1_meetings_export_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 100
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Q"
+            }
+          },
+          {
+            "name": "org_unit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 26
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Org Unit"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 60
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Status"
+            }
+          },
+          {
+            "name": "date_from",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Date From"
+            }
+          },
+          {
+            "name": "date_to",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Date To"
+            }
+          },
+          {
+            "name": "format",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/ExportFormat",
+              "default": "xlsx"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/meetings/{meeting_id}": {
+      "get": {
+        "tags": [
+          "meetings"
+        ],
+        "summary": "Get Meeting",
+        "operationId": "get_meeting_api_v1_meetings__meeting_id__get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "meeting_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Meeting Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MeetingOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "meetings"
+        ],
+        "summary": "Update Meeting",
+        "operationId": "update_meeting_api_v1_meetings__meeting_id__put",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "meeting_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Meeting Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MeetingIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MeetingOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "meetings"
+        ],
+        "summary": "Delete Meeting",
+        "operationId": "delete_meeting_api_v1_meetings__meeting_id__delete",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "meeting_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Meeting Id"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/meetings/{meeting_id}/cancel": {
+      "post": {
+        "tags": [
+          "meetings"
+        ],
+        "summary": "Cancel Meeting",
+        "operationId": "cancel_meeting_api_v1_meetings__meeting_id__cancel_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "meeting_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Meeting Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReasonIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MeetingOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/meetings/{meeting_id}/attendance": {
+      "get": {
+        "tags": [
+          "meetings"
+        ],
+        "summary": "Get Attendance",
+        "description": "Recorded attendance, or the organisation's current members as a starting list.",
+        "operationId": "get_attendance_api_v1_meetings__meeting_id__attendance_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "meeting_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Meeting Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AttendanceOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "meetings"
+        ],
+        "summary": "Save Attendance",
+        "operationId": "save_attendance_api_v1_meetings__meeting_id__attendance_put",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "meeting_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Meeting Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AttendanceIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AttendanceOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/meetings/{meeting_id}/minutes": {
+      "put": {
+        "tags": [
+          "meetings"
+        ],
+        "summary": "Save Minutes",
+        "operationId": "save_minutes_api_v1_meetings__meeting_id__minutes_put",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "meeting_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Meeting Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MinutesIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MeetingOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/meetings/{meeting_id}/minutes/submit": {
+      "post": {
+        "tags": [
+          "meetings"
+        ],
+        "summary": "Submit Minutes",
+        "operationId": "submit_minutes_api_v1_meetings__meeting_id__minutes_submit_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "meeting_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Meeting Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubmitIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MeetingOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/meetings/{meeting_id}/minutes.pdf": {
+      "get": {
+        "tags": [
+          "meetings"
+        ],
+        "summary": "Minutes Pdf",
+        "operationId": "minutes_pdf_api_v1_meetings__meeting_id__minutes_pdf_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "meeting_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Meeting Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/meetings/{meeting_id}/attachments": {
+      "get": {
+        "tags": [
+          "meetings"
+        ],
+        "summary": "Meeting Files",
+        "operationId": "meeting_files_api_v1_meetings__meeting_id__attachments_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "meeting_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Meeting Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AttachmentOut"
+                  },
+                  "title": "Response Meeting Files Api V1 Meetings  Meeting Id  Attachments Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "meetings"
+        ],
+        "summary": "Add Meeting File",
+        "operationId": "add_meeting_file_api_v1_meetings__meeting_id__attachments_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "meeting_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Meeting Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_add_meeting_file_api_v1_meetings__meeting_id__attachments_post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AttachmentOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/meetings/{meeting_id}/attachments/{file_id}": {
+      "delete": {
+        "tags": [
+          "meetings"
+        ],
+        "summary": "Remove Meeting File",
+        "operationId": "remove_meeting_file_api_v1_meetings__meeting_id__attachments__file_id__delete",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "meeting_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Meeting Id"
+            }
+          },
+          {
+            "name": "file_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "File Id"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/action-items": {
+      "get": {
+        "tags": [
+          "action items"
+        ],
+        "summary": "List Actions",
+        "description": "Action items in the user's organisations, plus every item the user is responsible for.",
+        "operationId": "list_actions_api_v1_action_items_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 100
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Q"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 60
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Status"
+            }
+          },
+          {
+            "name": "mine",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Mine"
+            }
+          },
+          {
+            "name": "overdue",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Overdue"
+            }
+          },
+          {
+            "name": "org_unit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 26
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Org Unit"
+            }
+          },
+          {
+            "name": "meeting",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 26
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Meeting"
+            }
+          },
+          {
+            "name": "activity",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 26
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Activity"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1,
+              "title": "Page"
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "default": 25,
+              "title": "Size"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 200
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "e.g. `name,-created_at`",
+              "title": "Sort"
+            },
+            "description": "e.g. `name,-created_at`"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Page_ActionItemOut_"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "action items"
+        ],
+        "summary": "Create Action",
+        "description": "Create from a meeting (needs meeting.update there), an activity (activity.update) or directly\n(action_item.create for the organisation).",
+        "operationId": "create_action_api_v1_action_items_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ActionIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionItemOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/action-items/summary": {
+      "get": {
+        "tags": [
+          "action items"
+        ],
+        "summary": "Action Summary",
+        "operationId": "action_summary_api_v1_action_items_summary_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": {
+                    "type": "integer"
+                  },
+                  "type": "object",
+                  "title": "Response Action Summary Api V1 Action Items Summary Get"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/action-items/export": {
+      "get": {
+        "tags": [
+          "action items"
+        ],
+        "summary": "Export Actions",
+        "operationId": "export_actions_api_v1_action_items_export_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 100
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Q"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 60
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Status"
+            }
+          },
+          {
+            "name": "overdue",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Overdue"
+            }
+          },
+          {
+            "name": "org_unit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 26
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Org Unit"
+            }
+          },
+          {
+            "name": "format",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/ExportFormat",
+              "default": "xlsx"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/action-items/{action_id}": {
+      "get": {
+        "tags": [
+          "action items"
+        ],
+        "summary": "Get Action",
+        "operationId": "get_action_api_v1_action_items__action_id__get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "action_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Action Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionItemOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "action items"
+        ],
+        "summary": "Update Action",
+        "operationId": "update_action_api_v1_action_items__action_id__patch",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "action_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Action Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ActionUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionItemOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/action-items/{action_id}/progress": {
+      "post": {
+        "tags": [
+          "action items"
+        ],
+        "summary": "Add Progress",
+        "description": "Progress note / status change by the person responsible or a coordinator.",
+        "operationId": "add_progress_api_v1_action_items__action_id__progress_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "action_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Action Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProgressIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionItemOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/calendar": {
+      "get": {
+        "tags": [
+          "calendar"
+        ],
+        "summary": "Calendar",
+        "description": "Activities and meetings between ``start`` and ``end`` (inclusive, at most 3 months).",
+        "operationId": "calendar_api_v1_calendar_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "start",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date",
+              "title": "Start"
+            }
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date",
+              "title": "End"
+            }
+          },
+          {
+            "name": "org_unit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 26
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Org Unit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CalendarEvent"
+                  },
+                  "title": "Response Calendar Api V1 Calendar Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/files/download": {
       "get": {
         "tags": [
@@ -7628,6 +10138,243 @@
           "action"
         ],
         "title": "ActIn"
+      },
+      "ActionIn": {
+        "properties": {
+          "title": {
+            "type": "string",
+            "maxLength": 255,
+            "minLength": 2,
+            "title": "Title"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 5000
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "org_unit_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 26
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Org Unit Id"
+          },
+          "meeting_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 26
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Meeting Id"
+          },
+          "activity_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 26
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Activity Id"
+          },
+          "owner_user_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 26
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Owner User Id"
+          },
+          "owner_name": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 200
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Owner Name"
+          },
+          "due_date": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Due Date"
+          }
+        },
+        "type": "object",
+        "required": [
+          "title"
+        ],
+        "title": "ActionIn"
+      },
+      "ActionItemOut": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "code": {
+            "type": "string",
+            "title": "Code"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "org_unit": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/UnitRef"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "source": {
+            "$ref": "#/components/schemas/SourceRef"
+          },
+          "owner": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/PersonRef"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "owner_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Owner Name"
+          },
+          "due_date": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Due Date"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "overdue": {
+            "type": "boolean",
+            "title": "Overdue"
+          },
+          "progress_pct": {
+            "type": "integer",
+            "title": "Progress Pct"
+          },
+          "completed_on": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Completed On"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          },
+          "updates": {
+            "items": {
+              "$ref": "#/components/schemas/ProgressOut"
+            },
+            "type": "array",
+            "title": "Updates"
+          },
+          "can_update": {
+            "type": "boolean",
+            "title": "Can Update"
+          },
+          "can_edit": {
+            "type": "boolean",
+            "title": "Can Edit"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "code",
+          "title",
+          "description",
+          "org_unit",
+          "source",
+          "owner",
+          "owner_name",
+          "due_date",
+          "status",
+          "overdue",
+          "progress_pct",
+          "completed_on",
+          "created_at",
+          "updates",
+          "can_update",
+          "can_edit"
+        ],
+        "title": "ActionItemOut"
       },
       "ActionOut": {
         "properties": {
@@ -7727,6 +10474,978 @@
           "created_at"
         ],
         "title": "ActionOut"
+      },
+      "ActionUpdate": {
+        "properties": {
+          "title": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 255,
+                "minLength": 2
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 5000
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "owner_user_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 26
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Owner User Id"
+          },
+          "owner_name": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 200
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Owner Name"
+          },
+          "due_date": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Due Date"
+          }
+        },
+        "type": "object",
+        "title": "ActionUpdate"
+      },
+      "Actions": {
+        "properties": {
+          "edit": {
+            "type": "boolean",
+            "title": "Edit",
+            "default": false
+          },
+          "submit": {
+            "type": "boolean",
+            "title": "Submit",
+            "default": false
+          },
+          "delete": {
+            "type": "boolean",
+            "title": "Delete",
+            "default": false
+          },
+          "complete": {
+            "type": "boolean",
+            "title": "Complete",
+            "default": false
+          },
+          "cancel": {
+            "type": "boolean",
+            "title": "Cancel",
+            "default": false
+          },
+          "attach": {
+            "type": "boolean",
+            "title": "Attach",
+            "default": false
+          }
+        },
+        "type": "object",
+        "title": "Actions",
+        "description": "What the current user may do with the record (UI hints; the API enforces)."
+      },
+      "ActivityIn": {
+        "properties": {
+          "org_unit_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 26
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Org Unit Id",
+            "description": "Omit for a parish-level activity"
+          },
+          "title": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 2,
+            "title": "Title"
+          },
+          "category": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 30
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Category"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 5000
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "activity_date": {
+            "type": "string",
+            "format": "date",
+            "title": "Activity Date"
+          },
+          "end_date": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "End Date"
+          },
+          "location": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 255
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Location"
+          },
+          "responsible_member_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 26
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Responsible Member Id"
+          },
+          "responsible_name": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 200
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Responsible Name"
+          },
+          "planned_details": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 10000
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Planned Details"
+          },
+          "actual_details": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 10000
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Actual Details"
+          },
+          "planned_amount": {
+            "anyOf": [
+              {
+                "type": "number",
+                "minimum": 0.0
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Planned Amount"
+          },
+          "actual_amount": {
+            "anyOf": [
+              {
+                "type": "number",
+                "minimum": 0.0
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Actual Amount"
+          },
+          "participant_count": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 100000.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Participant Count"
+          },
+          "remarks": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 5000
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Remarks"
+          },
+          "participants": {
+            "items": {
+              "$ref": "#/components/schemas/ParticipantIn"
+            },
+            "type": "array",
+            "maxItems": 500,
+            "title": "Participants"
+          }
+        },
+        "type": "object",
+        "required": [
+          "title",
+          "activity_date"
+        ],
+        "title": "ActivityIn"
+      },
+      "ActivityListOut": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "code": {
+            "type": "string",
+            "title": "Code"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "category": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Category"
+          },
+          "org_unit": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/UnitRef"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "activity_date": {
+            "type": "string",
+            "format": "date",
+            "title": "Activity Date"
+          },
+          "end_date": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "End Date"
+          },
+          "location": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Location"
+          },
+          "responsible": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Responsible"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "planned_amount": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Planned Amount"
+          },
+          "actual_amount": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Actual Amount"
+          },
+          "participant_count": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Participant Count"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "code",
+          "title",
+          "category",
+          "org_unit",
+          "activity_date",
+          "end_date",
+          "location",
+          "responsible",
+          "status",
+          "planned_amount",
+          "actual_amount",
+          "participant_count"
+        ],
+        "title": "ActivityListOut"
+      },
+      "ActivityOut": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "code": {
+            "type": "string",
+            "title": "Code"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "category": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Category"
+          },
+          "org_unit": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/UnitRef"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "activity_date": {
+            "type": "string",
+            "format": "date",
+            "title": "Activity Date"
+          },
+          "end_date": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "End Date"
+          },
+          "location": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Location"
+          },
+          "responsible": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Responsible"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "planned_amount": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Planned Amount"
+          },
+          "actual_amount": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Actual Amount"
+          },
+          "participant_count": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Participant Count"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "responsible_member": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/PersonRef"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "planned_details": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Planned Details"
+          },
+          "actual_details": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Actual Details"
+          },
+          "remarks": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Remarks"
+          },
+          "participants": {
+            "items": {
+              "$ref": "#/components/schemas/ParticipantOut"
+            },
+            "type": "array",
+            "title": "Participants"
+          },
+          "created_by": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Created By"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          },
+          "submitted_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Submitted At"
+          },
+          "approved_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Approved At"
+          },
+          "completed_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Completed At"
+          },
+          "approval_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Approval Id"
+          },
+          "can": {
+            "$ref": "#/components/schemas/Actions"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "code",
+          "title",
+          "category",
+          "org_unit",
+          "activity_date",
+          "end_date",
+          "location",
+          "responsible",
+          "status",
+          "planned_amount",
+          "actual_amount",
+          "participant_count",
+          "description",
+          "responsible_member",
+          "planned_details",
+          "actual_details",
+          "remarks",
+          "participants",
+          "created_by",
+          "created_at",
+          "submitted_at",
+          "approved_at",
+          "completed_at",
+          "approval_id",
+          "can"
+        ],
+        "title": "ActivityOut"
+      },
+      "ActivityUpdate": {
+        "properties": {
+          "org_unit_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 26
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Org Unit Id"
+          },
+          "title": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 2,
+            "title": "Title"
+          },
+          "category": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 30
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Category"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 5000
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "activity_date": {
+            "type": "string",
+            "format": "date",
+            "title": "Activity Date"
+          },
+          "end_date": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "End Date"
+          },
+          "location": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 255
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Location"
+          },
+          "responsible_member_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 26
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Responsible Member Id"
+          },
+          "responsible_name": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 200
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Responsible Name"
+          },
+          "planned_details": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 10000
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Planned Details"
+          },
+          "actual_details": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 10000
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Actual Details"
+          },
+          "planned_amount": {
+            "anyOf": [
+              {
+                "type": "number",
+                "minimum": 0.0
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Planned Amount"
+          },
+          "actual_amount": {
+            "anyOf": [
+              {
+                "type": "number",
+                "minimum": 0.0
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Actual Amount"
+          },
+          "participant_count": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 100000.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Participant Count"
+          },
+          "remarks": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 5000
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Remarks"
+          },
+          "participants": {
+            "items": {
+              "$ref": "#/components/schemas/ParticipantIn"
+            },
+            "type": "array",
+            "maxItems": 500,
+            "title": "Participants"
+          }
+        },
+        "type": "object",
+        "required": [
+          "title",
+          "activity_date"
+        ],
+        "title": "ActivityUpdate"
+      },
+      "AgendaIn": {
+        "properties": {
+          "title": {
+            "type": "string",
+            "maxLength": 255,
+            "minLength": 1,
+            "title": "Title"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 2000
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "presenter": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 200
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Presenter"
+          }
+        },
+        "type": "object",
+        "required": [
+          "title"
+        ],
+        "title": "AgendaIn"
+      },
+      "AgendaOut": {
+        "properties": {
+          "title": {
+            "type": "string",
+            "maxLength": 255,
+            "minLength": 1,
+            "title": "Title"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 2000
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "presenter": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 200
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Presenter"
+          },
+          "seq": {
+            "type": "integer",
+            "title": "Seq"
+          }
+        },
+        "type": "object",
+        "required": [
+          "title",
+          "seq"
+        ],
+        "title": "AgendaOut"
       },
       "AnbiyamHistoryOut": {
         "properties": {
@@ -8063,6 +11782,166 @@
           "remarks"
         ],
         "title": "AssignmentOut"
+      },
+      "AttachmentOut": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "filename": {
+            "type": "string",
+            "title": "Filename"
+          },
+          "content_type": {
+            "type": "string",
+            "title": "Content Type"
+          },
+          "size": {
+            "type": "integer",
+            "title": "Size"
+          },
+          "uploaded_by": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Uploaded By"
+          },
+          "uploaded_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Uploaded At"
+          },
+          "url": {
+            "type": "string",
+            "title": "Url"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "filename",
+          "content_type",
+          "size",
+          "uploaded_by",
+          "uploaded_at",
+          "url"
+        ],
+        "title": "AttachmentOut"
+      },
+      "AttendanceIn": {
+        "properties": {
+          "rows": {
+            "items": {
+              "$ref": "#/components/schemas/AttendanceRow"
+            },
+            "type": "array",
+            "maxItems": 1000,
+            "title": "Rows"
+          }
+        },
+        "type": "object",
+        "required": [
+          "rows"
+        ],
+        "title": "AttendanceIn"
+      },
+      "AttendanceOut": {
+        "properties": {
+          "recorded": {
+            "type": "boolean",
+            "title": "Recorded"
+          },
+          "rows": {
+            "items": {
+              "$ref": "#/components/schemas/AttendanceRow"
+            },
+            "type": "array",
+            "title": "Rows"
+          },
+          "present": {
+            "type": "integer",
+            "title": "Present"
+          },
+          "total": {
+            "type": "integer",
+            "title": "Total"
+          }
+        },
+        "type": "object",
+        "required": [
+          "recorded",
+          "rows",
+          "present",
+          "total"
+        ],
+        "title": "AttendanceOut"
+      },
+      "AttendanceRow": {
+        "properties": {
+          "member_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 26
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Member Id"
+          },
+          "family_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 26
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Family Id"
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Name"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "PRESENT",
+              "ABSENT",
+              "EXCUSED"
+            ],
+            "title": "Status",
+            "default": "PRESENT"
+          },
+          "remarks": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 255
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Remarks"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "title": "AttendanceRow"
       },
       "AuditLogOut": {
         "properties": {
@@ -8442,6 +12321,34 @@
         ],
         "title": "BearerOut"
       },
+      "Body_add_activity_file_api_v1_activities__activity_id__attachments_post": {
+        "properties": {
+          "file": {
+            "type": "string",
+            "format": "binary",
+            "title": "File"
+          }
+        },
+        "type": "object",
+        "required": [
+          "file"
+        ],
+        "title": "Body_add_activity_file_api_v1_activities__activity_id__attachments_post"
+      },
+      "Body_add_meeting_file_api_v1_meetings__meeting_id__attachments_post": {
+        "properties": {
+          "file": {
+            "type": "string",
+            "format": "binary",
+            "title": "File"
+          }
+        },
+        "type": "object",
+        "required": [
+          "file"
+        ],
+        "title": "Body_add_meeting_file_api_v1_meetings__meeting_id__attachments_post"
+      },
       "Body_upload_logo_api_v1_parish_profile_logo_post": {
         "properties": {
           "file": {
@@ -8556,6 +12463,90 @@
           "failed"
         ],
         "title": "BulkResult"
+      },
+      "CalendarEvent": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "ACTIVITY",
+              "MEETING"
+            ],
+            "title": "Kind"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "start": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Start"
+          },
+          "end": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "End"
+          },
+          "all_day": {
+            "type": "boolean",
+            "title": "All Day"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "org_unit": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/UnitRef"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "location": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Location"
+          },
+          "link": {
+            "type": "string",
+            "title": "Link"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "kind",
+          "title",
+          "start",
+          "end",
+          "all_day",
+          "status",
+          "org_unit",
+          "location",
+          "link"
+        ],
+        "title": "CalendarEvent"
       },
       "ChangeAnbiyamIn": {
         "properties": {
@@ -8673,6 +12664,64 @@
         },
         "type": "object",
         "title": "CommentIn"
+      },
+      "CompleteIn": {
+        "properties": {
+          "actual_details": {
+            "type": "string",
+            "maxLength": 10000,
+            "minLength": 2,
+            "title": "Actual Details"
+          },
+          "actual_amount": {
+            "anyOf": [
+              {
+                "type": "number",
+                "minimum": 0.0
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Actual Amount"
+          },
+          "participant_count": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 100000.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Participant Count"
+          },
+          "participants": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/ParticipantIn"
+                },
+                "type": "array",
+                "maxItems": 500
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Participants"
+          }
+        },
+        "type": "object",
+        "required": [
+          "actual_details"
+        ],
+        "title": "CompleteIn"
       },
       "Conditions": {
         "properties": {
@@ -10921,6 +14970,343 @@
         ],
         "title": "MeOut"
       },
+      "MeetingIn": {
+        "properties": {
+          "org_unit_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 26
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Org Unit Id"
+          },
+          "title": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 2,
+            "title": "Title"
+          },
+          "meeting_type": {
+            "type": "string",
+            "enum": [
+              "REGULAR",
+              "SPECIAL",
+              "GENERAL_BODY",
+              "EMERGENCY"
+            ],
+            "title": "Meeting Type",
+            "default": "REGULAR"
+          },
+          "scheduled_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Scheduled At",
+            "description": "Local date and time of the parish"
+          },
+          "ends_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ends At"
+          },
+          "location": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 255
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Location"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 5000
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "agenda": {
+            "items": {
+              "$ref": "#/components/schemas/AgendaIn"
+            },
+            "type": "array",
+            "maxItems": 50,
+            "title": "Agenda"
+          },
+          "notify": {
+            "type": "boolean",
+            "title": "Notify",
+            "default": true
+          }
+        },
+        "type": "object",
+        "required": [
+          "title",
+          "scheduled_at"
+        ],
+        "title": "MeetingIn"
+      },
+      "MeetingListOut": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "code": {
+            "type": "string",
+            "title": "Code"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "meeting_type": {
+            "type": "string",
+            "title": "Meeting Type"
+          },
+          "org_unit": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/UnitRef"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "scheduled_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Scheduled At"
+          },
+          "ends_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ends At"
+          },
+          "location": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Location"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "minutes_status": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Minutes Status"
+          },
+          "open_actions": {
+            "type": "integer",
+            "title": "Open Actions"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "code",
+          "title",
+          "meeting_type",
+          "org_unit",
+          "scheduled_at",
+          "ends_at",
+          "location",
+          "status",
+          "minutes_status",
+          "open_actions"
+        ],
+        "title": "MeetingListOut"
+      },
+      "MeetingOut": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "code": {
+            "type": "string",
+            "title": "Code"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "meeting_type": {
+            "type": "string",
+            "title": "Meeting Type"
+          },
+          "org_unit": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/UnitRef"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "scheduled_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Scheduled At"
+          },
+          "ends_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ends At"
+          },
+          "location": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Location"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "minutes_status": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Minutes Status"
+          },
+          "open_actions": {
+            "type": "integer",
+            "title": "Open Actions"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "agenda": {
+            "items": {
+              "$ref": "#/components/schemas/AgendaOut"
+            },
+            "type": "array",
+            "title": "Agenda"
+          },
+          "called_by": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Called By"
+          },
+          "cancel_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cancel Reason"
+          },
+          "minutes": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/MinutesOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "can": {
+            "$ref": "#/components/schemas/Actions"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "code",
+          "title",
+          "meeting_type",
+          "org_unit",
+          "scheduled_at",
+          "ends_at",
+          "location",
+          "status",
+          "minutes_status",
+          "open_actions",
+          "description",
+          "agenda",
+          "called_by",
+          "cancel_reason",
+          "minutes",
+          "can"
+        ],
+        "title": "MeetingOut"
+      },
       "MemberIn": {
         "properties": {
           "first_name": {
@@ -12131,6 +16517,146 @@
         ],
         "title": "MessageOut"
       },
+      "MinutesIn": {
+        "properties": {
+          "summary": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 20000
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Summary"
+          },
+          "points": {
+            "items": {
+              "$ref": "#/components/schemas/PointIn"
+            },
+            "type": "array",
+            "maxItems": 100,
+            "title": "Points"
+          },
+          "resolutions": {
+            "items": {
+              "$ref": "#/components/schemas/ResolutionIn"
+            },
+            "type": "array",
+            "maxItems": 100,
+            "title": "Resolutions"
+          }
+        },
+        "type": "object",
+        "title": "MinutesIn"
+      },
+      "MinutesOut": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "summary": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Summary"
+          },
+          "points": {
+            "items": {
+              "$ref": "#/components/schemas/PointIn"
+            },
+            "type": "array",
+            "title": "Points"
+          },
+          "resolutions": {
+            "items": {
+              "$ref": "#/components/schemas/ResolutionIn"
+            },
+            "type": "array",
+            "title": "Resolutions"
+          },
+          "recorded_by": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Recorded By"
+          },
+          "submitted_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Submitted At"
+          },
+          "approved_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Approved At"
+          },
+          "approval_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Approval Id"
+          },
+          "can_edit": {
+            "type": "boolean",
+            "title": "Can Edit"
+          },
+          "can_submit": {
+            "type": "boolean",
+            "title": "Can Submit"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "status",
+          "summary",
+          "points",
+          "resolutions",
+          "recorded_by",
+          "submitted_at",
+          "approved_at",
+          "approval_id",
+          "can_edit",
+          "can_submit"
+        ],
+        "title": "MinutesOut"
+      },
       "MoveMemberIn": {
         "properties": {
           "family_id": {
@@ -12206,6 +16732,28 @@
           "family_id"
         ],
         "title": "MoveMemberIn"
+      },
+      "MyUnitsOut": {
+        "properties": {
+          "parish": {
+            "type": "boolean",
+            "title": "Parish"
+          },
+          "units": {
+            "items": {
+              "$ref": "#/components/schemas/ScopedUnit"
+            },
+            "type": "array",
+            "title": "Units"
+          }
+        },
+        "type": "object",
+        "required": [
+          "parish",
+          "units"
+        ],
+        "title": "MyUnitsOut",
+        "description": "Where the current user may act with a permission: parish-level records and/or these units."
       },
       "NotificationOut": {
         "properties": {
@@ -12286,6 +16834,78 @@
           "created_at"
         ],
         "title": "NotificationOut"
+      },
+      "Page_ActionItemOut_": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/ActionItemOut"
+            },
+            "type": "array",
+            "title": "Items"
+          },
+          "page": {
+            "type": "integer",
+            "title": "Page"
+          },
+          "size": {
+            "type": "integer",
+            "title": "Size"
+          },
+          "total": {
+            "type": "integer",
+            "title": "Total"
+          },
+          "pages": {
+            "type": "integer",
+            "title": "Pages"
+          }
+        },
+        "type": "object",
+        "required": [
+          "items",
+          "page",
+          "size",
+          "total",
+          "pages"
+        ],
+        "title": "Page[ActionItemOut]"
+      },
+      "Page_ActivityListOut_": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/ActivityListOut"
+            },
+            "type": "array",
+            "title": "Items"
+          },
+          "page": {
+            "type": "integer",
+            "title": "Page"
+          },
+          "size": {
+            "type": "integer",
+            "title": "Size"
+          },
+          "total": {
+            "type": "integer",
+            "title": "Total"
+          },
+          "pages": {
+            "type": "integer",
+            "title": "Pages"
+          }
+        },
+        "type": "object",
+        "required": [
+          "items",
+          "page",
+          "size",
+          "total",
+          "pages"
+        ],
+        "title": "Page[ActivityListOut]"
       },
       "Page_AuditLogOut_": {
         "properties": {
@@ -12430,6 +17050,42 @@
           "pages"
         ],
         "title": "Page[InstanceSummary]"
+      },
+      "Page_MeetingListOut_": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/MeetingListOut"
+            },
+            "type": "array",
+            "title": "Items"
+          },
+          "page": {
+            "type": "integer",
+            "title": "Page"
+          },
+          "size": {
+            "type": "integer",
+            "title": "Size"
+          },
+          "total": {
+            "type": "integer",
+            "title": "Total"
+          },
+          "pages": {
+            "type": "integer",
+            "title": "Pages"
+          }
+        },
+        "type": "object",
+        "required": [
+          "items",
+          "page",
+          "size",
+          "total",
+          "pages"
+        ],
+        "title": "Page[MeetingListOut]"
       },
       "Page_MemberOut_": {
         "properties": {
@@ -13063,6 +17719,85 @@
         ],
         "title": "ParishStatusUpdate"
       },
+      "ParticipantIn": {
+        "properties": {
+          "member_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 26
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Member Id"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 200
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "role": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Role"
+          }
+        },
+        "type": "object",
+        "title": "ParticipantIn"
+      },
+      "ParticipantOut": {
+        "properties": {
+          "member_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Member Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "role": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Role"
+          }
+        },
+        "type": "object",
+        "required": [
+          "member_id",
+          "name",
+          "role"
+        ],
+        "title": "ParticipantOut"
+      },
       "PermissionModuleOut": {
         "properties": {
           "module": {
@@ -13118,6 +17853,24 @@
           "description"
         ],
         "title": "PermissionOut"
+      },
+      "PersonRef": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name"
+        ],
+        "title": "PersonRef"
       },
       "PlatformLoginIn": {
         "properties": {
@@ -13195,6 +17948,33 @@
           "is_active"
         ],
         "title": "PlatformUserOut"
+      },
+      "PointIn": {
+        "properties": {
+          "topic": {
+            "type": "string",
+            "maxLength": 255,
+            "minLength": 1,
+            "title": "Topic"
+          },
+          "discussion": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 10000
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Discussion"
+          }
+        },
+        "type": "object",
+        "required": [
+          "topic"
+        ],
+        "title": "PointIn"
       },
       "PositionIn": {
         "properties": {
@@ -14641,6 +19421,139 @@
         "type": "object",
         "title": "ProfileUpdate"
       },
+      "ProgressIn": {
+        "properties": {
+          "text": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 2000
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Text"
+          },
+          "progress_pct": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 100.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Progress Pct"
+          },
+          "status": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "OPEN",
+                  "IN_PROGRESS",
+                  "DONE",
+                  "CANCELLED"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Status"
+          }
+        },
+        "type": "object",
+        "title": "ProgressIn"
+      },
+      "ProgressOut": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "text": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Text"
+          },
+          "progress_pct": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Progress Pct"
+          },
+          "status": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Status"
+          },
+          "by": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "By"
+          },
+          "at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "text",
+          "progress_pct",
+          "status",
+          "by",
+          "at"
+        ],
+        "title": "ProgressOut"
+      },
+      "ReasonIn": {
+        "properties": {
+          "reason": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 255
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason"
+          }
+        },
+        "type": "object",
+        "title": "ReasonIn"
+      },
       "Ref": {
         "properties": {
           "id": {
@@ -14716,6 +19629,31 @@
           "new_password"
         ],
         "title": "ResetPasswordIn"
+      },
+      "ResolutionIn": {
+        "properties": {
+          "text": {
+            "type": "string",
+            "maxLength": 5000,
+            "minLength": 1,
+            "title": "Text"
+          },
+          "decision": {
+            "type": "string",
+            "enum": [
+              "PASSED",
+              "DEFERRED",
+              "REJECTED"
+            ],
+            "title": "Decision",
+            "default": "PASSED"
+          }
+        },
+        "type": "object",
+        "required": [
+          "text"
+        ],
+        "title": "ResolutionIn"
       },
       "RoleCreate": {
         "properties": {
@@ -14998,6 +19936,39 @@
         ],
         "title": "RuleOut"
       },
+      "ScopedUnit": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "code": {
+            "type": "string",
+            "title": "Code"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "type_code": {
+            "type": "string",
+            "title": "Type Code"
+          },
+          "type_name": {
+            "type": "string",
+            "title": "Type Name"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "code",
+          "name",
+          "type_code",
+          "type_name"
+        ],
+        "title": "ScopedUnit"
+      },
       "SessionOut": {
         "properties": {
           "id": {
@@ -15097,6 +20068,43 @@
           "member_id"
         ],
         "title": "SetHeadIn"
+      },
+      "SourceRef": {
+        "properties": {
+          "type": {
+            "type": "string",
+            "title": "Type"
+          },
+          "id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Id"
+          },
+          "title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title"
+          }
+        },
+        "type": "object",
+        "required": [
+          "type",
+          "id",
+          "title"
+        ],
+        "title": "SourceRef"
       },
       "SplitIn": {
         "properties": {
@@ -15430,6 +20438,24 @@
           "active"
         ],
         "title": "StatusIn"
+      },
+      "SubmitIn": {
+        "properties": {
+          "comment": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 2000
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Comment"
+          }
+        },
+        "type": "object",
+        "title": "SubmitIn"
       },
       "TaskBrief": {
         "properties": {
@@ -16411,6 +21437,29 @@
           "created_at"
         ],
         "title": "UnitOut"
+      },
+      "UnitRef": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "type_code": {
+            "type": "string",
+            "title": "Type Code"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "type_code"
+        ],
+        "title": "UnitRef"
       },
       "UnitUpdate": {
         "properties": {

@@ -210,3 +210,16 @@ def workflow_sla(
 
     for code, r in run_sla_sweep(only).items():
         typer.echo(f"{code}: {r['reminded']} reminded, {r['escalated']} escalated")
+
+
+@app.command("reminders")
+def reminders(
+    only: Annotated[list[str] | None, typer.Option("--only", help="Parish code(s)")] = None,
+) -> None:
+    """Send meeting and action-item reminders now (normally run hourly by Celery beat)."""
+    from app.modules.activities.tasks import run_all_reminders
+
+    for code, r in run_all_reminders(only).items():
+        typer.echo(
+            f"{code}: {r['meetings']} meeting reminder(s), {r['action_items']} action item reminder(s)"
+        )

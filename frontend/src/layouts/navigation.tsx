@@ -41,7 +41,7 @@ export const NAVIGATION: NavSection[] = [
     key: 'overview',
     items: [
       { key: 'dashboard', path: '/', icon: <DashboardIcon /> },
-      { key: 'calendar', path: '/calendar', icon: <EventIcon />, task: 'T11', permission: ['activity.view', 'meeting.view'] },
+      { key: 'calendar', path: '/calendar', icon: <EventIcon />, permission: ['activity.view', 'meeting.view'] },
     ],
   },
   {
@@ -57,9 +57,9 @@ export const NAVIGATION: NavSection[] = [
   {
     key: 'activities',
     items: [
-      { key: 'activityList', path: '/activities', icon: <ChecklistIcon />, task: 'T11', permission: 'activity.view' },
-      { key: 'meetings', path: '/meetings', icon: <EventIcon />, task: 'T11', permission: 'meeting.view' },
-      { key: 'actionItems', path: '/action-items', icon: <TaskIcon />, task: 'T11', permission: 'action_item.view' },
+      { key: 'activityList', path: '/activities', icon: <ChecklistIcon />, permission: 'activity.view' },
+      { key: 'meetings', path: '/meetings', icon: <EventIcon />, permission: 'meeting.view' },
+      { key: 'actionItems', path: '/action-items', icon: <TaskIcon /> },
     ],
   },
   {

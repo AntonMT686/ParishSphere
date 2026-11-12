@@ -173,3 +173,18 @@ class UnitUpdate(BaseModel):
     meeting_schedule: str | None = Field(default=None, max_length=255)
     contact_phone: str | None = Field(default=None, max_length=30)
     contact_email: EmailStr | None = None
+
+
+class ScopedUnit(BaseModel):
+    id: str
+    code: str
+    name: str
+    type_code: str
+    type_name: str
+
+
+class MyUnitsOut(BaseModel):
+    """Where the current user may act with a permission: parish-level records and/or these units."""
+
+    parish: bool
+    units: list[ScopedUnit]

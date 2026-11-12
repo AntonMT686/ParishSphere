@@ -32,3 +32,12 @@ export function timeAgo(value: string): string {
 export function formatMoney(value: string | number, currency = 'INR'): string {
   return new Intl.NumberFormat(locale(), { style: 'currency', currency }).format(Number(value));
 }
+
+/** Format a local wall-clock value from the API (e.g. a meeting time stored in parish time, no zone). */
+export function formatWallTime(value?: string | null, withDate = true): string {
+  if (!value) return '—';
+  const d = new Date(value.replace(/[zZ]$/, ''));
+  return withDate
+    ? d.toLocaleString(locale(), { dateStyle: 'medium', timeStyle: 'short' })
+    : d.toLocaleTimeString(locale(), { timeStyle: 'short' });
+}

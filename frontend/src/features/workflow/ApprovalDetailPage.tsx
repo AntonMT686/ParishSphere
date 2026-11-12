@@ -40,7 +40,7 @@ function Fact({ label, children }: { label: string; children: ReactNode }) {
 }
 
 /** Approve / return / reject / delegate a pending task (own, or on someone's behalf for administrators). */
-export function DecisionPanel({ instance }: { instance: WorkflowInstance }) {
+export function DecisionPanel({ instance, onDecided }: { instance: WorkflowInstance; onDecided?: () => void }) {
   const { t } = useTranslation();
   const { toast, toastError, confirm } = useFeedback();
   const invalidate = useInvalidate();
@@ -57,6 +57,7 @@ export function DecisionPanel({ instance }: { instance: WorkflowInstance }) {
       })).data,
     onSuccess: (inst, action) => {
       invalidate(inst);
+      onDecided?.();
       toast(t(`workflow.done.${action}`));
       setComment('');
       setDelegating(false);

@@ -7,7 +7,7 @@
   @page {
     size: A4 {{ 'landscape' if landscape else 'portrait' }};
     margin: 16mm 12mm 18mm 12mm;
-    @bottom-left { content: "{{ parish_name }} · ParishSphere"; font-size: 8pt; color: #5B6075; }
+    @bottom-left { content: "{{ parish_name|css_string }} · ParishSphere"; font-size: 8pt; color: #5B6075; }
     @bottom-right { content: "Page " counter(page) " of " counter(pages); font-size: 8pt; color: #5B6075; }
   }
   * { box-sizing: border-box; }

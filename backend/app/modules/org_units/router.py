@@ -29,9 +29,11 @@ from app.modules.org_units.schemas import (
     BearerCreate,
     BearerEnd,
     BearerOut,
+    MyUnitsOut,
     PositionIn,
     PositionOut,
     PositionUpdate,
+    ScopedUnit,
     TypeCreate,
     TypeOut,
     TypeUpdate,
@@ -483,6 +485,33 @@ def create_unit(body: UnitCreate, request: Request, auth: Auth, _: CanCreate, db
         new={**body.model_dump(mode="json"), "code": code},
     )
     return _unit_out(db, u, auth)
+
+
+@units_router.get("/mine", response_model=MyUnitsOut)
+def my_units(
+    auth: Auth,
+    db: TenantSession,
+    permission: Annotated[str, Query(max_length=80, description="e.g. activity.create")],
+) -> MyUnitsOut:
+    """Organisations the current user can act for with ``permission`` (for pickers in record forms)."""
+    from app.modules.rbac.catalog import ALL_PERMISSIONS
+
+    if permission not in ALL_PERMISSIONS:
+        raise ValidationFailed(details=[{"field": "permission", "message": "Unknown permission"}])
+    scope = auth.permissions.scope(permission)
+    stmt = (
+        select(OrgUnit)
+        .join(OrgUnitType, OrgUnitType.id == OrgUnit.type_id)
+        .where(OrgUnit.is_deleted.is_(False), OrgUnit.status == "ACTIVE", scope.filter(OrgUnit.id))
+        .order_by(OrgUnitType.sort_order, OrgUnit.name)
+    )
+    return MyUnitsOut(
+        parish=scope.parish_wide,
+        units=[
+            ScopedUnit(id=u.public_id, code=u.code, name=u.name, type_code=u.type.code, type_name=u.type.name)
+            for u in db.scalars(stmt)
+        ],
+    )
 
 
 @units_router.get("/{unit_id}", response_model=UnitOut)

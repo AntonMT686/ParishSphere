@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block style %}
+  h2 { font-size: 11pt; color: #2F3E9E; margin: 14px 0 4px; border-bottom: 1px solid #C9CDE6; padding-bottom: 2px; }
+  .facts td { border: 0; padding: 2px 8px 2px 0; }
+  .facts td.k { color: #5B6075; width: 30mm; }
+  p, li { line-height: 1.45; }
+  .names { columns: 2; }
+  .draft { position: fixed; top: 110mm; left: 0; right: 0; text-align: center; font-size: 60pt; color: rgba(47,62,158,.07);
+           transform: rotate(-30deg); }
+  .sign { margin-top: 28px; display: flex; justify-content: space-between; }
+  .sign div { width: 45%; border-top: 1px solid #1B1F3B; padding-top: 4px; color: #5B6075; font-size: 8pt; }
+  .decision { font-size: 8pt; color: #5B6075; }
+{% endblock %}
+{% block content %}
+{% if draft %}<div class="draft">DRAFT</div>{% endif %}
+<table class="facts">
+  <tr><td class="k">Organisation</td><td>{{ organisation }}</td></tr>
+  <tr><td class="k">Meeting</td><td>{{ meeting.code }} · {{ meeting.title }}</td></tr>
+  <tr><td class="k">Date &amp; time</td><td>{{ when }}</td></tr>
+  {% if meeting.location %}<tr><td class="k">Place</td><td>{{ meeting.location }}</td></tr>{% endif %}
+  <tr><td class="k">Status</td><td>{{ minutes.status|replace('_', ' ')|title }}{% if minutes.approved_at %} on {{ minutes.approved_at.strftime('%d %b %Y') }}{% endif %}</td></tr>
+</table>
+
+{% if present or excused or absent %}
+<h2>Attendance</h2>
+<p><strong>Present ({{ present|length }}):</strong> {{ present|join(', ') or '—' }}</p>
+{% if excused %}<p><strong>Excused ({{ excused|length }}):</strong> {{ excused|join(', ') }}</p>{% endif %}
+{% if absent %}<p><strong>Absent ({{ absent|length }}):</strong> {{ absent|join(', ') }}</p>{% endif %}
+{% endif %}
+
+{% if meeting.agenda %}
+<h2>Agenda</h2>
+<ol>{% for a in meeting.agenda %}<li>{{ a.title }}{% if a.presenter %} — {{ a.presenter }}{% endif %}</li>{% endfor %}</ol>
+{% endif %}
+
+{% if minutes.summary %}
+<h2>Summary</h2>
+{% for para in minutes.summary.split('\n') if para.strip() %}<p>{{ para }}</p>{% endfor %}
+{% endif %}
+
+{% if minutes.points %}
+<h2>Discussion</h2>
+<ol>{% for p in minutes.points %}<li><strong>{{ p.topic }}</strong>{% if p.discussion %}<br>{{ p.discussion }}{% endif %}</li>{% endfor %}</ol>
+{% endif %}
+
+{% if minutes.resolutions %}
+<h2>Resolutions</h2>
+<ol>{% for r in minutes.resolutions %}<li>{{ r.text }} <span class="decision">({{ r.decision|title }})</span></li>{% endfor %}</ol>
+{% endif %}
+
+{% if actions %}
+<h2>Action items</h2>
+<table>
+  <thead><tr><th>ID</th><th>Action</th><th>Responsible</th><th>Due</th><th>Status</th></tr></thead>
+  <tbody>
+  {% for a in actions %}
+    <tr><td>{{ a.code }}</td><td>{{ a.title }}</td><td>{{ a.owner_name or '—' }}</td>
+        <td>{{ a.due_date.strftime('%d %b %Y') if a.due_date else '—' }}</td><td>{{ a.status|replace('_', ' ')|title }}</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endif %}
+
+<div class="sign">
+  <div>Recorded by{% if recorded_by %}: {{ recorded_by }}{% endif %}</div>
+  <div>Approved by</div>
+</div>
+{% endblock %}

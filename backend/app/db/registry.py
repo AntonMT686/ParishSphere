@@ -4,6 +4,9 @@ and every module that registers seeders or session hooks."""
 from __future__ import annotations
 
 import app.master.models
+import app.modules.activities.models
+import app.modules.activities.service  # workflow handlers
+import app.modules.attachments.models
 import app.modules.core.models
 import app.modules.identity.models
 import app.modules.notifications.models
@@ -21,6 +24,9 @@ from app.db.base import MasterBase, TenantBase
 
 LOADED_MODULES = (
     app.master.models,
+    app.modules.activities.models,
+    app.modules.activities.service,
+    app.modules.attachments.models,
     app.modules.core.models,
     app.modules.identity.models,
     app.modules.notifications.models,

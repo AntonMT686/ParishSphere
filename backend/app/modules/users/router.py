@@ -175,9 +175,28 @@ class UserLookupOut(BaseModel):
     full_name: str
 
 
+# Anyone who assigns people in forms: office bearers, action items, delegations of approvals.
+LOOKUP_PERMISSIONS = (
+    "user.view",
+    "org_unit.manage_members",
+    "action_item.create",
+    "action_item.update",
+    "activity.review",
+    "activity.approve",
+    "meeting.review",
+    "meeting.approve",
+    "finance.review",
+    "finance.approve",
+    "notice.review",
+    "notice.approve",
+    "finance_period.approve",
+    "workflow.manage",
+)
+
+
 @router.get("/lookup", response_model=list[UserLookupOut])
 def lookup_users(
-    _: Annotated[list[PermissionScope], Depends(require_any("user.view", "org_unit.manage_members"))],
+    _: Annotated[list[PermissionScope], Depends(require_any(*LOOKUP_PERMISSIONS))],
     db: TenantSession,
     q: Annotated[str, Query(min_length=2, max_length=100)],
 ) -> list[UserLookupOut]:

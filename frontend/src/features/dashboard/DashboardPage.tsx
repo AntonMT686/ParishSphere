@@ -15,6 +15,7 @@ import { useTranslation } from 'react-i18next';
 import { useTenantBranding } from '@/api/tenant';
 import { EmptyState, PageHeader, StatCard } from '@/design-system';
 import { useClergy } from '@/features/parish/api';
+import { DashboardAgenda } from './DashboardAgenda';
 
 /** Role-based dashboard shell; live widgets are wired in T14 once module APIs exist. */
 export function DashboardPage() {
@@ -62,6 +63,7 @@ export function DashboardPage() {
             <StatCard label={t(`dashboard.${s.key}`)} value="—" icon={s.icon} tone={s.tone} loading={isLoading} />
           </Grid>
         ))}
+        <DashboardAgenda />
         <Grid size={12}>
           <Card>
             <EmptyState icon={<InsightsIcon />} title={t('nav.dashboard')} description={t('dashboard.comingSoon')} />

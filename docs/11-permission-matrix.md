@@ -65,10 +65,10 @@ Scope: **PARISH** = parish-wide only; **ORG_UNIT** = assigned for one organisati
 | `priest.create` — Add priests | ✓ | ✓ |  |  |  |  |  |  |  |  |  |  |  |  |  |
 | `priest.update` — Edit priests and assignments | ✓ | ✓ |  |  |  |  |  |  |  |  |  |  |  |  |  |
 | `activity.view` — View activities | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |  |  |
-| `activity.create` — Record activities |  | ✓ |  |  |  | ✓ | ✓ |  | ✓ | ✓ | ✓ |  |  |  |  |
-| `activity.update` — Edit activities |  | ✓ |  |  |  | ✓ | ✓ |  | ✓ | ✓ | ✓ |  |  |  |  |
-| `activity.delete` — Delete draft activities |  | ✓ |  |  |  | ✓ | ✓ |  | ✓ | ✓ | ✓ |  |  |  |  |
-| `activity.submit` — Submit activities for approval |  | ✓ |  |  |  | ✓ | ✓ |  | ✓ | ✓ | ✓ |  |  |  |  |
+| `activity.create` — Record activities |  | ✓ | ✓ | ✓ |  | ✓ | ✓ |  | ✓ | ✓ | ✓ |  |  |  |  |
+| `activity.update` — Edit activities |  | ✓ | ✓ | ✓ |  | ✓ | ✓ |  | ✓ | ✓ | ✓ |  |  |  |  |
+| `activity.delete` — Delete draft activities |  | ✓ |  | ✓ |  | ✓ | ✓ |  | ✓ | ✓ | ✓ |  |  |  |  |
+| `activity.submit` — Submit activities for approval |  | ✓ | ✓ | ✓ |  | ✓ | ✓ |  | ✓ | ✓ | ✓ |  |  |  |  |
 | `activity.review` — Review activities |  | ✓ | ✓ | ✓ |  | ✓ |  |  | ✓ | ✓ | ✓ | ✓ |  |  |  |
 | `activity.approve` — Approve activities |  | ✓ |  |  |  |  |  |  |  |  |  |  | ✓ |  |  |
 | `activity.reject` — Reject activities |  | ✓ |  |  |  |  |  |  |  |  |  |  | ✓ |  |  |

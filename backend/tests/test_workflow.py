@@ -22,6 +22,7 @@ from app.modules.notifications.models import Notification
 from app.modules.org_units import service as org_svc
 from app.modules.org_units.models import OrgUnit
 from app.modules.rbac.service import assign_role, role_by_code
+from app.modules.workflow import registry
 from app.modules.workflow import service as wf
 from app.modules.workflow.models import WorkflowDefinition, WorkflowInstance, WorkflowTask
 from app.modules.workflow.registry import WorkflowHandler, register_handler, unregister_handler
@@ -54,6 +55,7 @@ def calls(tenant: TenantDescriptor) -> Iterator[list[tuple[str, str]]]:
     """Record handler callbacks; afterwards switch off every workflow a test defined."""
     counter().reset()
     seen: list[tuple[str, str]] = []
+    previous = registry._HANDLERS.get("ACTIVITY")
 
     def cb(name: str):  # type: ignore[no-untyped-def]
         return lambda _db, inst: seen.append((name, inst.entity_id))
@@ -70,6 +72,8 @@ def calls(tenant: TenantDescriptor) -> Iterator[list[tuple[str, str]]]:
     )
     yield seen
     unregister_handler("ACTIVITY")
+    if previous is not None:
+        register_handler("ACTIVITY", previous)
     with tenant_session_scope(tenant) as s:
         s.execute(
             update(WorkflowDefinition).where(WorkflowDefinition.is_system.is_(False)).values(is_active=False)

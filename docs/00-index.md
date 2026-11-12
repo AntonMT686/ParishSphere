@@ -19,5 +19,6 @@
 | 13 | [Organisations](13-organisations.md) | Configurable council/committees/Anbiyam/Sabai/societies, office bearers → roles |
 | 14 | [Families & Members](14-families-members.md) | Parish register, life events with history, duplicates, scoping, memberships |
 | 15 | [Parish Profile & Priests](15-parish-priests.md) | Parish settings & branding, priests, assignment history with handover dates, role sync |
+| 16 | [Activities, Meetings & Action Items](16-activities-meetings.md) | Activities with approval, meetings, attendance, minutes & PDF, action items, calendar, reminders |
 
 Living documents: update them in the same PR as the code that changes the behaviour they describe.

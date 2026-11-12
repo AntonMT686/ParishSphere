@@ -1,6 +1,13 @@
 import { createBrowserRouter, Outlet, type RouteObject } from 'react-router-dom';
 import { RedirectIfAuthenticated, RequireAuth, RequirePermission } from '@/auth/guards';
 import { ProfilePage } from '@/features/account/ProfilePage';
+import { ActionItemsPage } from '@/features/activities/ActionItemsPage';
+import { ActivitiesPage } from '@/features/activities/ActivitiesPage';
+import { ActivityDetailPage } from '@/features/activities/ActivityDetailPage';
+import { ActivityFormPage } from '@/features/activities/ActivityFormPage';
+import { CalendarPage } from '@/features/activities/CalendarPage';
+import { MeetingDetailPage } from '@/features/activities/MeetingDetailPage';
+import { MeetingsPage } from '@/features/activities/MeetingsPage';
 import { AuditLogPage } from '@/features/admin/AuditLogPage';
 import { RoleDetailPage } from '@/features/admin/RoleDetailPage';
 import { RolesPage } from '@/features/admin/RolesPage';
@@ -66,6 +73,14 @@ export const routes: RouteObject[] = [
           { path: '/admin/priests', element: guarded('priest.view', <PriestsPage />) },
           { path: '/admin/priests/:priestId', element: guarded('priest.view', <PriestDetailPage />) },
           { path: '/admin/settings', element: guarded('settings.view', <ParishSettingsPage />) },
+          { path: '/calendar', element: guarded(['activity.view', 'meeting.view'], <CalendarPage />) },
+          { path: '/activities', element: guarded('activity.view', <ActivitiesPage />) },
+          { path: '/activities/new', element: guarded('activity.create', <ActivityFormPage />) },
+          { path: '/activities/:activityId', element: guarded('activity.view', <ActivityDetailPage />) },
+          { path: '/activities/:activityId/edit', element: guarded('activity.update', <ActivityFormPage />) },
+          { path: '/meetings', element: guarded('meeting.view', <MeetingsPage />) },
+          { path: '/meetings/:meetingId', element: guarded('meeting.view', <MeetingDetailPage />) },
+          { path: '/action-items', element: <ActionItemsPage /> },
           { path: '/approvals', element: <MyApprovalsPage /> },
           { path: '/approvals/submitted', element: <SubmittedPage /> },
           { path: '/approvals/:instanceId', element: <ApprovalDetailPage /> },
