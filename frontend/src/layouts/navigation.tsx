@@ -72,9 +72,9 @@ export const NAVIGATION: NavSection[] = [
   {
     key: 'finance',
     items: [
-      { key: 'transactions', path: '/finance/transactions', icon: <ReceiptIcon />, task: 'T12', permission: 'finance.view' },
-      { key: 'statements', path: '/finance/statements', icon: <AssessmentIcon />, task: 'T12', permission: 'finance_period.view' },
-      { key: 'accounts', path: '/finance/accounts', icon: <AccountBalanceIcon />, task: 'T12', permission: 'finance.view' },
+      { key: 'transactions', path: '/finance/transactions', icon: <ReceiptIcon />, permission: ['finance.view', 'finance.create'] },
+      { key: 'statements', path: '/finance/statements', icon: <AssessmentIcon />, permission: 'finance_period.view' },
+      { key: 'accounts', path: '/finance/accounts', icon: <AccountBalanceIcon />, permission: ['finance.view', 'finance.configure'] },
     ],
   },
   {

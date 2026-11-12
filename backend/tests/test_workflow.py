@@ -55,7 +55,10 @@ def calls(tenant: TenantDescriptor) -> Iterator[list[tuple[str, str]]]:
     """Record handler callbacks; afterwards switch off every workflow a test defined."""
     counter().reset()
     seen: list[tuple[str, str]] = []
-    previous = registry._HANDLERS.get("ACTIVITY")
+    previous = {k: registry._HANDLERS.get(k) for k in ("ACTIVITY", "FIN_TRANSACTION", "FIN_PERIOD")}
+    # Engine tests use made-up records: the real finance handlers would look them up.
+    for k in ("FIN_TRANSACTION", "FIN_PERIOD"):
+        register_handler(k, WorkflowHandler())
 
     def cb(name: str):  # type: ignore[no-untyped-def]
         return lambda _db, inst: seen.append((name, inst.entity_id))
@@ -71,9 +74,10 @@ def calls(tenant: TenantDescriptor) -> Iterator[list[tuple[str, str]]]:
         ),
     )
     yield seen
-    unregister_handler("ACTIVITY")
-    if previous is not None:
-        register_handler("ACTIVITY", previous)
+    for k, h in previous.items():
+        unregister_handler(k)
+        if h is not None:
+            register_handler(k, h)
     with tenant_session_scope(tenant) as s:
         s.execute(
             update(WorkflowDefinition).where(WorkflowDefinition.is_system.is_(False)).values(is_active=False)

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block style %}
+  .box { border: 1.5px solid #2F3E9E; border-radius: 6px; padding: 14px 16px; margin-top: 6px; }
+  .row { display: flex; justify-content: space-between; margin: 6px 0; font-size: 10.5pt; }
+  .amount { font-size: 18pt; font-weight: 700; color: #2F3E9E; margin: 10px 0; }
+  .k { color: #5B6075; }
+  .sign { margin-top: 36px; text-align: right; color: #5B6075; font-size: 8.5pt; }
+  .sign span { display: inline-block; border-top: 1px solid #1B1F3B; padding-top: 4px; min-width: 55mm; text-align: center; }
+{% endblock %}
+{% block content %}
+<div class="box">
+  <div class="row"><span><span class="k">Receipt no.</span> <strong>{{ code }}</strong></span><span><span class="k">Date</span> {{ date }}</span></div>
+  <div class="row"><span class="k">Received from</span><span>{{ payer or '—' }}{% if family %} ({{ family }}){% endif %}</span></div>
+  <div class="row"><span class="k">Towards</span><span>{{ category }}{% if org_unit %} · {{ org_unit }}{% endif %}</span></div>
+  <div class="row"><span class="k">Particulars</span><span>{{ description }}</span></div>
+  <div class="row"><span class="k">Paid by</span><span>{{ method }}{% if reference %} · Ref. {{ reference }}{% endif %}</span></div>
+  <div class="amount">{{ inr(amount) }}</div>
+  <div class="k">Approved {{ approved_on }}{% if approved_by %} by {{ approved_by }}{% endif %}</div>
+</div>
+<div class="sign"><span>For {{ parish_name }}</span></div>
+{% endblock %}

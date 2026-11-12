@@ -93,6 +93,7 @@ PERMISSION_CATALOG: dict[str, dict[str, str]] = {
         "approve": "Approve transactions",
         "reject": "Reject transactions",
         "export": "Export financial reports",
+        "configure": "Manage accounts and categories",
     },
     "finance_period": {
         "view": "View monthly periods and statements",

@@ -9,6 +9,11 @@ import { CalendarPage } from '@/features/activities/CalendarPage';
 import { MeetingDetailPage } from '@/features/activities/MeetingDetailPage';
 import { MeetingsPage } from '@/features/activities/MeetingsPage';
 import { AuditLogPage } from '@/features/admin/AuditLogPage';
+import { AccountsPage } from '@/features/finance/AccountsPage';
+import { StatementPage } from '@/features/finance/StatementPage';
+import { StatementsPage } from '@/features/finance/StatementsPage';
+import { TransactionDetailPage } from '@/features/finance/TransactionDetailPage';
+import { TransactionsPage } from '@/features/finance/TransactionsPage';
 import { RoleDetailPage } from '@/features/admin/RoleDetailPage';
 import { RolesPage } from '@/features/admin/RolesPage';
 import { UsersPage } from '@/features/admin/UsersPage';
@@ -81,6 +86,11 @@ export const routes: RouteObject[] = [
           { path: '/meetings', element: guarded('meeting.view', <MeetingsPage />) },
           { path: '/meetings/:meetingId', element: guarded('meeting.view', <MeetingDetailPage />) },
           { path: '/action-items', element: <ActionItemsPage /> },
+          { path: '/finance/transactions', element: guarded(['finance.view', 'finance.create'], <TransactionsPage />) },
+          { path: '/finance/transactions/:txnId', element: guarded(['finance.view', 'finance.create'], <TransactionDetailPage />) },
+          { path: '/finance/accounts', element: guarded(['finance.view', 'finance.configure'], <AccountsPage />) },
+          { path: '/finance/statements', element: guarded('finance_period.view', <StatementsPage />) },
+          { path: '/finance/statements/:periodKey', element: guarded('finance_period.view', <StatementPage />) },
           { path: '/approvals', element: <MyApprovalsPage /> },
           { path: '/approvals/submitted', element: <SubmittedPage /> },
           { path: '/approvals/:instanceId', element: <ApprovalDetailPage /> },

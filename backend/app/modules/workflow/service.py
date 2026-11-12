@@ -416,6 +416,7 @@ def submit(
     comment: str | None = None,
 ) -> WorkflowInstance:
     """Start the approval of a record. Raises ``NO_WORKFLOW_CONFIGURED`` / ``ALREADY_SUBMITTED``."""
+    db.info["tenant"] = tenant  # handlers that need it (e.g. statement generation) read it from the session
     if entity_type not in ENTITY_TYPES:
         raise ValidationFailed(f"Unknown workflow entity type {entity_type!r}")
     if active_instance(db, entity_type, entity_id) is not None:
@@ -469,6 +470,7 @@ def act(
     override: bool = False,
 ) -> WorkflowInstance:
     """Record a reviewer's decision. ``override`` lets an administrator act on someone else's task."""
+    db.info["tenant"] = tenant
     action = action.upper()
     if action not in DECISIONS:
         raise ValidationFailed(f"Unknown action {action!r}")
@@ -567,6 +569,7 @@ def resubmit(
 ) -> WorkflowInstance:
     """Send a returned record back for approval: a new cycle starting at the first stage (same
     definition snapshot)."""
+    db.info["tenant"] = tenant
     inst = _lock(db, inst.id)
     if inst.status != "REWORK":
         raise Conflict("Only records returned for rework can be resubmitted", code="INVALID_STATE")
@@ -592,6 +595,7 @@ def resubmit(
 def withdraw(
     db: Session, tenant: TenantDescriptor, inst: WorkflowInstance, actor_id: int, comment: str | None = None
 ) -> WorkflowInstance:
+    db.info["tenant"] = tenant
     inst = _lock(db, inst.id)
     if inst.status not in ACTIVE:
         raise Conflict("This approval has already finished", code="INVALID_STATE")

@@ -1833,6 +1833,327 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/finance/accounts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Accounts
+         * @description Accounts the user may use (their organisations' and, with a parish-wide grant, the parish's).
+         */
+        get: operations["list_accounts_api_v1_finance_accounts_get"];
+        put?: never;
+        /** Create Account */
+        post: operations["create_account_api_v1_finance_accounts_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/finance/accounts/{account_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Update Account */
+        patch: operations["update_account_api_v1_finance_accounts__account_id__patch"];
+        trace?: never;
+    };
+    "/api/v1/finance/categories": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Categories */
+        get: operations["list_categories_api_v1_finance_categories_get"];
+        put?: never;
+        /** Create Category */
+        post: operations["create_category_api_v1_finance_categories_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/finance/categories/{category_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Update Category */
+        patch: operations["update_category_api_v1_finance_categories__category_id__patch"];
+        trace?: never;
+    };
+    "/api/v1/finance/transactions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Transactions */
+        get: operations["list_transactions_api_v1_finance_transactions_get"];
+        put?: never;
+        /** Create Transaction */
+        post: operations["create_transaction_api_v1_finance_transactions_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/finance/transactions/export": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Export Transactions */
+        get: operations["export_transactions_api_v1_finance_transactions_export_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/finance/transactions/{txn_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Transaction */
+        get: operations["get_transaction_api_v1_finance_transactions__txn_id__get"];
+        /** Update Transaction */
+        put: operations["update_transaction_api_v1_finance_transactions__txn_id__put"];
+        post?: never;
+        /** Delete Transaction */
+        delete: operations["delete_transaction_api_v1_finance_transactions__txn_id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/finance/transactions/{txn_id}/submit": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Submit Transaction */
+        post: operations["submit_transaction_api_v1_finance_transactions__txn_id__submit_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/finance/transactions/{txn_id}/receipt.pdf": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Transaction Receipt */
+        get: operations["transaction_receipt_api_v1_finance_transactions__txn_id__receipt_pdf_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/finance/transactions/{txn_id}/attachments": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Txn Files */
+        get: operations["txn_files_api_v1_finance_transactions__txn_id__attachments_get"];
+        put?: never;
+        /** Add Txn File */
+        post: operations["add_txn_file_api_v1_finance_transactions__txn_id__attachments_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/finance/transactions/{txn_id}/attachments/{file_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Remove Txn File */
+        delete: operations["remove_txn_file_api_v1_finance_transactions__txn_id__attachments__file_id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/finance/periods": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Periods
+         * @description Months with entries or statements (newest first), plus the current month.
+         */
+        get: operations["list_periods_api_v1_finance_periods_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/finance/periods/{key}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Period */
+        get: operations["get_period_api_v1_finance_periods__key__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/finance/periods/{key}/close": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Close Period */
+        post: operations["close_period_api_v1_finance_periods__key__close_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/finance/periods/{key}/release": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Release Period */
+        post: operations["release_period_api_v1_finance_periods__key__release_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/finance/periods/{key}/reopen": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Reopen Period */
+        post: operations["reopen_period_api_v1_finance_periods__key__reopen_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/finance/statements/{statement_id}/download": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Download Statement */
+        get: operations["download_statement_api_v1_finance_statements__statement_id__download_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/finance/summary": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Summary
+         * @description Totals for the dashboard: this month and the financial year to date, within the user's scope.
+         */
+        get: operations["summary_api_v1_finance_summary_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/activities/categories": {
         parameters: {
             query?: never;
@@ -2312,6 +2633,80 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /** AccountIn */
+        AccountIn: {
+            /** Code */
+            code: string;
+            /** Name */
+            name: string;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "CASH" | "BANK" | "DIGITAL";
+            /** Org Unit Id */
+            org_unit_id?: string | null;
+            /** Bank Name */
+            bank_name?: string | null;
+            /**
+             * Account Number Masked
+             * @description e.g. XXXX1234
+             */
+            account_number_masked?: string | null;
+            /**
+             * Opening Balance
+             * @default 0
+             */
+            opening_balance: number | string;
+            /**
+             * Opening Date
+             * Format: date
+             */
+            opening_date: string;
+        };
+        /** AccountOut */
+        AccountOut: {
+            /** Id */
+            id: string;
+            /** Code */
+            code: string;
+            /** Name */
+            name: string;
+            /** Kind */
+            kind: string;
+            org_unit: components["schemas"]["FinRef"] | null;
+            /** Bank Name */
+            bank_name: string | null;
+            /** Account Number Masked */
+            account_number_masked: string | null;
+            /** Opening Balance */
+            opening_balance: string;
+            /**
+             * Opening Date
+             * Format: date
+             */
+            opening_date: string;
+            /** Is Active */
+            is_active: boolean;
+            /**
+             * Balance
+             * @description Approved balance today
+             */
+            balance: string | null;
+            /** Pending */
+            pending: number;
+        };
+        /** AccountUpdate */
+        AccountUpdate: {
+            /** Name */
+            name?: string | null;
+            /** Bank Name */
+            bank_name?: string | null;
+            /** Account Number Masked */
+            account_number_masked?: string | null;
+            /** Is Active */
+            is_active?: boolean | null;
+        };
         /** ActIn */
         ActIn: {
             /**
@@ -2931,6 +3326,14 @@ export interface components {
              */
             file: string;
         };
+        /** Body_add_txn_file_api_v1_finance_transactions__txn_id__attachments_post */
+        Body_add_txn_file_api_v1_finance_transactions__txn_id__attachments_post: {
+            /**
+             * File
+             * Format: binary
+             */
+            file: string;
+        };
         /** Body_upload_logo_api_v1_parish_profile_logo_post */
         Body_upload_logo_api_v1_parish_profile_logo_post: {
             /**
@@ -2997,6 +3400,55 @@ export interface components {
             location: string | null;
             /** Link */
             link: string;
+        };
+        /** CategoryIn */
+        CategoryIn: {
+            /** Code */
+            code: string;
+            /** Name */
+            name: string;
+            /** Name Local */
+            name_local?: string | null;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "INCOME" | "EXPENSE";
+            /**
+             * Sort Order
+             * @default 100
+             */
+            sort_order: number;
+        };
+        /** CategoryOut */
+        CategoryOut: {
+            /** Id */
+            id: string;
+            /** Code */
+            code: string;
+            /** Name */
+            name: string;
+            /** Name Local */
+            name_local: string | null;
+            /** Kind */
+            kind: string;
+            /** Sort Order */
+            sort_order: number;
+            /** Is Active */
+            is_active: boolean;
+            /** Is System */
+            is_system: boolean;
+        };
+        /** CategoryUpdate */
+        CategoryUpdate: {
+            /** Name */
+            name?: string | null;
+            /** Name Local */
+            name_local?: string | null;
+            /** Sort Order */
+            sort_order?: number | null;
+            /** Is Active */
+            is_active?: boolean | null;
         };
         /** ChangeAnbiyamIn */
         ChangeAnbiyamIn: {
@@ -3278,6 +3730,13 @@ export interface components {
             /** Status */
             status?: string | null;
         };
+        /** DownloadOut */
+        DownloadOut: {
+            /** Url */
+            url: string;
+            /** Filename */
+            filename: string;
+        };
         /** DuplicateCheckIn */
         DuplicateCheckIn: {
             /** Family Name */
@@ -3496,6 +3955,13 @@ export interface components {
             previous_diocese?: string | null;
             /** Remarks */
             remarks?: string | null;
+        };
+        /** FinRef */
+        FinRef: {
+            /** Id */
+            id: string;
+            /** Name */
+            name: string;
         };
         /** ForgotPasswordIn */
         ForgotPasswordIn: {
@@ -4253,6 +4719,19 @@ export interface components {
             /** Pages */
             pages: number;
         };
+        /** Page[TxnListOut] */
+        Page_TxnListOut_: {
+            /** Items */
+            items: components["schemas"]["TxnListOut"][];
+            /** Page */
+            page: number;
+            /** Size */
+            size: number;
+            /** Total */
+            total: number;
+            /** Pages */
+            pages: number;
+        };
         /** Page[UnitOut] */
         Page_UnitOut_: {
             /** Items */
@@ -4388,6 +4867,68 @@ export interface components {
             name: string;
             /** Role */
             role: string | null;
+        };
+        /** PeriodListOut */
+        PeriodListOut: {
+            /**
+             * Key
+             * @description YYYY-MM
+             */
+            key: string;
+            /** Label */
+            label: string;
+            /** Status */
+            status: string;
+            /** Income */
+            income: string;
+            /** Expense */
+            expense: string;
+            /** Closing */
+            closing: string | null;
+            /** Pending */
+            pending: number;
+            /** Versions */
+            versions: number;
+        };
+        /** PeriodOut */
+        PeriodOut: {
+            /** Id */
+            id: string;
+            /** Key */
+            key: string;
+            /** Label */
+            label: string;
+            /** Status */
+            status: string;
+            /**
+             * Live
+             * @description True: figures computed now; False: from the generated statement
+             */
+            live: boolean;
+            /** Snapshot */
+            snapshot: {
+                [key: string]: unknown;
+            };
+            /** Statements */
+            statements: components["schemas"]["StatementVersion"][];
+            /** Submitted At */
+            submitted_at: string | null;
+            /** Approved At */
+            approved_at: string | null;
+            /** Released At */
+            released_at: string | null;
+            /** Released By */
+            released_by: string | null;
+            /** Revision Reason */
+            revision_reason: string | null;
+            /** Approval Id */
+            approval_id: string | null;
+            /** Can Close */
+            can_close: boolean;
+            /** Can Release */
+            can_release: boolean;
+            /** Can Reopen */
+            can_reopen: boolean;
         };
         /** PermissionModuleOut */
         PermissionModuleOut: {
@@ -4853,6 +5394,11 @@ export interface components {
             /** Reason */
             reason?: string | null;
         };
+        /** ReopenIn */
+        ReopenIn: {
+            /** Reason */
+            reason: string;
+        };
         /** ResetPasswordIn */
         ResetPasswordIn: {
             /** Token */
@@ -5127,6 +5673,28 @@ export interface components {
             /** Tasks */
             tasks: components["schemas"]["TaskBrief"][];
         };
+        /** StatementVersion */
+        StatementVersion: {
+            /** Id */
+            id: string;
+            /** Version */
+            version: number;
+            /**
+             * Generated At
+             * Format: date-time
+             */
+            generated_at: string;
+            /** Generated By */
+            generated_by: string | null;
+            /** Released At */
+            released_at: string | null;
+            /** Is Current */
+            is_current: boolean;
+            /** Revision Reason */
+            revision_reason: string | null;
+            /** Sha256 */
+            sha256: string;
+        };
         /** StatusIn */
         StatusIn: {
             /** Active */
@@ -5138,6 +5706,30 @@ export interface components {
         SubmitIn: {
             /** Comment */
             comment?: string | null;
+        };
+        /** SummaryOut */
+        SummaryOut: {
+            /** Month */
+            month: string;
+            /** Income */
+            income: string;
+            /** Expense */
+            expense: string;
+            /** Fy Label */
+            fy_label: string;
+            /** Fy Income */
+            fy_income: string;
+            /** Fy Expense */
+            fy_expense: string;
+            /** Pending Entries */
+            pending_entries: number;
+            /**
+             * Balance
+             * @description Total approved balance of the accounts you can see
+             */
+            balance: string | null;
+            /** Last Released */
+            last_released: string | null;
         };
         /** TaskBrief */
         TaskBrief: {
@@ -5251,6 +5843,145 @@ export interface components {
             effective_date?: string | null;
             /** Reason */
             reason?: string | null;
+        };
+        /** TxnIn */
+        TxnIn: {
+            /**
+             * Txn Date
+             * Format: date
+             */
+            txn_date: string;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "INCOME" | "EXPENSE" | "TRANSFER";
+            /** Org Unit Id */
+            org_unit_id?: string | null;
+            /** Category Id */
+            category_id?: string | null;
+            /** Account Id */
+            account_id: string;
+            /** To Account Id */
+            to_account_id?: string | null;
+            /** Amount */
+            amount: number | string;
+            /**
+             * Payment Method
+             * @default CASH
+             * @enum {string}
+             */
+            payment_method: "CASH" | "CHEQUE" | "BANK_TRANSFER" | "UPI" | "CARD" | "ONLINE";
+            /** Reference No */
+            reference_no?: string | null;
+            /** Description */
+            description: string;
+            /** Payer Payee */
+            payer_payee?: string | null;
+            /** Family Id */
+            family_id?: string | null;
+            /**
+             * Adjusts Transaction Id
+             * @description Entry being corrected
+             */
+            adjusts_transaction_id?: string | null;
+        };
+        /** TxnListOut */
+        TxnListOut: {
+            /** Id */
+            id: string;
+            /** Code */
+            code: string;
+            /**
+             * Txn Date
+             * Format: date
+             */
+            txn_date: string;
+            /** Kind */
+            kind: string;
+            category: components["schemas"]["FinRef"] | null;
+            account: components["schemas"]["FinRef"];
+            to_account: components["schemas"]["FinRef"] | null;
+            org_unit: components["schemas"]["FinRef"] | null;
+            /** Amount */
+            amount: string;
+            /** Payment Method */
+            payment_method: string;
+            /** Description */
+            description: string;
+            /** Payer Payee */
+            payer_payee: string | null;
+            /** Status */
+            status: string;
+            /** Is Correction */
+            is_correction: boolean;
+        };
+        /** TxnOut */
+        TxnOut: {
+            /** Id */
+            id: string;
+            /** Code */
+            code: string;
+            /**
+             * Txn Date
+             * Format: date
+             */
+            txn_date: string;
+            /** Kind */
+            kind: string;
+            category: components["schemas"]["FinRef"] | null;
+            account: components["schemas"]["FinRef"];
+            to_account: components["schemas"]["FinRef"] | null;
+            org_unit: components["schemas"]["FinRef"] | null;
+            /** Amount */
+            amount: string;
+            /** Payment Method */
+            payment_method: string;
+            /** Description */
+            description: string;
+            /** Payer Payee */
+            payer_payee: string | null;
+            /** Status */
+            status: string;
+            /** Is Correction */
+            is_correction: boolean;
+            /** Reference No */
+            reference_no: string | null;
+            family: components["schemas"]["FinRef"] | null;
+            /** Period */
+            period: string;
+            /** Period Status */
+            period_status: string;
+            adjusts: components["schemas"]["FinRef"] | null;
+            /** Corrections */
+            corrections: components["schemas"]["FinRef"][];
+            /** Entered By */
+            entered_by: string | null;
+            /** Reviewed By */
+            reviewed_by: string | null;
+            /** Approved By */
+            approved_by: string | null;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Submitted At */
+            submitted_at: string | null;
+            /** Approved At */
+            approved_at: string | null;
+            /** Approval Id */
+            approval_id: string | null;
+            /** Can Edit */
+            can_edit: boolean;
+            /** Can Submit */
+            can_submit: boolean;
+            /** Can Delete */
+            can_delete: boolean;
+            /** Can Correct */
+            can_correct: boolean;
+            /** Can Attach */
+            can_attach: boolean;
         };
         /** TypeCreate */
         TypeCreate: {
@@ -9724,6 +10455,793 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_accounts_api_v1_finance_accounts_get: {
+        parameters: {
+            query?: {
+                include_inactive?: boolean;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AccountOut"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_account_api_v1_finance_accounts_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AccountIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AccountOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_account_api_v1_finance_accounts__account_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                account_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AccountUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AccountOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_categories_api_v1_finance_categories_get: {
+        parameters: {
+            query?: {
+                include_inactive?: boolean;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CategoryOut"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_category_api_v1_finance_categories_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CategoryIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CategoryOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_category_api_v1_finance_categories__category_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                category_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CategoryUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CategoryOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_transactions_api_v1_finance_transactions_get: {
+        parameters: {
+            query?: {
+                q?: string | null;
+                kind?: string | null;
+                status?: string | null;
+                category?: string | null;
+                account?: string | null;
+                org_unit?: string | null;
+                date_from?: string | null;
+                date_to?: string | null;
+                period?: string | null;
+                page?: number;
+                size?: number;
+                /** @description e.g. `name,-created_at` */
+                sort?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Page_TxnListOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_transaction_api_v1_finance_transactions_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TxnIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TxnOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    export_transactions_api_v1_finance_transactions_export_get: {
+        parameters: {
+            query?: {
+                q?: string | null;
+                kind?: string | null;
+                status?: string | null;
+                category?: string | null;
+                account?: string | null;
+                org_unit?: string | null;
+                date_from?: string | null;
+                date_to?: string | null;
+                period?: string | null;
+                format?: components["schemas"]["ExportFormat"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_transaction_api_v1_finance_transactions__txn_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                txn_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TxnOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_transaction_api_v1_finance_transactions__txn_id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                txn_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TxnIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TxnOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_transaction_api_v1_finance_transactions__txn_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                txn_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    submit_transaction_api_v1_finance_transactions__txn_id__submit_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                txn_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SubmitIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TxnOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    transaction_receipt_api_v1_finance_transactions__txn_id__receipt_pdf_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                txn_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    txn_files_api_v1_finance_transactions__txn_id__attachments_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                txn_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AttachmentOut"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    add_txn_file_api_v1_finance_transactions__txn_id__attachments_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                txn_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["Body_add_txn_file_api_v1_finance_transactions__txn_id__attachments_post"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AttachmentOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    remove_txn_file_api_v1_finance_transactions__txn_id__attachments__file_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                txn_id: string;
+                file_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_periods_api_v1_finance_periods_get: {
+        parameters: {
+            query?: {
+                year?: number | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PeriodListOut"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_period_api_v1_finance_periods__key__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                key: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PeriodOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    close_period_api_v1_finance_periods__key__close_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                key: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SubmitIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PeriodOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    release_period_api_v1_finance_periods__key__release_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                key: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PeriodOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    reopen_period_api_v1_finance_periods__key__reopen_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                key: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReopenIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PeriodOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    download_statement_api_v1_finance_statements__statement_id__download_get: {
+        parameters: {
+            query?: {
+                format?: string;
+            };
+            header?: never;
+            path: {
+                statement_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DownloadOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    summary_api_v1_finance_summary_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SummaryOut"];
                 };
             };
         };

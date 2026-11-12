@@ -97,6 +97,7 @@ Scope: **PARISH** = parish-wide only; **ORG_UNIT** = assigned for one organisati
 | `finance.approve` — Approve transactions |  | ✓ |  |  |  |  |  |  |  |  |  |  | ✓ |  |  |
 | `finance.reject` — Reject transactions |  | ✓ |  |  | ✓ |  |  |  |  |  |  |  | ✓ |  |  |
 | `finance.export` — Export financial reports |  | ✓ |  |  | ✓ |  |  |  |  |  |  |  |  |  |  |
+| `finance.configure` — Manage accounts and categories |  | ✓ |  |  | ✓ |  |  |  |  |  |  |  |  |  |  |
 | `finance_period.view` — View monthly periods and statements |  | ✓ | ✓ |  | ✓ |  |  |  |  |  |  |  | ✓ |  |  |
 | `finance_period.submit` — Close a month and submit the statement |  | ✓ |  |  | ✓ |  |  |  |  |  |  |  |  |  |  |
 | `finance_period.approve` — Approve monthly statements |  | ✓ |  |  |  |  |  |  |  |  |  |  | ✓ |  |  |

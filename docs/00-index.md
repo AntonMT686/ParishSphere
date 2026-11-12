@@ -20,5 +20,6 @@
 | 14 | [Families & Members](14-families-members.md) | Parish register, life events with history, duplicates, scoping, memberships |
 | 15 | [Parish Profile & Priests](15-parish-priests.md) | Parish settings & branding, priests, assignment history with handover dates, role sync |
 | 16 | [Activities, Meetings & Action Items](16-activities-meetings.md) | Activities with approval, meetings, attendance, minutes & PDF, action items, calendar, reminders |
+| 17 | [Finance & Monthly Statements](17-finance.md) | Accounts, categories, one ledger with approval, corrections, receipts, month close → approve → release → revise |
 
 Living documents: update them in the same PR as the code that changes the behaviour they describe.

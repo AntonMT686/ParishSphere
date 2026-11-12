@@ -16,6 +16,7 @@ import { useTenantBranding } from '@/api/tenant';
 import { EmptyState, PageHeader, StatCard } from '@/design-system';
 import { useClergy } from '@/features/parish/api';
 import { DashboardAgenda } from './DashboardAgenda';
+import { DashboardFinance } from './DashboardFinance';
 
 /** Role-based dashboard shell; live widgets are wired in T14 once module APIs exist. */
 export function DashboardPage() {
@@ -64,6 +65,7 @@ export function DashboardPage() {
           </Grid>
         ))}
         <DashboardAgenda />
+        <DashboardFinance />
         <Grid size={12}>
           <Card>
             <EmptyState icon={<InsightsIcon />} title={t('nav.dashboard')} description={t('dashboard.comingSoon')} />
