@@ -199,3 +199,14 @@ def create_parish_user(
 
 if __name__ == "__main__":
     app()
+
+
+@app.command("workflow-sla")
+def workflow_sla(
+    only: Annotated[list[str] | None, typer.Option("--only", help="Parish code(s)")] = None,
+) -> None:
+    """Send reminders for overdue approval tasks and escalate them (normally run by Celery beat)."""
+    from app.modules.workflow.tasks import run_sla_sweep
+
+    for code, r in run_sla_sweep(only).items():
+        typer.echo(f"{code}: {r['reminded']} reminded, {r['escalated']} escalated")

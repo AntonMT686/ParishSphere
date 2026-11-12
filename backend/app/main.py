@@ -30,6 +30,7 @@ from app.modules.people.router import members as members_router
 from app.modules.people.router import memberships as memberships_router
 from app.modules.rbac.router import router as roles_router
 from app.modules.users.router import router as users_router
+from app.modules.workflow.router import router as workflow_router
 from app.tenancy.router import router as tenant_router
 
 log = structlog.get_logger("app.request")
@@ -130,6 +131,7 @@ def create_app() -> FastAPI:
     app.include_router(members_router, prefix=API_PREFIX)
     app.include_router(parish_router, prefix=API_PREFIX)
     app.include_router(priests_router, prefix=API_PREFIX)
+    app.include_router(workflow_router, prefix=API_PREFIX)
     app.include_router(files_router, prefix=API_PREFIX)
     return app
 

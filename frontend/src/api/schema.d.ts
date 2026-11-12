@@ -1520,6 +1520,299 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/workflow/entity-types": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Entity Types */
+        get: operations["entity_types_api_v1_workflow_entity_types_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/workflow/definitions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Definitions */
+        get: operations["list_definitions_api_v1_workflow_definitions_get"];
+        put?: never;
+        /** Create Definition */
+        post: operations["create_definition_api_v1_workflow_definitions_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/workflow/definitions/{definition_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Definition */
+        get: operations["get_definition_api_v1_workflow_definitions__definition_id__get"];
+        /**
+         * New Version
+         * @description Save changes as a new version. Approvals already running keep the version they started with.
+         */
+        put: operations["new_version_api_v1_workflow_definitions__definition_id__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/workflow/definitions/{definition_id}/{state}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Set Active */
+        post: operations["set_active_api_v1_workflow_definitions__definition_id___state__post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/workflow/preview": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Preview
+         * @description Who would approve such a record now – for the selected workflow or for unsaved stages.
+         */
+        post: operations["preview_api_v1_workflow_preview_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/workflow/tasks": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * My Tasks
+         * @description My Approvals: tasks assigned to me (pending) or decided by me (done).
+         */
+        get: operations["my_tasks_api_v1_workflow_tasks_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/workflow/tasks/summary": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Task Summary */
+        get: operations["task_summary_api_v1_workflow_tasks_summary_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/workflow/tasks/{task_id}/act": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Act */
+        post: operations["act_api_v1_workflow_tasks__task_id__act_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/workflow/tasks/bulk-approve": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Bulk Approve
+         * @description Approve several of my own pending tasks; each is decided independently.
+         */
+        post: operations["bulk_approve_api_v1_workflow_tasks_bulk_approve_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/workflow/instances": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Instances
+         * @description Submitted by me (default) or, with ``mine=false``, every approval (needs workflow.view).
+         */
+        get: operations["list_instances_api_v1_workflow_instances_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/workflow/instances/{instance_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Instance */
+        get: operations["get_instance_api_v1_workflow_instances__instance_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/workflow/entities/{entity_type}/{entity_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Entity History
+         * @description Every approval run of one record, newest first (for the ApprovalTimeline component).
+         */
+        get: operations["entity_history_api_v1_workflow_entities__entity_type___entity_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/workflow/instances/{instance_id}/withdraw": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Withdraw */
+        post: operations["withdraw_api_v1_workflow_instances__instance_id__withdraw_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/workflow/instances/{instance_id}/resubmit": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Resubmit */
+        post: operations["resubmit_api_v1_workflow_instances__instance_id__resubmit_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/workflow/delegations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Delegations */
+        get: operations["list_delegations_api_v1_workflow_delegations_get"];
+        put?: never;
+        /** Create Delegation */
+        post: operations["create_delegation_api_v1_workflow_delegations_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/workflow/delegations/{delegation_id}/end": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** End Delegation */
+        post: operations["end_delegation_api_v1_workflow_delegations__delegation_id__end_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/files/download": {
         parameters: {
             query?: never;
@@ -1544,6 +1837,42 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /** ActIn */
+        ActIn: {
+            /**
+             * Action
+             * @enum {string}
+             */
+            action: "APPROVE" | "REJECT" | "RETURN" | "DELEGATE";
+            /** Comment */
+            comment?: string | null;
+            /** Delegate User Id */
+            delegate_user_id?: string | null;
+        };
+        /** ActionOut */
+        ActionOut: {
+            /** Id */
+            id: number;
+            /** Action */
+            action: string;
+            actor: components["schemas"]["WorkflowRef"] | null;
+            on_behalf_of: components["schemas"]["WorkflowRef"] | null;
+            /** Comment */
+            comment: string | null;
+            /** Cycle */
+            cycle: number;
+            /** Stage Name */
+            stage_name: string | null;
+            /** Prev Status */
+            prev_status: string | null;
+            /** New Status */
+            new_status: string | null;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+        };
         /** AnbiyamHistoryOut */
         AnbiyamHistoryOut: {
             anbiyam: components["schemas"]["Ref"];
@@ -1583,6 +1912,29 @@ export interface components {
              * @default false
              */
             relieve_current: boolean;
+        };
+        /** AssigneeRule */
+        AssigneeRule: {
+            /**
+             * Type
+             * @enum {string}
+             */
+            type: "ROLE" | "POSITION" | "USER";
+            /** Role */
+            role?: string | null;
+            /** Position */
+            position?: string | null;
+            /**
+             * Scope
+             * @default PARISH
+             * @enum {string}
+             */
+            scope: "PARISH" | "SAME_ORG_UNIT" | "PARENT_ORG_UNIT";
+            /**
+             * User Id
+             * @description User public id (type USER)
+             */
+            user_id?: string | null;
         };
         /** AssignmentCreate */
         AssignmentCreate: {
@@ -1765,6 +2117,22 @@ export interface components {
             /** Link */
             link?: string | null;
         };
+        /** BulkApproveIn */
+        BulkApproveIn: {
+            /** Task Ids */
+            task_ids: string[];
+            /** Comment */
+            comment?: string | null;
+        };
+        /** BulkResult */
+        BulkResult: {
+            /** Approved */
+            approved: string[];
+            /** Failed */
+            failed: {
+                [key: string]: string;
+            }[];
+        };
         /** ChangeAnbiyamIn */
         ChangeAnbiyamIn: {
             /**
@@ -1798,6 +2166,27 @@ export interface components {
                 [key: string]: string;
             }[];
         };
+        /** CommentIn */
+        CommentIn: {
+            /** Comment */
+            comment?: string | null;
+        };
+        /** Conditions */
+        Conditions: {
+            /** Org Unit Types */
+            org_unit_types?: string[] | null;
+            /**
+             * Parish Level
+             * @description true: only parish-level records
+             */
+            parish_level?: boolean | null;
+            /** Categories */
+            categories?: string[] | null;
+            /** Min Amount */
+            min_amount?: number | null;
+            /** Max Amount */
+            max_amount?: number | null;
+        };
         /** DeceasedIn */
         DeceasedIn: {
             /**
@@ -1807,6 +2196,121 @@ export interface components {
             date_of_death: string;
             /** Remarks */
             remarks?: string | null;
+        };
+        /** DefinitionIn */
+        DefinitionIn: {
+            /** Entity Type */
+            entity_type: string;
+            /** Name */
+            name: string;
+            /** Description */
+            description?: string | null;
+            /**
+             * Priority
+             * @default 0
+             */
+            priority: number;
+            conditions?: components["schemas"]["Conditions"];
+            /** Stages */
+            stages: components["schemas"]["StageIn"][];
+        };
+        /** DefinitionOut */
+        DefinitionOut: {
+            /** Id */
+            id: string;
+            /** Code */
+            code: string;
+            /** Version */
+            version: number;
+            /** Is Latest */
+            is_latest: boolean;
+            /** Is Active */
+            is_active: boolean;
+            /** Entity Type */
+            entity_type: string;
+            /** Entity Label */
+            entity_label: string;
+            /** Name */
+            name: string;
+            /** Description */
+            description: string | null;
+            /** Priority */
+            priority: number;
+            conditions: components["schemas"]["Conditions"];
+            /** Stages */
+            stages: components["schemas"]["StageOut"][];
+            /** Is System */
+            is_system: boolean;
+            /**
+             * Running
+             * @description Approvals in progress that started with this code
+             */
+            running: number;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+        };
+        /** DefinitionUpdate */
+        DefinitionUpdate: {
+            /** Name */
+            name: string;
+            /** Description */
+            description?: string | null;
+            /**
+             * Priority
+             * @default 0
+             */
+            priority: number;
+            conditions?: components["schemas"]["Conditions"];
+            /** Stages */
+            stages: components["schemas"]["StageIn"][];
+        };
+        /** DelegationIn */
+        DelegationIn: {
+            /** Delegate User Id */
+            delegate_user_id: string;
+            /**
+             * Delegator User Id
+             * @description Administrators only
+             */
+            delegator_user_id?: string | null;
+            /** Valid From */
+            valid_from?: string | null;
+            /** Valid To */
+            valid_to?: string | null;
+            /** Entity Types */
+            entity_types?: string[] | null;
+            /** Reason */
+            reason?: string | null;
+        };
+        /** DelegationOut */
+        DelegationOut: {
+            /** Id */
+            id: string;
+            delegator: components["schemas"]["WorkflowRef"];
+            delegate: components["schemas"]["WorkflowRef"];
+            /**
+             * Valid From
+             * Format: date
+             */
+            valid_from: string;
+            /** Valid To */
+            valid_to: string | null;
+            /** Entity Types */
+            entity_types: string[] | null;
+            /** Reason */
+            reason: string | null;
+            /** Active */
+            active: boolean;
+            /** Ended At */
+            ended_at: string | null;
         };
         /** DioceseCreate */
         DioceseCreate: {
@@ -1919,6 +2423,19 @@ export interface components {
             status: string;
             /** Reasons */
             reasons: string[];
+        };
+        /** EntityTypeOut */
+        EntityTypeOut: {
+            /** Code */
+            code: string;
+            /** Label */
+            label: string;
+            /** Has Amount */
+            has_amount: boolean;
+            /** Has Category */
+            has_category: boolean;
+            /** Definitions */
+            definitions: number;
         };
         /**
          * ExportFormat
@@ -2116,6 +2633,105 @@ export interface components {
         HTTPValidationError: {
             /** Detail */
             detail?: components["schemas"]["ValidationError"][];
+        };
+        /** InstanceDetail */
+        InstanceDetail: {
+            /** Id */
+            id: string;
+            /** Entity Type */
+            entity_type: string;
+            /** Entity Label */
+            entity_label: string;
+            /** Entity Id */
+            entity_id: string;
+            /** Title */
+            title: string;
+            /** Link */
+            link: string | null;
+            org_unit: components["schemas"]["WorkflowRef"] | null;
+            /** Amount */
+            amount: number | null;
+            /** Category */
+            category: string | null;
+            /** Status */
+            status: string;
+            /** Cycle */
+            cycle: number;
+            /** Stage Index */
+            stage_index: number;
+            /** Stage Name */
+            stage_name: string | null;
+            /** Stage Count */
+            stage_count: number;
+            /** Pending With */
+            pending_with: string[];
+            submitted_by: components["schemas"]["WorkflowRef"];
+            /**
+             * Submitted At
+             * Format: date-time
+             */
+            submitted_at: string;
+            /** Completed At */
+            completed_at: string | null;
+            /** Definition */
+            definition: {
+                [key: string]: string | number;
+            };
+            /** Stages */
+            stages: components["schemas"]["StageState"][];
+            /** Actions */
+            actions: components["schemas"]["ActionOut"][];
+            /**
+             * My Task
+             * @description Your pending task on this record, if any
+             */
+            my_task: string | null;
+            /** Can Withdraw */
+            can_withdraw: boolean;
+            /** Can Resubmit */
+            can_resubmit: boolean;
+            /** Can Override */
+            can_override: boolean;
+        };
+        /** InstanceSummary */
+        InstanceSummary: {
+            /** Id */
+            id: string;
+            /** Entity Type */
+            entity_type: string;
+            /** Entity Label */
+            entity_label: string;
+            /** Entity Id */
+            entity_id: string;
+            /** Title */
+            title: string;
+            /** Link */
+            link: string | null;
+            org_unit: components["schemas"]["WorkflowRef"] | null;
+            /** Amount */
+            amount: number | null;
+            /** Category */
+            category: string | null;
+            /** Status */
+            status: string;
+            /** Cycle */
+            cycle: number;
+            /** Stage Index */
+            stage_index: number;
+            /** Stage Name */
+            stage_name: string | null;
+            /** Stage Count */
+            stage_count: number;
+            /** Pending With */
+            pending_with: string[];
+            submitted_by: components["schemas"]["WorkflowRef"];
+            /**
+             * Submitted At
+             * Format: date-time
+             */
+            submitted_at: string;
+            /** Completed At */
+            completed_at: string | null;
         };
         /** LinkUserIn */
         LinkUserIn: {
@@ -2491,6 +3107,19 @@ export interface components {
             /** Pages */
             pages: number;
         };
+        /** Page[InstanceSummary] */
+        Page_InstanceSummary_: {
+            /** Items */
+            items: components["schemas"]["InstanceSummary"][];
+            /** Page */
+            page: number;
+            /** Size */
+            size: number;
+            /** Total */
+            total: number;
+            /** Pages */
+            pages: number;
+        };
         /** Page[MemberOut] */
         Page_MemberOut_: {
             /** Items */
@@ -2547,6 +3176,19 @@ export interface components {
         Page_PriestOut_: {
             /** Items */
             items: components["schemas"]["PriestOut"][];
+            /** Page */
+            page: number;
+            /** Size */
+            size: number;
+            /** Total */
+            total: number;
+            /** Pages */
+            pages: number;
+        };
+        /** Page[TaskOut] */
+        Page_TaskOut_: {
+            /** Items */
+            items: components["schemas"]["TaskOut"][];
             /** Page */
             page: number;
             /** Size */
@@ -2801,6 +3443,55 @@ export interface components {
             enabled: boolean;
             /** Default */
             default: boolean;
+        };
+        /** PreviewAssignee */
+        PreviewAssignee: {
+            /** Name */
+            name: string;
+            /** Delegated From */
+            delegated_from: string | null;
+        };
+        /** PreviewIn */
+        PreviewIn: {
+            /** Entity Type */
+            entity_type: string;
+            /** Org Unit Id */
+            org_unit_id?: string | null;
+            /** Amount */
+            amount?: number | null;
+            /** Category */
+            category?: string | null;
+            /** Submitter User Id */
+            submitter_user_id?: string | null;
+            /**
+             * Stages
+             * @description Preview unsaved stages instead
+             */
+            stages?: components["schemas"]["StageIn"][] | null;
+        };
+        /** PreviewOut */
+        PreviewOut: {
+            /** Definition */
+            definition: {
+                [key: string]: string | number;
+            } | null;
+            /** Stages */
+            stages: components["schemas"]["PreviewStage"][];
+        };
+        /** PreviewStage */
+        PreviewStage: {
+            /** Index */
+            index: number;
+            /** Name */
+            name: string;
+            /** Quorum */
+            quorum: string;
+            /** Skipped */
+            skipped: boolean;
+            /** Fallback */
+            fallback: boolean;
+            /** Assignees */
+            assignees: components["schemas"]["PreviewAssignee"][];
         };
         /** PriestAssignmentOut */
         PriestAssignmentOut: {
@@ -3115,6 +3806,31 @@ export interface components {
             /** Permissions */
             permissions?: string[] | null;
         };
+        /** RuleOut */
+        RuleOut: {
+            /**
+             * Type
+             * @enum {string}
+             */
+            type: "ROLE" | "POSITION" | "USER";
+            /** Role */
+            role?: string | null;
+            /** Position */
+            position?: string | null;
+            /**
+             * Scope
+             * @default PARISH
+             * @enum {string}
+             */
+            scope: "PARISH" | "SAME_ORG_UNIT" | "PARENT_ORG_UNIT";
+            /**
+             * User Id
+             * @description User public id (type USER)
+             */
+            user_id?: string | null;
+            /** Label */
+            label: string;
+        };
         /** SessionOut */
         SessionOut: {
             /** Id */
@@ -3171,12 +3887,155 @@ export interface components {
             /** Reason */
             reason?: string | null;
         };
+        /** StageIn */
+        StageIn: {
+            /** Key */
+            key?: string | null;
+            /** Name */
+            name: string;
+            /**
+             * Kind
+             * @default REVIEW
+             * @enum {string}
+             */
+            kind: "REVIEW" | "APPROVE";
+            /**
+             * Quorum
+             * @default ANY
+             */
+            quorum: ("ANY" | "ALL") | number;
+            /**
+             * Optional
+             * @default false
+             */
+            optional: boolean;
+            /** Sla Hours */
+            sla_hours?: number | null;
+            /**
+             * Allow Delegation
+             * @default true
+             */
+            allow_delegation: boolean;
+            /** Assignees */
+            assignees: components["schemas"]["AssigneeRule"][];
+            /** Escalate To */
+            escalate_to?: components["schemas"]["AssigneeRule"][];
+        };
+        /** StageOut */
+        StageOut: {
+            /** Key */
+            key?: string | null;
+            /** Name */
+            name: string;
+            /**
+             * Kind
+             * @default REVIEW
+             * @enum {string}
+             */
+            kind: "REVIEW" | "APPROVE";
+            /**
+             * Quorum
+             * @default ANY
+             */
+            quorum: ("ANY" | "ALL") | number;
+            /**
+             * Optional
+             * @default false
+             */
+            optional: boolean;
+            /** Sla Hours */
+            sla_hours?: number | null;
+            /**
+             * Allow Delegation
+             * @default true
+             */
+            allow_delegation: boolean;
+            /** Assignees */
+            assignees: components["schemas"]["RuleOut"][];
+            /** Escalate To */
+            escalate_to: components["schemas"]["RuleOut"][];
+        };
+        /** StageState */
+        StageState: {
+            /** Index */
+            index: number;
+            /** Name */
+            name: string;
+            /** Kind */
+            kind: string;
+            /** Quorum */
+            quorum: string;
+            /** Optional */
+            optional: boolean;
+            /**
+             * State
+             * @enum {string}
+             */
+            state: "DONE" | "CURRENT" | "UPCOMING" | "SKIPPED";
+            /** Tasks */
+            tasks: components["schemas"]["TaskBrief"][];
+        };
         /** StatusIn */
         StatusIn: {
             /** Active */
             active: boolean;
             /** Reason */
             reason?: string | null;
+        };
+        /** TaskBrief */
+        TaskBrief: {
+            /** Id */
+            id: string;
+            assignee: components["schemas"]["WorkflowRef"];
+            delegated_from: components["schemas"]["WorkflowRef"] | null;
+            /** Status */
+            status: string;
+            /** Is Escalation */
+            is_escalation: boolean;
+            /** Due At */
+            due_at: string | null;
+            /** Acted At */
+            acted_at: string | null;
+            acted_by: components["schemas"]["WorkflowRef"] | null;
+            /** Comment */
+            comment: string | null;
+        };
+        /** TaskOut */
+        TaskOut: {
+            /** Id */
+            id: string;
+            /** Status */
+            status: string;
+            /** Stage Index */
+            stage_index: number;
+            /** Stage Name */
+            stage_name: string;
+            /** Kind */
+            kind: string;
+            /** Is Escalation */
+            is_escalation: boolean;
+            delegated_from: components["schemas"]["WorkflowRef"] | null;
+            /** Due At */
+            due_at: string | null;
+            /** Overdue */
+            overdue: boolean;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Acted At */
+            acted_at: string | null;
+            /** Comment */
+            comment: string | null;
+            instance: components["schemas"]["InstanceSummary"];
+        };
+        /** TaskSummaryOut */
+        TaskSummaryOut: {
+            /** Pending */
+            pending: number;
+            /** Overdue */
+            overdue: number;
         };
         /** TemplateIn */
         TemplateIn: {
@@ -3506,6 +4365,13 @@ export interface components {
             msg: string;
             /** Error Type */
             type: string;
+        };
+        /** WorkflowRef */
+        WorkflowRef: {
+            /** Id */
+            id: string;
+            /** Name */
+            name: string;
         };
     };
     responses: never;
@@ -7043,6 +7909,614 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["PriestOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    entity_types_api_v1_workflow_entity_types_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntityTypeOut"][];
+                };
+            };
+        };
+    };
+    list_definitions_api_v1_workflow_definitions_get: {
+        parameters: {
+            query?: {
+                entity_type?: string | null;
+                /** @description All versions of one workflow */
+                code?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DefinitionOut"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_definition_api_v1_workflow_definitions_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DefinitionIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DefinitionOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_definition_api_v1_workflow_definitions__definition_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                definition_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DefinitionOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    new_version_api_v1_workflow_definitions__definition_id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                definition_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DefinitionUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DefinitionOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    set_active_api_v1_workflow_definitions__definition_id___state__post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                definition_id: string;
+                state: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DefinitionOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    preview_api_v1_workflow_preview_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PreviewIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PreviewOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    my_tasks_api_v1_workflow_tasks_get: {
+        parameters: {
+            query?: {
+                state?: string;
+                entity_type?: string | null;
+                overdue?: boolean | null;
+                page?: number;
+                size?: number;
+                /** @description e.g. `name,-created_at` */
+                sort?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Page_TaskOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    task_summary_api_v1_workflow_tasks_summary_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TaskSummaryOut"];
+                };
+            };
+        };
+    };
+    act_api_v1_workflow_tasks__task_id__act_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                task_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ActIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InstanceDetail"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    bulk_approve_api_v1_workflow_tasks_bulk_approve_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BulkApproveIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BulkResult"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_instances_api_v1_workflow_instances_get: {
+        parameters: {
+            query?: {
+                mine?: boolean;
+                status?: string | null;
+                entity_type?: string | null;
+                q?: string | null;
+                page?: number;
+                size?: number;
+                /** @description e.g. `name,-created_at` */
+                sort?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Page_InstanceSummary_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_instance_api_v1_workflow_instances__instance_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                instance_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InstanceDetail"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    entity_history_api_v1_workflow_entities__entity_type___entity_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                entity_type: string;
+                entity_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InstanceDetail"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    withdraw_api_v1_workflow_instances__instance_id__withdraw_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                instance_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CommentIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InstanceDetail"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    resubmit_api_v1_workflow_instances__instance_id__resubmit_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                instance_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CommentIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InstanceDetail"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_delegations_api_v1_workflow_delegations_get: {
+        parameters: {
+            query?: {
+                all?: boolean;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DelegationOut"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_delegation_api_v1_workflow_delegations_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DelegationIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DelegationOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    end_delegation_api_v1_workflow_delegations__delegation_id__end_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                delegation_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DelegationOut"];
                 };
             };
             /** @description Validation Error */

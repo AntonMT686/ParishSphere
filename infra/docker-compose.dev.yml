@@ -58,7 +58,8 @@ services:
   worker:
     build: ../backend
     environment: *backend-env
-    command: celery -A app.worker worker -l info -Q default,notifications,documents,workflow,maintenance
+    # -B runs the scheduler (SLA reminders) inside this single dev worker.
+    command: celery -A app.worker worker -B -s /tmp/celerybeat-schedule -l info -Q default,notifications,documents,workflow,maintenance
     volumes: ["../backend:/app", "files:/data/files"]
     depends_on: [api]
 

@@ -4,6 +4,7 @@ import {
   DataGrid,
   type GridColDef,
   type GridPaginationModel,
+  type GridRowId,
   type GridRowParams,
   type GridSortModel,
   type GridValidRowModel,
@@ -32,6 +33,8 @@ export interface DataTableProps<T extends GridValidRowModel> {
   emptyTitle?: string;
   emptyDescription?: string;
   height?: number | string;
+  /** Checkbox selection (MUI X v7 selection model: an array of row ids). */
+  selection?: { model: GridRowId[]; onChange: (ids: GridRowId[]) => void; isRowSelectable?: (row: T) => boolean };
 }
 
 export function sortParam(model: GridSortModel): string | undefined {
@@ -55,6 +58,7 @@ export function DataTable<T extends GridValidRowModel>({
   emptyTitle,
   emptyDescription,
   height,
+  selection,
 }: DataTableProps<T>) {
   const { t } = useTranslation();
   const [pagination, setPagination] = useState<GridPaginationModel>({ page: 0, pageSize: 25 });
@@ -89,6 +93,10 @@ export function DataTable<T extends GridValidRowModel>({
           pageSizeOptions={pageSizeOptions}
           disableColumnFilter
           disableRowSelectionOnClick
+          checkboxSelection={Boolean(selection)}
+          rowSelectionModel={selection?.model}
+          onRowSelectionModelChange={selection ? (m) => selection.onChange([...m]) : undefined}
+          isRowSelectable={selection?.isRowSelectable ? (p: GridRowParams<T>) => selection.isRowSelectable!(p.row) : undefined}
           autoHeight={!height}
           onRowClick={onRowClick ? (p: GridRowParams<T>) => onRowClick(p.row) : undefined}
           slots={{

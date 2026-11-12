@@ -15,6 +15,8 @@ import app.modules.parish.service  # profile seeder
 import app.modules.people.models
 import app.modules.rbac.models
 import app.modules.rbac.service  # RBAC seeder
+import app.modules.workflow.models
+import app.modules.workflow.seeds  # default workflows
 from app.db.base import MasterBase, TenantBase
 
 LOADED_MODULES = (
@@ -30,6 +32,8 @@ LOADED_MODULES = (
     app.modules.people.models,
     app.modules.rbac.models,
     app.modules.rbac.service,
+    app.modules.workflow.models,
+    app.modules.workflow.seeds,
 )
 
 master_metadata = MasterBase.metadata

@@ -8,7 +8,7 @@
 | 02 | [Solution Architecture](02-solution-architecture.md) | System context, components, backend/frontend layering, module dependencies, background jobs, storage, notifications |
 | 03 | [Multi-Tenant Architecture](03-multi-tenant-architecture.md) | Database-per-parish design, tenant resolution, connection lifecycle, provisioning, migrations, diocese view, backup & recovery |
 | 04 | [Database Design](04-database-design.md) | Master & parish schemas, conventions, Mermaid ER diagrams |
-| 05 | [Workflow Engine](05-workflow-engine.md) | Configurable approval engine, state machines, example workflows |
+| 05 | [Workflow Engine](05-workflow-engine.md) | Configurable approval engine, state machines, example workflows, implementation & API (T10) |
 | 06 | [Security](06-security.md) | AuthN/AuthZ, sessions & idle timeout, HTTPS, uploads, audit, OWASP controls |
 | 07 | [UI/UX & Navigation](07-ui-ux-navigation.md) | Design system, navigation tree, layouts, sample dashboard & page wireframes |
 | 08 | [API Standards](08-api-standards.md) | REST conventions, errors, pagination, filtering, versioning |

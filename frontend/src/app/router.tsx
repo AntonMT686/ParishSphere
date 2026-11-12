@@ -23,6 +23,11 @@ import { ParishSettingsPage } from '@/features/parish/ParishSettingsPage';
 import { PriestDetailPage } from '@/features/parish/PriestDetailPage';
 import { PriestsPage } from '@/features/parish/PriestsPage';
 import { ScheduledModulePage } from '@/features/ScheduledModulePage';
+import { ApprovalDetailPage } from '@/features/workflow/ApprovalDetailPage';
+import { MyApprovalsPage } from '@/features/workflow/MyApprovalsPage';
+import { SubmittedPage } from '@/features/workflow/SubmittedPage';
+import { WorkflowDesignerPage } from '@/features/workflow/WorkflowDesignerPage';
+import { WorkflowsPage } from '@/features/workflow/WorkflowsPage';
 import { AdminLayout } from '@/layouts/AdminLayout';
 import { AuthLayout } from '@/layouts/AuthLayout';
 import { ALL_NAV_ITEMS } from '@/layouts/navigation';
@@ -61,6 +66,12 @@ export const routes: RouteObject[] = [
           { path: '/admin/priests', element: guarded('priest.view', <PriestsPage />) },
           { path: '/admin/priests/:priestId', element: guarded('priest.view', <PriestDetailPage />) },
           { path: '/admin/settings', element: guarded('settings.view', <ParishSettingsPage />) },
+          { path: '/approvals', element: <MyApprovalsPage /> },
+          { path: '/approvals/submitted', element: <SubmittedPage /> },
+          { path: '/approvals/:instanceId', element: <ApprovalDetailPage /> },
+          { path: '/admin/workflows', element: guarded('workflow.view', <WorkflowsPage />) },
+          { path: '/admin/workflows/new', element: guarded('workflow.manage', <WorkflowDesignerPage />) },
+          { path: '/admin/workflows/:definitionId', element: guarded('workflow.view', <WorkflowDesignerPage />) },
           { path: '/admin/org-types', element: guarded('org_unit.update', <OrgTypesPage />) },
           { path: '/org/units/:unitId', element: guarded('org_unit.view', <OrgUnitDetailPage />) },
           { path: '/org/:typeCode', element: guarded('org_unit.view', <OrgUnitListPage />) },

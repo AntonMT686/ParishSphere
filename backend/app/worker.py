@@ -13,7 +13,7 @@ celery_app = Celery(
     "parishsphere",
     broker=_broker,
     backend=_settings.redis_url or None,
-    include=["app.modules.notifications.tasks"],
+    include=["app.modules.notifications.tasks", "app.modules.workflow.tasks"],
 )
 celery_app.conf.update(
     task_serializer="json",
@@ -29,6 +29,10 @@ celery_app.conf.update(
         "app.tasks.documents.*": {"queue": "documents"},
         "app.tasks.workflow.*": {"queue": "workflow"},
         "app.tasks.maintenance.*": {"queue": "maintenance"},
+    },
+    beat_schedule={
+        # Reminders and escalation of overdue approval tasks (docs/05-workflow-engine.md §5).
+        "workflow-sla": {"task": "app.tasks.workflow.sla_sweep", "schedule": 15 * 60},
     },
 )
 

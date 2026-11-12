@@ -65,8 +65,8 @@ export const NAVIGATION: NavSection[] = [
   {
     key: 'approvals',
     items: [
-      { key: 'myApprovals', path: '/approvals', icon: <FactCheckIcon />, task: 'T10', permission: ['activity.review', 'activity.approve', 'meeting.review', 'meeting.approve', 'finance.review', 'finance.approve', 'notice.review', 'notice.approve', 'finance_period.approve'] },
-      { key: 'submitted', path: '/approvals/submitted', icon: <HistoryIcon />, task: 'T10' },
+      { key: 'myApprovals', path: '/approvals', icon: <FactCheckIcon /> },
+      { key: 'submitted', path: '/approvals/submitted', icon: <HistoryIcon /> },
     ],
   },
   {
@@ -90,7 +90,7 @@ export const NAVIGATION: NavSection[] = [
     items: [
       { key: 'users', path: '/admin/users', icon: <PeopleIcon />, permission: 'user.view' },
       { key: 'roles', path: '/admin/roles', icon: <SecurityIcon />, permission: 'role.view' },
-      { key: 'workflows', path: '/admin/workflows', icon: <RouteIcon />, task: 'T10', permission: 'workflow.view' },
+      { key: 'workflows', path: '/admin/workflows', icon: <RouteIcon />, permission: 'workflow.view' },
       { key: 'orgTypes', path: '/admin/org-types', icon: <HubIcon />, permission: 'org_unit.update' },
       { key: 'priests', path: '/admin/priests', icon: <ChurchIcon />, permission: 'priest.view' },
       { key: 'settings', path: '/admin/settings', icon: <SettingsIcon />, permission: 'settings.view' },

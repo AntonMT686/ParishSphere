@@ -8,6 +8,7 @@ import GroupsIcon from '@mui/icons-material/GroupsOutlined';
 import HubIcon from '@mui/icons-material/HubOutlined';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
+import Chip from '@mui/material/Chip';
 import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
 import InputBase from '@mui/material/InputBase';
@@ -33,6 +34,7 @@ import { IdleTimeoutDialog } from '@/auth/IdleTimeoutDialog';
 import { NotificationsBell } from '@/features/notifications/NotificationsBell';
 import { SUPPORTED_LANGUAGES } from '@/i18n';
 import { useOrgTypes, typePath } from '@/features/org/api';
+import { useTaskSummary } from '@/features/workflow/api';
 import { visibleNavigation, type NavItem } from './navigation';
 import { UserMenu } from './UserMenu';
 
@@ -49,6 +51,7 @@ function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
   const can = useCan();
   const { i18n } = useTranslation();
   const { data: orgTypes } = useOrgTypes();
+  const { data: tasks } = useTaskSummary();
   const orgItems: NavItem[] = (orgTypes ?? []).map((ot) => ({
     key: ot.code,
     label: i18n.language === 'ta' && ot.name_local ? ot.name_local : ot.name_plural,
@@ -94,6 +97,10 @@ function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
               >
                 <ListItemIcon sx={{ minWidth: 36 }}>{item.icon}</ListItemIcon>
                 <ListItemText primary={item.label ?? t(`nav.${item.key}`)} primaryTypographyProps={{ fontSize: 14 }} />
+                {item.key === 'myApprovals' && Boolean(tasks?.pending) && (
+                  <Chip size="small" color={tasks!.overdue ? 'error' : 'primary'} label={tasks!.pending}
+                    aria-label={t('workflow.pendingCount', { count: tasks!.pending })} sx={{ height: 20, fontSize: 12 }} />
+                )}
               </ListItemButton>
             ))}
           </List>

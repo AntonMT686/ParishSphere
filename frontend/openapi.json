@@ -6420,6 +6420,1126 @@
         }
       }
     },
+    "/api/v1/workflow/entity-types": {
+      "get": {
+        "tags": [
+          "workflow"
+        ],
+        "summary": "Entity Types",
+        "operationId": "entity_types_api_v1_workflow_entity_types_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/EntityTypeOut"
+                  },
+                  "type": "array",
+                  "title": "Response Entity Types Api V1 Workflow Entity Types Get"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/workflow/definitions": {
+      "get": {
+        "tags": [
+          "workflow"
+        ],
+        "summary": "List Definitions",
+        "operationId": "list_definitions_api_v1_workflow_definitions_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "entity_type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 30
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Entity Type"
+            }
+          },
+          {
+            "name": "code",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 50
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "All versions of one workflow",
+              "title": "Code"
+            },
+            "description": "All versions of one workflow"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DefinitionOut"
+                  },
+                  "title": "Response List Definitions Api V1 Workflow Definitions Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "workflow"
+        ],
+        "summary": "Create Definition",
+        "operationId": "create_definition_api_v1_workflow_definitions_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DefinitionIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DefinitionOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/workflow/definitions/{definition_id}": {
+      "get": {
+        "tags": [
+          "workflow"
+        ],
+        "summary": "Get Definition",
+        "operationId": "get_definition_api_v1_workflow_definitions__definition_id__get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "definition_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Definition Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DefinitionOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "workflow"
+        ],
+        "summary": "New Version",
+        "description": "Save changes as a new version. Approvals already running keep the version they started with.",
+        "operationId": "new_version_api_v1_workflow_definitions__definition_id__put",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "definition_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Definition Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DefinitionUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DefinitionOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/workflow/definitions/{definition_id}/{state}": {
+      "post": {
+        "tags": [
+          "workflow"
+        ],
+        "summary": "Set Active",
+        "operationId": "set_active_api_v1_workflow_definitions__definition_id___state__post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "definition_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Definition Id"
+            }
+          },
+          {
+            "name": "state",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "State"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DefinitionOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/workflow/preview": {
+      "post": {
+        "tags": [
+          "workflow"
+        ],
+        "summary": "Preview",
+        "description": "Who would approve such a record now – for the selected workflow or for unsaved stages.",
+        "operationId": "preview_api_v1_workflow_preview_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PreviewIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PreviewOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/workflow/tasks": {
+      "get": {
+        "tags": [
+          "workflow"
+        ],
+        "summary": "My Tasks",
+        "description": "My Approvals: tasks assigned to me (pending) or decided by me (done).",
+        "operationId": "my_tasks_api_v1_workflow_tasks_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "state",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "pattern": "^(PENDING|DONE)$",
+              "default": "PENDING",
+              "title": "State"
+            }
+          },
+          {
+            "name": "entity_type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 30
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Entity Type"
+            }
+          },
+          {
+            "name": "overdue",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Overdue"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1,
+              "title": "Page"
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "default": 25,
+              "title": "Size"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 200
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "e.g. `name,-created_at`",
+              "title": "Sort"
+            },
+            "description": "e.g. `name,-created_at`"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Page_TaskOut_"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/workflow/tasks/summary": {
+      "get": {
+        "tags": [
+          "workflow"
+        ],
+        "summary": "Task Summary",
+        "operationId": "task_summary_api_v1_workflow_tasks_summary_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskSummaryOut"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/workflow/tasks/{task_id}/act": {
+      "post": {
+        "tags": [
+          "workflow"
+        ],
+        "summary": "Act",
+        "operationId": "act_api_v1_workflow_tasks__task_id__act_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "task_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Task Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ActIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InstanceDetail"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/workflow/tasks/bulk-approve": {
+      "post": {
+        "tags": [
+          "workflow"
+        ],
+        "summary": "Bulk Approve",
+        "description": "Approve several of my own pending tasks; each is decided independently.",
+        "operationId": "bulk_approve_api_v1_workflow_tasks_bulk_approve_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BulkApproveIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BulkResult"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/workflow/instances": {
+      "get": {
+        "tags": [
+          "workflow"
+        ],
+        "summary": "List Instances",
+        "description": "Submitted by me (default) or, with ``mine=false``, every approval (needs workflow.view).",
+        "operationId": "list_instances_api_v1_workflow_instances_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "mine",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": true,
+              "title": "Mine"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 20
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Status"
+            }
+          },
+          {
+            "name": "entity_type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 30
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Entity Type"
+            }
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 100
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Q"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1,
+              "title": "Page"
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "default": 25,
+              "title": "Size"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 200
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "e.g. `name,-created_at`",
+              "title": "Sort"
+            },
+            "description": "e.g. `name,-created_at`"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Page_InstanceSummary_"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/workflow/instances/{instance_id}": {
+      "get": {
+        "tags": [
+          "workflow"
+        ],
+        "summary": "Get Instance",
+        "operationId": "get_instance_api_v1_workflow_instances__instance_id__get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "instance_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Instance Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InstanceDetail"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/workflow/entities/{entity_type}/{entity_id}": {
+      "get": {
+        "tags": [
+          "workflow"
+        ],
+        "summary": "Entity History",
+        "description": "Every approval run of one record, newest first (for the ApprovalTimeline component).",
+        "operationId": "entity_history_api_v1_workflow_entities__entity_type___entity_id__get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "entity_type",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Entity Type"
+            }
+          },
+          {
+            "name": "entity_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Entity Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/InstanceDetail"
+                  },
+                  "title": "Response Entity History Api V1 Workflow Entities  Entity Type   Entity Id  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/workflow/instances/{instance_id}/withdraw": {
+      "post": {
+        "tags": [
+          "workflow"
+        ],
+        "summary": "Withdraw",
+        "operationId": "withdraw_api_v1_workflow_instances__instance_id__withdraw_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "instance_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Instance Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CommentIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InstanceDetail"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/workflow/instances/{instance_id}/resubmit": {
+      "post": {
+        "tags": [
+          "workflow"
+        ],
+        "summary": "Resubmit",
+        "operationId": "resubmit_api_v1_workflow_instances__instance_id__resubmit_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "instance_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Instance Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CommentIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InstanceDetail"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/workflow/delegations": {
+      "get": {
+        "tags": [
+          "workflow"
+        ],
+        "summary": "List Delegations",
+        "operationId": "list_delegations_api_v1_workflow_delegations_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "all",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "All"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DelegationOut"
+                  },
+                  "title": "Response List Delegations Api V1 Workflow Delegations Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "workflow"
+        ],
+        "summary": "Create Delegation",
+        "operationId": "create_delegation_api_v1_workflow_delegations_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DelegationIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DelegationOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/workflow/delegations/{delegation_id}/end": {
+      "post": {
+        "tags": [
+          "workflow"
+        ],
+        "summary": "End Delegation",
+        "operationId": "end_delegation_api_v1_workflow_delegations__delegation_id__end_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "delegation_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Delegation Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DelegationOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/files/download": {
       "get": {
         "tags": [
@@ -6466,6 +7586,148 @@
   },
   "components": {
     "schemas": {
+      "ActIn": {
+        "properties": {
+          "action": {
+            "type": "string",
+            "enum": [
+              "APPROVE",
+              "REJECT",
+              "RETURN",
+              "DELEGATE"
+            ],
+            "title": "Action"
+          },
+          "comment": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 2000
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Comment"
+          },
+          "delegate_user_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 26
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Delegate User Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "action"
+        ],
+        "title": "ActIn"
+      },
+      "ActionOut": {
+        "properties": {
+          "id": {
+            "type": "integer",
+            "title": "Id"
+          },
+          "action": {
+            "type": "string",
+            "title": "Action"
+          },
+          "actor": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/WorkflowRef"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "on_behalf_of": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/WorkflowRef"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "comment": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Comment"
+          },
+          "cycle": {
+            "type": "integer",
+            "title": "Cycle"
+          },
+          "stage_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Stage Name"
+          },
+          "prev_status": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Prev Status"
+          },
+          "new_status": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "New Status"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "action",
+          "actor",
+          "on_behalf_of",
+          "comment",
+          "cycle",
+          "stage_name",
+          "prev_status",
+          "new_status",
+          "created_at"
+        ],
+        "title": "ActionOut"
+      },
       "AnbiyamHistoryOut": {
         "properties": {
           "anbiyam": {
@@ -6583,6 +7845,71 @@
           "appointed_on"
         ],
         "title": "AppointIn"
+      },
+      "AssigneeRule": {
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "ROLE",
+              "POSITION",
+              "USER"
+            ],
+            "title": "Type"
+          },
+          "role": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 50
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Role"
+          },
+          "position": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 30
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Position"
+          },
+          "scope": {
+            "type": "string",
+            "enum": [
+              "PARISH",
+              "SAME_ORG_UNIT",
+              "PARENT_ORG_UNIT"
+            ],
+            "title": "Scope",
+            "default": "PARISH"
+          },
+          "user_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 26
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "User Id",
+            "description": "User public id (type USER)"
+          }
+        },
+        "type": "object",
+        "required": [
+          "type"
+        ],
+        "title": "AssigneeRule"
       },
       "AssignmentCreate": {
         "properties": {
@@ -7173,6 +8500,63 @@
         ],
         "title": "BroadcastIn"
       },
+      "BulkApproveIn": {
+        "properties": {
+          "task_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 50,
+            "minItems": 1,
+            "title": "Task Ids"
+          },
+          "comment": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 2000
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Comment"
+          }
+        },
+        "type": "object",
+        "required": [
+          "task_ids"
+        ],
+        "title": "BulkApproveIn"
+      },
+      "BulkResult": {
+        "properties": {
+          "approved": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Approved"
+          },
+          "failed": {
+            "items": {
+              "additionalProperties": {
+                "type": "string"
+              },
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Failed"
+          }
+        },
+        "type": "object",
+        "required": [
+          "approved",
+          "failed"
+        ],
+        "title": "BulkResult"
+      },
       "ChangeAnbiyamIn": {
         "properties": {
           "anbiyam_id": {
@@ -7272,6 +8656,96 @@
         "title": "ClergyOut",
         "description": "Who serves the parish today – visible to every signed-in user."
       },
+      "CommentIn": {
+        "properties": {
+          "comment": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 2000
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Comment"
+          }
+        },
+        "type": "object",
+        "title": "CommentIn"
+      },
+      "Conditions": {
+        "properties": {
+          "org_unit_types": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array",
+                "maxItems": 20
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Org Unit Types"
+          },
+          "parish_level": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Parish Level",
+            "description": "true: only parish-level records"
+          },
+          "categories": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array",
+                "maxItems": 50
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Categories"
+          },
+          "min_amount": {
+            "anyOf": [
+              {
+                "type": "number",
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Min Amount"
+          },
+          "max_amount": {
+            "anyOf": [
+              {
+                "type": "number",
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Max Amount"
+          }
+        },
+        "type": "object",
+        "title": "Conditions"
+      },
       "DeceasedIn": {
         "properties": {
           "date_of_death": {
@@ -7297,6 +8771,368 @@
           "date_of_death"
         ],
         "title": "DeceasedIn"
+      },
+      "DefinitionIn": {
+        "properties": {
+          "entity_type": {
+            "type": "string",
+            "maxLength": 30,
+            "title": "Entity Type"
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 150,
+            "minLength": 2,
+            "title": "Name"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 2000
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "priority": {
+            "type": "integer",
+            "maximum": 1000.0,
+            "minimum": 0.0,
+            "title": "Priority",
+            "default": 0
+          },
+          "conditions": {
+            "$ref": "#/components/schemas/Conditions"
+          },
+          "stages": {
+            "items": {
+              "$ref": "#/components/schemas/StageIn"
+            },
+            "type": "array",
+            "maxItems": 10,
+            "minItems": 1,
+            "title": "Stages"
+          }
+        },
+        "type": "object",
+        "required": [
+          "entity_type",
+          "name",
+          "stages"
+        ],
+        "title": "DefinitionIn"
+      },
+      "DefinitionOut": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "code": {
+            "type": "string",
+            "title": "Code"
+          },
+          "version": {
+            "type": "integer",
+            "title": "Version"
+          },
+          "is_latest": {
+            "type": "boolean",
+            "title": "Is Latest"
+          },
+          "is_active": {
+            "type": "boolean",
+            "title": "Is Active"
+          },
+          "entity_type": {
+            "type": "string",
+            "title": "Entity Type"
+          },
+          "entity_label": {
+            "type": "string",
+            "title": "Entity Label"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "priority": {
+            "type": "integer",
+            "title": "Priority"
+          },
+          "conditions": {
+            "$ref": "#/components/schemas/Conditions"
+          },
+          "stages": {
+            "items": {
+              "$ref": "#/components/schemas/StageOut"
+            },
+            "type": "array",
+            "title": "Stages"
+          },
+          "is_system": {
+            "type": "boolean",
+            "title": "Is System"
+          },
+          "running": {
+            "type": "integer",
+            "title": "Running",
+            "description": "Approvals in progress that started with this code"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Updated At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "code",
+          "version",
+          "is_latest",
+          "is_active",
+          "entity_type",
+          "entity_label",
+          "name",
+          "description",
+          "priority",
+          "conditions",
+          "stages",
+          "is_system",
+          "running",
+          "created_at",
+          "updated_at"
+        ],
+        "title": "DefinitionOut"
+      },
+      "DefinitionUpdate": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 150,
+            "minLength": 2,
+            "title": "Name"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 2000
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "priority": {
+            "type": "integer",
+            "maximum": 1000.0,
+            "minimum": 0.0,
+            "title": "Priority",
+            "default": 0
+          },
+          "conditions": {
+            "$ref": "#/components/schemas/Conditions"
+          },
+          "stages": {
+            "items": {
+              "$ref": "#/components/schemas/StageIn"
+            },
+            "type": "array",
+            "maxItems": 10,
+            "minItems": 1,
+            "title": "Stages"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name",
+          "stages"
+        ],
+        "title": "DefinitionUpdate"
+      },
+      "DelegationIn": {
+        "properties": {
+          "delegate_user_id": {
+            "type": "string",
+            "maxLength": 26,
+            "title": "Delegate User Id"
+          },
+          "delegator_user_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 26
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Delegator User Id",
+            "description": "Administrators only"
+          },
+          "valid_from": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Valid From"
+          },
+          "valid_to": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Valid To"
+          },
+          "entity_types": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Entity Types"
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 255
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason"
+          }
+        },
+        "type": "object",
+        "required": [
+          "delegate_user_id"
+        ],
+        "title": "DelegationIn"
+      },
+      "DelegationOut": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "delegator": {
+            "$ref": "#/components/schemas/WorkflowRef"
+          },
+          "delegate": {
+            "$ref": "#/components/schemas/WorkflowRef"
+          },
+          "valid_from": {
+            "type": "string",
+            "format": "date",
+            "title": "Valid From"
+          },
+          "valid_to": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Valid To"
+          },
+          "entity_types": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Entity Types"
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason"
+          },
+          "active": {
+            "type": "boolean",
+            "title": "Active"
+          },
+          "ended_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ended At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "delegator",
+          "delegate",
+          "valid_from",
+          "valid_to",
+          "entity_types",
+          "reason",
+          "active",
+          "ended_at"
+        ],
+        "title": "DelegationOut"
       },
       "DioceseCreate": {
         "properties": {
@@ -7785,6 +9621,39 @@
           "reasons"
         ],
         "title": "DuplicateOut"
+      },
+      "EntityTypeOut": {
+        "properties": {
+          "code": {
+            "type": "string",
+            "title": "Code"
+          },
+          "label": {
+            "type": "string",
+            "title": "Label"
+          },
+          "has_amount": {
+            "type": "boolean",
+            "title": "Has Amount"
+          },
+          "has_category": {
+            "type": "boolean",
+            "title": "Has Category"
+          },
+          "definitions": {
+            "type": "integer",
+            "title": "Definitions"
+          }
+        },
+        "type": "object",
+        "required": [
+          "code",
+          "label",
+          "has_amount",
+          "has_category",
+          "definitions"
+        ],
+        "title": "EntityTypeOut"
       },
       "ExportFormat": {
         "type": "string",
@@ -8579,6 +10448,351 @@
         },
         "type": "object",
         "title": "HTTPValidationError"
+      },
+      "InstanceDetail": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "entity_type": {
+            "type": "string",
+            "title": "Entity Type"
+          },
+          "entity_label": {
+            "type": "string",
+            "title": "Entity Label"
+          },
+          "entity_id": {
+            "type": "string",
+            "title": "Entity Id"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "link": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Link"
+          },
+          "org_unit": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/WorkflowRef"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "amount": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Amount"
+          },
+          "category": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Category"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "cycle": {
+            "type": "integer",
+            "title": "Cycle"
+          },
+          "stage_index": {
+            "type": "integer",
+            "title": "Stage Index"
+          },
+          "stage_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Stage Name"
+          },
+          "stage_count": {
+            "type": "integer",
+            "title": "Stage Count"
+          },
+          "pending_with": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Pending With"
+          },
+          "submitted_by": {
+            "$ref": "#/components/schemas/WorkflowRef"
+          },
+          "submitted_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Submitted At"
+          },
+          "completed_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Completed At"
+          },
+          "definition": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "object",
+            "title": "Definition"
+          },
+          "stages": {
+            "items": {
+              "$ref": "#/components/schemas/StageState"
+            },
+            "type": "array",
+            "title": "Stages"
+          },
+          "actions": {
+            "items": {
+              "$ref": "#/components/schemas/ActionOut"
+            },
+            "type": "array",
+            "title": "Actions"
+          },
+          "my_task": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "My Task",
+            "description": "Your pending task on this record, if any"
+          },
+          "can_withdraw": {
+            "type": "boolean",
+            "title": "Can Withdraw"
+          },
+          "can_resubmit": {
+            "type": "boolean",
+            "title": "Can Resubmit"
+          },
+          "can_override": {
+            "type": "boolean",
+            "title": "Can Override"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "entity_type",
+          "entity_label",
+          "entity_id",
+          "title",
+          "link",
+          "org_unit",
+          "amount",
+          "category",
+          "status",
+          "cycle",
+          "stage_index",
+          "stage_name",
+          "stage_count",
+          "pending_with",
+          "submitted_by",
+          "submitted_at",
+          "completed_at",
+          "definition",
+          "stages",
+          "actions",
+          "my_task",
+          "can_withdraw",
+          "can_resubmit",
+          "can_override"
+        ],
+        "title": "InstanceDetail"
+      },
+      "InstanceSummary": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "entity_type": {
+            "type": "string",
+            "title": "Entity Type"
+          },
+          "entity_label": {
+            "type": "string",
+            "title": "Entity Label"
+          },
+          "entity_id": {
+            "type": "string",
+            "title": "Entity Id"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "link": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Link"
+          },
+          "org_unit": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/WorkflowRef"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "amount": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Amount"
+          },
+          "category": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Category"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "cycle": {
+            "type": "integer",
+            "title": "Cycle"
+          },
+          "stage_index": {
+            "type": "integer",
+            "title": "Stage Index"
+          },
+          "stage_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Stage Name"
+          },
+          "stage_count": {
+            "type": "integer",
+            "title": "Stage Count"
+          },
+          "pending_with": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Pending With"
+          },
+          "submitted_by": {
+            "$ref": "#/components/schemas/WorkflowRef"
+          },
+          "submitted_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Submitted At"
+          },
+          "completed_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Completed At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "entity_type",
+          "entity_label",
+          "entity_id",
+          "title",
+          "link",
+          "org_unit",
+          "amount",
+          "category",
+          "status",
+          "cycle",
+          "stage_index",
+          "stage_name",
+          "stage_count",
+          "pending_with",
+          "submitted_by",
+          "submitted_at",
+          "completed_at"
+        ],
+        "title": "InstanceSummary"
       },
       "LinkUserIn": {
         "properties": {
@@ -10181,6 +12395,42 @@
         ],
         "title": "Page[FamilyListOut]"
       },
+      "Page_InstanceSummary_": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/InstanceSummary"
+            },
+            "type": "array",
+            "title": "Items"
+          },
+          "page": {
+            "type": "integer",
+            "title": "Page"
+          },
+          "size": {
+            "type": "integer",
+            "title": "Size"
+          },
+          "total": {
+            "type": "integer",
+            "title": "Total"
+          },
+          "pages": {
+            "type": "integer",
+            "title": "Pages"
+          }
+        },
+        "type": "object",
+        "required": [
+          "items",
+          "page",
+          "size",
+          "total",
+          "pages"
+        ],
+        "title": "Page[InstanceSummary]"
+      },
       "Page_MemberOut_": {
         "properties": {
           "items": {
@@ -10360,6 +12610,42 @@
           "pages"
         ],
         "title": "Page[PriestOut]"
+      },
+      "Page_TaskOut_": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/TaskOut"
+            },
+            "type": "array",
+            "title": "Items"
+          },
+          "page": {
+            "type": "integer",
+            "title": "Page"
+          },
+          "size": {
+            "type": "integer",
+            "title": "Size"
+          },
+          "total": {
+            "type": "integer",
+            "title": "Total"
+          },
+          "pages": {
+            "type": "integer",
+            "title": "Pages"
+          }
+        },
+        "type": "object",
+        "required": [
+          "items",
+          "page",
+          "size",
+          "total",
+          "pages"
+        ],
+        "title": "Page[TaskOut]"
       },
       "Page_UnitOut_": {
         "properties": {
@@ -11174,6 +13460,187 @@
           "default"
         ],
         "title": "PreferenceOut"
+      },
+      "PreviewAssignee": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "delegated_from": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Delegated From"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name",
+          "delegated_from"
+        ],
+        "title": "PreviewAssignee"
+      },
+      "PreviewIn": {
+        "properties": {
+          "entity_type": {
+            "type": "string",
+            "maxLength": 30,
+            "title": "Entity Type"
+          },
+          "org_unit_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 26
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Org Unit Id"
+          },
+          "amount": {
+            "anyOf": [
+              {
+                "type": "number",
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Amount"
+          },
+          "category": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 50
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Category"
+          },
+          "submitter_user_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 26
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Submitter User Id"
+          },
+          "stages": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/StageIn"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Stages",
+            "description": "Preview unsaved stages instead"
+          }
+        },
+        "type": "object",
+        "required": [
+          "entity_type"
+        ],
+        "title": "PreviewIn"
+      },
+      "PreviewOut": {
+        "properties": {
+          "definition": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "integer"
+                    }
+                  ]
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Definition"
+          },
+          "stages": {
+            "items": {
+              "$ref": "#/components/schemas/PreviewStage"
+            },
+            "type": "array",
+            "title": "Stages"
+          }
+        },
+        "type": "object",
+        "required": [
+          "definition",
+          "stages"
+        ],
+        "title": "PreviewOut"
+      },
+      "PreviewStage": {
+        "properties": {
+          "index": {
+            "type": "integer",
+            "title": "Index"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "quorum": {
+            "type": "string",
+            "title": "Quorum"
+          },
+          "skipped": {
+            "type": "boolean",
+            "title": "Skipped"
+          },
+          "fallback": {
+            "type": "boolean",
+            "title": "Fallback"
+          },
+          "assignees": {
+            "items": {
+              "$ref": "#/components/schemas/PreviewAssignee"
+            },
+            "type": "array",
+            "title": "Assignees"
+          }
+        },
+        "type": "object",
+        "required": [
+          "index",
+          "name",
+          "quorum",
+          "skipped",
+          "fallback",
+          "assignees"
+        ],
+        "title": "PreviewStage"
       },
       "PriestAssignmentOut": {
         "properties": {
@@ -12461,6 +14928,76 @@
         "type": "object",
         "title": "RoleUpdate"
       },
+      "RuleOut": {
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "ROLE",
+              "POSITION",
+              "USER"
+            ],
+            "title": "Type"
+          },
+          "role": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 50
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Role"
+          },
+          "position": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 30
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Position"
+          },
+          "scope": {
+            "type": "string",
+            "enum": [
+              "PARISH",
+              "SAME_ORG_UNIT",
+              "PARENT_ORG_UNIT"
+            ],
+            "title": "Scope",
+            "default": "PARISH"
+          },
+          "user_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 26
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "User Id",
+            "description": "User public id (type USER)"
+          },
+          "label": {
+            "type": "string",
+            "title": "Label"
+          }
+        },
+        "type": "object",
+        "required": [
+          "type",
+          "label"
+        ],
+        "title": "RuleOut"
+      },
       "SessionOut": {
         "properties": {
           "id": {
@@ -12633,6 +15170,242 @@
         ],
         "title": "SplitIn"
       },
+      "StageIn": {
+        "properties": {
+          "key": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 50
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Key"
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 150,
+            "minLength": 1,
+            "title": "Name"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "REVIEW",
+              "APPROVE"
+            ],
+            "title": "Kind",
+            "default": "REVIEW"
+          },
+          "quorum": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "ANY",
+                  "ALL"
+                ]
+              },
+              {
+                "type": "integer"
+              }
+            ],
+            "title": "Quorum",
+            "default": "ANY"
+          },
+          "optional": {
+            "type": "boolean",
+            "title": "Optional",
+            "default": false
+          },
+          "sla_hours": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 2160.0,
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sla Hours"
+          },
+          "allow_delegation": {
+            "type": "boolean",
+            "title": "Allow Delegation",
+            "default": true
+          },
+          "assignees": {
+            "items": {
+              "$ref": "#/components/schemas/AssigneeRule"
+            },
+            "type": "array",
+            "maxItems": 10,
+            "minItems": 1,
+            "title": "Assignees"
+          },
+          "escalate_to": {
+            "items": {
+              "$ref": "#/components/schemas/AssigneeRule"
+            },
+            "type": "array",
+            "maxItems": 10,
+            "title": "Escalate To"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name",
+          "assignees"
+        ],
+        "title": "StageIn"
+      },
+      "StageOut": {
+        "properties": {
+          "key": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 50
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Key"
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 150,
+            "minLength": 1,
+            "title": "Name"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "REVIEW",
+              "APPROVE"
+            ],
+            "title": "Kind",
+            "default": "REVIEW"
+          },
+          "quorum": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "ANY",
+                  "ALL"
+                ]
+              },
+              {
+                "type": "integer"
+              }
+            ],
+            "title": "Quorum",
+            "default": "ANY"
+          },
+          "optional": {
+            "type": "boolean",
+            "title": "Optional",
+            "default": false
+          },
+          "sla_hours": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 2160.0,
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sla Hours"
+          },
+          "allow_delegation": {
+            "type": "boolean",
+            "title": "Allow Delegation",
+            "default": true
+          },
+          "assignees": {
+            "items": {
+              "$ref": "#/components/schemas/RuleOut"
+            },
+            "type": "array",
+            "title": "Assignees"
+          },
+          "escalate_to": {
+            "items": {
+              "$ref": "#/components/schemas/RuleOut"
+            },
+            "type": "array",
+            "title": "Escalate To"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name",
+          "assignees",
+          "escalate_to"
+        ],
+        "title": "StageOut"
+      },
+      "StageState": {
+        "properties": {
+          "index": {
+            "type": "integer",
+            "title": "Index"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "kind": {
+            "type": "string",
+            "title": "Kind"
+          },
+          "quorum": {
+            "type": "string",
+            "title": "Quorum"
+          },
+          "optional": {
+            "type": "boolean",
+            "title": "Optional"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "DONE",
+              "CURRENT",
+              "UPCOMING",
+              "SKIPPED"
+            ],
+            "title": "State"
+          },
+          "tasks": {
+            "items": {
+              "$ref": "#/components/schemas/TaskBrief"
+            },
+            "type": "array",
+            "title": "Tasks"
+          }
+        },
+        "type": "object",
+        "required": [
+          "index",
+          "name",
+          "kind",
+          "quorum",
+          "optional",
+          "state",
+          "tasks"
+        ],
+        "title": "StageState"
+      },
       "StatusIn": {
         "properties": {
           "active": {
@@ -12657,6 +15430,213 @@
           "active"
         ],
         "title": "StatusIn"
+      },
+      "TaskBrief": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "assignee": {
+            "$ref": "#/components/schemas/WorkflowRef"
+          },
+          "delegated_from": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/WorkflowRef"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "is_escalation": {
+            "type": "boolean",
+            "title": "Is Escalation"
+          },
+          "due_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Due At"
+          },
+          "acted_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Acted At"
+          },
+          "acted_by": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/WorkflowRef"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "comment": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Comment"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "assignee",
+          "delegated_from",
+          "status",
+          "is_escalation",
+          "due_at",
+          "acted_at",
+          "acted_by",
+          "comment"
+        ],
+        "title": "TaskBrief"
+      },
+      "TaskOut": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "stage_index": {
+            "type": "integer",
+            "title": "Stage Index"
+          },
+          "stage_name": {
+            "type": "string",
+            "title": "Stage Name"
+          },
+          "kind": {
+            "type": "string",
+            "title": "Kind"
+          },
+          "is_escalation": {
+            "type": "boolean",
+            "title": "Is Escalation"
+          },
+          "delegated_from": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/WorkflowRef"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "due_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Due At"
+          },
+          "overdue": {
+            "type": "boolean",
+            "title": "Overdue"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          },
+          "acted_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Acted At"
+          },
+          "comment": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Comment"
+          },
+          "instance": {
+            "$ref": "#/components/schemas/InstanceSummary"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "status",
+          "stage_index",
+          "stage_name",
+          "kind",
+          "is_escalation",
+          "delegated_from",
+          "due_at",
+          "overdue",
+          "created_at",
+          "acted_at",
+          "comment",
+          "instance"
+        ],
+        "title": "TaskOut"
+      },
+      "TaskSummaryOut": {
+        "properties": {
+          "pending": {
+            "type": "integer",
+            "title": "Pending"
+          },
+          "overdue": {
+            "type": "integer",
+            "title": "Overdue"
+          }
+        },
+        "type": "object",
+        "required": [
+          "pending",
+          "overdue"
+        ],
+        "title": "TaskSummaryOut"
       },
       "TemplateIn": {
         "properties": {
@@ -13838,6 +16818,24 @@
           "type"
         ],
         "title": "ValidationError"
+      },
+      "WorkflowRef": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name"
+        ],
+        "title": "WorkflowRef"
       }
     },
     "securitySchemes": {
