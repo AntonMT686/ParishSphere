@@ -354,7 +354,8 @@
     "dateTo": "To date",
     "remarks": "Remarks",
     "old": "Before",
-    "new": "After"
+    "new": "After",
+    "searchHint": "Name, record code or remarks"
   },
   "org": {
     "newUnit": "New {{type}}",
@@ -1214,5 +1215,56 @@
     "titleLocal": "Title in Tamil (optional)",
     "until": "until {{when}}",
     "when": "Publication"
+  },
+  "search": {
+    "title": "Search",
+    "placeholder": "Search families, members, activities, entries…  (Ctrl+K)",
+    "results": "Search results",
+    "resultsFor": "Results for “{{q}}”",
+    "noResults": "Nothing found for “{{q}}”",
+    "noResultsHint": "Try a code (FAM000012, TXN-2026-000045), a name or a phone number.",
+    "tooShort": "Type at least two letters.",
+    "seeAll": "See all results",
+    "showAll": "Show all ({{count}})",
+    "matches_one": "{{count}} match",
+    "matches_other": "{{count}} matches",
+    "groups": {
+      "families": "Families",
+      "members": "Members",
+      "organisations": "Organisations",
+      "activities": "Activities",
+      "meetings": "Meetings",
+      "finance": "Finance entries",
+      "notices": "Notices",
+      "users": "Users"
+    }
+  },
+  "reports": {
+    "title": "Reports",
+    "subtitle": "Parish registers, activity, financial and management reports – view on screen or export to Excel, CSV or PDF.",
+    "none": "No reports available",
+    "noneHint": "Ask the parish administrator for access to reports.",
+    "group": {
+      "PARISH": "Parish registers",
+      "ACTIVITY": "Activities & meetings",
+      "FINANCE": "Finance",
+      "MANAGEMENT": "Management"
+    },
+    "from": "From",
+    "to": "To",
+    "month": "Month",
+    "fy": "Financial year",
+    "current": "Current year",
+    "organisation": "Organisation",
+    "all": "All",
+    "run": "Run report",
+    "empty": "No records match the selected filters.",
+    "truncated": "Showing the first {{shown}} of {{total}} rows – export to get them all.",
+    "param": {
+      "org_type": "Organisation type",
+      "status": "Status",
+      "sacrament": "Sacrament",
+      "gender": "Gender"
+    }
   }
 }

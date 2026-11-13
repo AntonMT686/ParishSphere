@@ -1,7 +1,6 @@
 import DarkModeIcon from '@mui/icons-material/DarkModeOutlined';
 import LightModeIcon from '@mui/icons-material/LightModeOutlined';
 import MenuIcon from '@mui/icons-material/Menu';
-import SearchIcon from '@mui/icons-material/Search';
 import TranslateIcon from '@mui/icons-material/Translate';
 import ChurchIcon from '@mui/icons-material/ChurchOutlined';
 import GroupsIcon from '@mui/icons-material/GroupsOutlined';
@@ -11,7 +10,6 @@ import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
 import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
-import InputBase from '@mui/material/InputBase';
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -32,6 +30,7 @@ import { useUiStore } from '@/app/uiStore';
 import { useCan } from '@/auth/authStore';
 import { IdleTimeoutDialog } from '@/auth/IdleTimeoutDialog';
 import { NotificationsBell } from '@/features/notifications/NotificationsBell';
+import { GlobalSearch } from '@/features/search/GlobalSearch';
 import { SUPPORTED_LANGUAGES } from '@/i18n';
 import { useOrgTypes, typePath } from '@/features/org/api';
 import { useTaskSummary } from '@/features/workflow/api';
@@ -146,23 +145,7 @@ export function AdminLayout() {
                 <MenuIcon />
               </IconButton>
             )}
-            <Box
-              role="search"
-              sx={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: 1,
-                px: 1.5,
-                py: 0.5,
-                borderRadius: 2,
-                bgcolor: 'action.hover',
-                flexGrow: 1,
-                maxWidth: 520,
-              }}
-            >
-              <SearchIcon fontSize="small" color="action" />
-              <InputBase placeholder={t('common.search')} inputProps={{ 'aria-label': t('common.search') }} fullWidth />
-            </Box>
+            <GlobalSearch />
             <Box sx={{ flexGrow: 1 }} />
             <Tooltip title={t('common.language')}>
               <IconButton aria-label={t('common.language')} onClick={(e) => setLangAnchor(e.currentTarget)}>

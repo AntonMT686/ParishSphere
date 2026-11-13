@@ -84,7 +84,7 @@ export const NAVIGATION: NavSection[] = [
       { key: 'documents', path: '/documents', icon: <DescriptionIcon />, task: 'T20', permission: 'document.view' },
     ],
   },
-  { key: 'reports', items: [{ key: 'reports', path: '/reports', icon: <AssessmentIcon />, task: 'T15', permission: 'report.view' }] },
+  { key: 'reports', items: [{ key: 'reports', path: '/reports', icon: <AssessmentIcon />, permission: 'report.view' }] },
   {
     key: 'administration',
     items: [

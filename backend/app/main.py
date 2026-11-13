@@ -34,6 +34,8 @@ from app.modules.people.router import families as families_router
 from app.modules.people.router import members as members_router
 from app.modules.people.router import memberships as memberships_router
 from app.modules.rbac.router import router as roles_router
+from app.modules.reports.router import router as reports_router
+from app.modules.search.router import router as search_router
 from app.modules.users.router import router as users_router
 from app.modules.workflow.router import router as workflow_router
 from app.tenancy.router import router as tenant_router
@@ -141,6 +143,8 @@ def create_app() -> FastAPI:
     app.include_router(notices_router, prefix=API_PREFIX)
     app.include_router(public_notices_router, prefix=API_PREFIX)
     app.include_router(dashboard_router, prefix=API_PREFIX)
+    app.include_router(search_router, prefix=API_PREFIX)
+    app.include_router(reports_router, prefix=API_PREFIX)
     for r in (activities_router, meetings_router, actions_router, calendar_router):
         app.include_router(r, prefix=API_PREFIX)
     app.include_router(files_router, prefix=API_PREFIX)

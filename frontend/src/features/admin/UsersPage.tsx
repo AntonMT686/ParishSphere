@@ -13,6 +13,7 @@ import type { UserOut } from '@/api/types';
 import { PermissionGate } from '@/auth/guards';
 import { DataTable, PageHeader, StatusBadge } from '@/design-system';
 import { formatDateTime } from '@/lib/format';
+import { useSearchParams } from 'react-router-dom';
 import { fetchUsers, useRoles, type UserFilters } from './api';
 import { CreateUserDialog } from './CreateUserDialog';
 import { UserDrawer } from './UserDrawer';
@@ -22,7 +23,8 @@ export function UsersPage() {
   const [q, setQ] = useState('');
   const [role, setRole] = useState('');
   const [status, setStatus] = useState<'all' | 'active' | 'inactive'>('all');
-  const [selected, setSelected] = useState<string | null>(null);
+  const [search] = useSearchParams();
+  const [selected, setSelected] = useState<string | null>(search.get('open'));
   const [creating, setCreating] = useState(false);
   const deferredQ = useDeferredValue(q);
   const { data: roles } = useRoles();

@@ -95,7 +95,14 @@ def _query(db: Session, f: AuditFilters) -> Select[Any]:
         stmt = stmt.where(AuditLog.occurred_at < datetime.combine(f.date_to + timedelta(days=1), time.min))
     if f.q:
         like = f"%{f.q}%"
-        stmt = stmt.where(or_(AuditLog.remarks.ilike(like), AuditLog.entity_id.ilike(like)))
+        stmt = stmt.where(
+            or_(
+                AuditLog.remarks.ilike(like),
+                AuditLog.entity_id.ilike(like),
+                User.username.ilike(like),
+                User.full_name.ilike(like),
+            )
+        )
     return stmt
 
 
@@ -134,6 +141,26 @@ def list_audit_logs(_: CanView, db: TenantSession, params: PageQuery, f: Filters
         size=params.size,
         total=total,
         pages=(total + params.size - 1) // params.size,
+    )
+
+
+class AuditFacets(BaseModel):
+    modules: list[str]
+    actions: list[str]
+    entity_types: list[str]
+
+
+@router.get("/facets", response_model=AuditFacets)
+def audit_facets(_: CanView, db: TenantSession) -> AuditFacets:
+    """Distinct modules, actions and record types, for the viewer's filter dropdowns."""
+
+    def distinct(col: Any) -> list[str]:
+        return sorted(v for v in db.scalars(select(col).distinct()) if v)
+
+    return AuditFacets(
+        modules=distinct(AuditLog.module),
+        actions=distinct(AuditLog.action),
+        entity_types=distinct(AuditLog.entity_type),
     )
 
 

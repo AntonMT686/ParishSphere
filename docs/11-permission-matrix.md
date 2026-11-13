@@ -117,5 +117,5 @@ Scope: **PARISH** = parish-wide only; **ORG_UNIT** = assigned for one organisati
 | `document.update` — Edit document metadata and versions | ✓ | ✓ |  | ✓ |  |  |  |  |  |  |  |  |  |  |  |
 | `document.delete` — Archive documents |  | ✓ |  |  |  |  |  |  |  |  |  |  |  |  |  |
 | `document.export` — Download documents in bulk |  | ✓ |  |  |  |  |  |  |  |  |  |  |  |  |  |
-| `report.view` — View reports | ✓ | ✓ | ✓ | ✓ | ✓ |  |  |  |  |  |  |  |  |  |  |
-| `report.export` — Export reports | ✓ | ✓ | ✓ | ✓ | ✓ |  |  |  |  |  |  |  |  |  |  |
+| `report.view` — View reports | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |  | ✓ | ✓ | ✓ |  |  |  |  |
+| `report.export` — Export reports | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |  | ✓ | ✓ | ✓ |  |  |  |  |

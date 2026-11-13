@@ -38,6 +38,9 @@ import { ParishSettingsPage } from '@/features/parish/ParishSettingsPage';
 import { PriestDetailPage } from '@/features/parish/PriestDetailPage';
 import { PriestsPage } from '@/features/parish/PriestsPage';
 import { ScheduledModulePage } from '@/features/ScheduledModulePage';
+import { ReportPage } from '@/features/reports/ReportPage';
+import { ReportsPage } from '@/features/reports/ReportsPage';
+import { SearchPage } from '@/features/search/SearchPage';
 import { ApprovalDetailPage } from '@/features/workflow/ApprovalDetailPage';
 import { MyApprovalsPage } from '@/features/workflow/MyApprovalsPage';
 import { SubmittedPage } from '@/features/workflow/SubmittedPage';
@@ -98,6 +101,9 @@ export const routes: RouteObject[] = [
           { path: '/notices/new', element: guarded('notice.create', <NoticeFormPage />) },
           { path: '/notices/:noticeId', element: guarded('notice.view', <NoticeDetailPage />) },
           { path: '/notices/:noticeId/edit', element: guarded('notice.update', <NoticeFormPage />) },
+          { path: '/search', element: <SearchPage /> },
+          { path: '/reports', element: guarded('report.view', <ReportsPage />) },
+          { path: '/reports/:code', element: guarded('report.view', <ReportPage />) },
           { path: '/approvals', element: <MyApprovalsPage /> },
           { path: '/approvals/submitted', element: <SubmittedPage /> },
           { path: '/approvals/:instanceId', element: <ApprovalDetailPage /> },

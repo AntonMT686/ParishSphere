@@ -25,9 +25,9 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link as RouterLink, useParams } from 'react-router-dom';
+import { Link as RouterLink, useParams, useSearchParams } from 'react-router-dom';
 import { api } from '@/api/client';
 import { useCan } from '@/auth/authStore';
 import { PageHeader, StatusBadge, useFeedback } from '@/design-system';
@@ -61,7 +61,14 @@ export function FamilyDetailPage() {
   const [action, setAction] = useState<FamilyAction>(null);
   const [menu, setMenu] = useState<HTMLElement | null>(null);
   const [adding, setAdding] = useState(false);
-  const [memberId, setMemberId] = useState<string | null>(null);
+  const [search, setSearch] = useSearchParams();
+  const [memberId, setMemberIdState] = useState<string | null>(search.get('member'));
+  const linked = search.get('member');
+  useEffect(() => { if (linked) setMemberIdState(linked); }, [linked]); // opened from search on the same page
+  const setMemberId = (id: string | null) => {
+    setMemberIdState(id);
+    if (!id && search.has('member')) { search.delete('member'); setSearch(search, { replace: true }); }
+  };
   const status = useMutation({
     mutationFn: (active: boolean) => api.post(`/families/${familyId}/status`, { active }),
     onSuccess: () => qc.invalidateQueries({ queryKey: peopleKeys.families }),

@@ -777,6 +777,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/audit-logs/facets": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Audit Facets
+         * @description Distinct modules, actions and record types, for the viewer's filter dropdowns.
+         */
+        get: operations["audit_facets_api_v1_audit_logs_facets_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/audit-logs/export": {
         parameters: {
             query?: never;
@@ -2377,6 +2397,74 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/search": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Global Search */
+        get: operations["global_search_api_v1_search_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/reports": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Catalog */
+        get: operations["catalog_api_v1_reports_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/reports/{code}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Preview */
+        get: operations["preview_api_v1_reports__code__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/reports/{code}/export": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Export */
+        get: operations["export_api_v1_reports__code__export_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/activities/categories": {
         parameters: {
             query?: never;
@@ -3420,6 +3508,15 @@ export interface components {
             /** Remarks */
             remarks?: string | null;
         };
+        /** AuditFacets */
+        AuditFacets: {
+            /** Modules */
+            modules: string[];
+            /** Actions */
+            actions: string[];
+            /** Entity Types */
+            entity_types: string[];
+        };
         /** AuditLogOut */
         AuditLogOut: {
             /** Id */
@@ -3713,6 +3810,15 @@ export interface components {
             others: {
                 [key: string]: string;
             }[];
+        };
+        /** ColumnOut */
+        ColumnOut: {
+            /** Key */
+            key: string;
+            /** Header */
+            header: string;
+            /** Kind */
+            kind: string;
         };
         /** CommentIn */
         CommentIn: {
@@ -5415,6 +5521,25 @@ export interface components {
             /** Pages */
             pages: number;
         };
+        /** ParamOption */
+        ParamOption: {
+            /** Value */
+            value: string;
+            /** Label */
+            label: string;
+        };
+        /** ParamOut */
+        ParamOut: {
+            /** Name */
+            name: string;
+            /**
+             * Options
+             * @default []
+             */
+            options: components["schemas"]["ParamOption"][];
+            /** Default */
+            default?: string | null;
+        };
         /** ParishCreate */
         ParishCreate: {
             /** Address Line1 */
@@ -6082,6 +6207,46 @@ export interface components {
             /** Reason */
             reason: string;
         };
+        /** ReportInfo */
+        ReportInfo: {
+            /** Code */
+            code: string;
+            /** Group */
+            group: string;
+            /** Title */
+            title: string;
+            /** Description */
+            description: string;
+            /** Params */
+            params: components["schemas"]["ParamOut"][];
+            /** Can Export */
+            can_export: boolean;
+        };
+        /** ReportOut */
+        ReportOut: {
+            /** Code */
+            code: string;
+            /** Title */
+            title: string;
+            /** Subtitle */
+            subtitle: string | null;
+            /** Note */
+            note: string | null;
+            /** Columns */
+            columns: components["schemas"]["ColumnOut"][];
+            /** Rows */
+            rows: {
+                [key: string]: unknown;
+            }[];
+            /** Totals */
+            totals: {
+                [key: string]: unknown;
+            } | null;
+            /** Total Rows */
+            total_rows: number;
+            /** Truncated */
+            truncated: boolean;
+        };
         /** ResetPasswordIn */
         ResetPasswordIn: {
             /** Token */
@@ -6202,6 +6367,39 @@ export interface components {
             type_code: string;
             /** Type Name */
             type_name: string;
+        };
+        /** SearchGroup */
+        SearchGroup: {
+            /** Key */
+            key: string;
+            /** Total */
+            total: number;
+            /** More Link */
+            more_link: string | null;
+            /** Hits */
+            hits: components["schemas"]["SearchHit"][];
+        };
+        /** SearchHit */
+        SearchHit: {
+            /** Id */
+            id: string;
+            /** Title */
+            title: string;
+            /** Subtitle */
+            subtitle?: string | null;
+            /** Code */
+            code?: string | null;
+            /** Status */
+            status?: string | null;
+            /** Link */
+            link: string;
+        };
+        /** SearchOut */
+        SearchOut: {
+            /** Q */
+            q: string;
+            /** Groups */
+            groups: components["schemas"]["SearchGroup"][];
         };
         /** SessionOut */
         SessionOut: {
@@ -8570,6 +8768,26 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    audit_facets_api_v1_audit_logs_facets_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AuditFacets"];
                 };
             };
         };
@@ -12433,6 +12651,142 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["DashboardOut"];
+                };
+            };
+        };
+    };
+    global_search_api_v1_search_get: {
+        parameters: {
+            query: {
+                q: string;
+                limit?: number;
+                group?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SearchOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    catalog_api_v1_reports_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReportInfo"][];
+                };
+            };
+        };
+    };
+    preview_api_v1_reports__code__get: {
+        parameters: {
+            query?: {
+                date_from?: string | null;
+                date_to?: string | null;
+                month?: string | null;
+                fy?: number | null;
+                org_unit?: string | null;
+                org_type?: string | null;
+                status?: string | null;
+                sacrament?: string | null;
+                gender?: string | null;
+            };
+            header?: never;
+            path: {
+                code: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReportOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    export_api_v1_reports__code__export_get: {
+        parameters: {
+            query?: {
+                format?: components["schemas"]["ExportFormat"];
+                date_from?: string | null;
+                date_to?: string | null;
+                month?: string | null;
+                fy?: number | null;
+                org_unit?: string | null;
+                org_type?: string | null;
+                status?: string | null;
+                sacrament?: string | null;
+                gender?: string | null;
+            };
+            header?: never;
+            path: {
+                code: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
                 };
             };
         };

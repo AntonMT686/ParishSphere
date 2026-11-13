@@ -174,6 +174,8 @@ _ORG_WORK = (
     "family.view",
     "notice.view",
     "document.view",
+    "report.view",
+    "report.export",
     "document.create",
 )
 

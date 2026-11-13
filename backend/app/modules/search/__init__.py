@@ -1,0 +1,1 @@
+"""Global search (T15)."""

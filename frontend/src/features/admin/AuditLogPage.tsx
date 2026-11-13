@@ -9,13 +9,15 @@ import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import type { GridColDef } from '@mui/x-data-grid';
+import { useQuery } from '@tanstack/react-query';
 import { useDeferredValue, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { api, type Page } from '@/api/client';
-import type { AuditLog } from '@/api/types';
+import type { AuditFacets, AuditLog } from '@/api/types';
 import { PermissionGate } from '@/auth/guards';
 import { DataTable, ExportMenu, PageHeader } from '@/design-system';
 import { formatDateTime } from '@/lib/format';
@@ -70,13 +72,27 @@ export function AuditLogPage() {
   const [open, setOpen] = useState<AuditLog | null>(null);
   const params = Object.fromEntries(Object.entries(deferred).filter(([, v]) => v));
   const set = (k: keyof typeof filters) => (e: React.ChangeEvent<HTMLInputElement>) => setFilters({ ...filters, [k]: e.target.value });
+  const { data: facets } = useQuery({
+    queryKey: ['audit', 'facets'],
+    queryFn: async () => (await api.get<AuditFacets>('/audit-logs/facets')).data,
+    staleTime: 60_000,
+  });
+  const select = (k: 'action' | 'module', options: string[] = []) => (
+    <TextField select label={t(`audit.${k}`)} value={filters[k]} onChange={set(k)} sx={{ minWidth: 170 }}>
+      <MenuItem value="">{t('reports.all')}</MenuItem>
+      {options.map((o) => <MenuItem key={o} value={o}>{o}</MenuItem>)}
+    </TextField>
+  );
 
   const columns: GridColDef<AuditLog>[] = [
     { field: 'occurred_at', headerName: t('audit.when'), width: 180, valueFormatter: (v: string) => formatDateTime(v) },
     { field: 'username', headerName: t('audit.user'), width: 140, sortable: false, valueFormatter: (v: string | null) => v ?? '—' },
     { field: 'action', headerName: t('audit.action'), width: 170 },
     { field: 'module', headerName: t('audit.module'), width: 120 },
-    { field: 'entity_type', headerName: t('audit.record'), width: 120, sortable: false },
+    {
+      field: 'entity_type', headerName: t('audit.record'), width: 200, sortable: false,
+      valueGetter: (_v: unknown, row: AuditLog) => [row.entity_type, row.entity_id].filter(Boolean).join(' · '),
+    },
     { field: 'remarks', headerName: t('audit.remarks'), flex: 1, minWidth: 200, sortable: false },
     {
       field: 'changes',
@@ -113,9 +129,9 @@ export function AuditLogPage() {
         toolbar={
           <Box>
             <Stack direction={{ xs: 'column', md: 'row' }} spacing={1.5}>
-              <TextField label={t('common.search')} value={filters.q} onChange={set('q')} />
-              <TextField label={t('audit.action')} value={filters.action} onChange={set('action')} placeholder="LOGIN_FAILED" />
-              <TextField label={t('audit.module')} value={filters.module} onChange={set('module')} placeholder="auth" />
+              <TextField label={t('common.search')} value={filters.q} onChange={set('q')} placeholder={t('audit.searchHint')} />
+              {select('action', facets?.actions)}
+              {select('module', facets?.modules)}
               <TextField label={t('audit.dateFrom')} type="date" value={filters.date_from} onChange={set('date_from')} slotProps={{ inputLabel: { shrink: true } }} />
               <TextField label={t('audit.dateTo')} type="date" value={filters.date_to} onChange={set('date_to')} slotProps={{ inputLabel: { shrink: true } }} />
             </Stack>
