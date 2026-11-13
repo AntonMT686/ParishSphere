@@ -2154,6 +2154,212 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/notices/board": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Board
+         * @description Live notices for the current user (important first, newest first).
+         */
+        get: operations["board_api_v1_notices_board_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/notices/bulletin.pdf": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Bulletin
+         * @description Printable bulletin of the live notices the user can see (e.g. for the church notice board).
+         */
+        get: operations["bulletin_api_v1_notices_bulletin_pdf_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/notices": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Manage List
+         * @description Every notice the user prepares, reviews or publishes.
+         */
+        get: operations["manage_list_api_v1_notices_get"];
+        put?: never;
+        /** Create Notice */
+        post: operations["create_notice_api_v1_notices_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/notices/{notice_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Notice */
+        get: operations["get_notice_api_v1_notices__notice_id__get"];
+        /** Update Notice */
+        put: operations["update_notice_api_v1_notices__notice_id__put"];
+        post?: never;
+        /** Delete Notice */
+        delete: operations["delete_notice_api_v1_notices__notice_id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/notices/{notice_id}/submit": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Submit Notice */
+        post: operations["submit_notice_api_v1_notices__notice_id__submit_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/notices/{notice_id}/publish": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Publish Now
+         * @description Publish an approved, scheduled notice immediately.
+         */
+        post: operations["publish_now_api_v1_notices__notice_id__publish_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/notices/{notice_id}/archive": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Archive Notice */
+        post: operations["archive_notice_api_v1_notices__notice_id__archive_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/notices/{notice_id}/pdf": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Notice Pdf */
+        get: operations["notice_pdf_api_v1_notices__notice_id__pdf_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/notices/{notice_id}/attachments": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Notice Files */
+        get: operations["notice_files_api_v1_notices__notice_id__attachments_get"];
+        put?: never;
+        /** Add Notice File */
+        post: operations["add_notice_file_api_v1_notices__notice_id__attachments_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/notices/{notice_id}/attachments/{file_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Remove Notice File */
+        delete: operations["remove_notice_file_api_v1_notices__notice_id__attachments__file_id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/public/notices": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Public Notices
+         * @description Live notices marked for the public / member portal (no sign-in).
+         */
+        get: operations["public_notices_api_v1_public_notices_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/activities/categories": {
         parameters: {
             query?: never;
@@ -3320,6 +3526,14 @@ export interface components {
         };
         /** Body_add_meeting_file_api_v1_meetings__meeting_id__attachments_post */
         Body_add_meeting_file_api_v1_meetings__meeting_id__attachments_post: {
+            /**
+             * File
+             * Format: binary
+             */
+            file: string;
+        };
+        /** Body_add_notice_file_api_v1_notices__notice_id__attachments_post */
+        Body_add_notice_file_api_v1_notices__notice_id__attachments_post: {
             /**
              * File
              * Format: binary
@@ -4524,6 +4738,186 @@ export interface components {
             /** Units */
             units: components["schemas"]["ScopedUnit"][];
         };
+        /** NoticeActions */
+        NoticeActions: {
+            /**
+             * Edit
+             * @default false
+             */
+            edit: boolean;
+            /**
+             * Submit
+             * @default false
+             */
+            submit: boolean;
+            /**
+             * Delete
+             * @default false
+             */
+            delete: boolean;
+            /**
+             * Publish
+             * @default false
+             */
+            publish: boolean;
+            /**
+             * Archive
+             * @default false
+             */
+            archive: boolean;
+        };
+        /** NoticeIn */
+        NoticeIn: {
+            /** Title */
+            title: string;
+            /** Title Local */
+            title_local?: string | null;
+            /**
+             * Category
+             * @default ANNOUNCEMENT
+             * @enum {string}
+             */
+            category: "WEEKLY" | "ANNOUNCEMENT" | "EVENT" | "EMERGENCY" | "DIOCESE" | "NEWS";
+            /** Body */
+            body: string;
+            /** Body Local */
+            body_local?: string | null;
+            /**
+             * Org Unit Id
+             * @description Preparing organisation; omit for the parish office
+             */
+            org_unit_id?: string | null;
+            /**
+             * Audience All
+             * @default true
+             */
+            audience_all: boolean;
+            /** Audience Org Units */
+            audience_org_units?: string[];
+            /**
+             * Is Important
+             * @default false
+             */
+            is_important: boolean;
+            /**
+             * Is Public
+             * @default false
+             */
+            is_public: boolean;
+            /**
+             * Publish At
+             * @description Parish local time; default: as soon as approved
+             */
+            publish_at?: string | null;
+            /** Expires At */
+            expires_at?: string | null;
+        };
+        /** NoticeListOut */
+        NoticeListOut: {
+            /** Id */
+            id: string;
+            /** Code */
+            code: string;
+            /** Category */
+            category: string;
+            /** Title */
+            title: string;
+            /** Title Local */
+            title_local: string | null;
+            /** Excerpt */
+            excerpt: string;
+            /** Excerpt Local */
+            excerpt_local: string | null;
+            org_unit: components["schemas"]["NoticeUnitRef"] | null;
+            /** Audience All */
+            audience_all: boolean;
+            /** Audience */
+            audience: components["schemas"]["NoticeUnitRef"][];
+            /** Is Important */
+            is_important: boolean;
+            /** Is Public */
+            is_public: boolean;
+            /**
+             * Publish At
+             * Format: date-time
+             */
+            publish_at: string;
+            /** Expires At */
+            expires_at: string | null;
+            /** Status */
+            status: string;
+            /** State */
+            state: string;
+            /** Attachments */
+            attachments: number;
+        };
+        /** NoticeOut */
+        NoticeOut: {
+            /** Id */
+            id: string;
+            /** Code */
+            code: string;
+            /** Category */
+            category: string;
+            /** Title */
+            title: string;
+            /** Title Local */
+            title_local: string | null;
+            /** Excerpt */
+            excerpt: string;
+            /** Excerpt Local */
+            excerpt_local: string | null;
+            org_unit: components["schemas"]["NoticeUnitRef"] | null;
+            /** Audience All */
+            audience_all: boolean;
+            /** Audience */
+            audience: components["schemas"]["NoticeUnitRef"][];
+            /** Is Important */
+            is_important: boolean;
+            /** Is Public */
+            is_public: boolean;
+            /**
+             * Publish At
+             * Format: date-time
+             */
+            publish_at: string;
+            /** Expires At */
+            expires_at: string | null;
+            /** Status */
+            status: string;
+            /** State */
+            state: string;
+            /** Attachments */
+            attachments: number;
+            /** Body */
+            body: string;
+            /** Body Local */
+            body_local: string | null;
+            /** Created By */
+            created_by: string | null;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Approved At */
+            approved_at: string | null;
+            /** Approval Id */
+            approval_id: string | null;
+            can: components["schemas"]["NoticeActions"];
+        };
+        /** NoticeSubmitIn */
+        NoticeSubmitIn: {
+            /** Comment */
+            comment?: string | null;
+        };
+        /** NoticeUnitRef */
+        NoticeUnitRef: {
+            /** Id */
+            id: string;
+            /** Name */
+            name: string;
+        };
         /** NotificationOut */
         NotificationOut: {
             /** Id */
@@ -4658,6 +5052,19 @@ export interface components {
         Page_MembershipOut_: {
             /** Items */
             items: components["schemas"]["MembershipOut"][];
+            /** Page */
+            page: number;
+            /** Size */
+            size: number;
+            /** Total */
+            total: number;
+            /** Pages */
+            pages: number;
+        };
+        /** Page[NoticeListOut] */
+        Page_NoticeListOut_: {
+            /** Items */
+            items: components["schemas"]["NoticeListOut"][];
             /** Page */
             page: number;
             /** Size */
@@ -5369,6 +5776,32 @@ export interface components {
              * Format: date-time
              */
             at: string;
+        };
+        /** PublicNotice */
+        PublicNotice: {
+            /** Id */
+            id: string;
+            /** Category */
+            category: string;
+            /** Title */
+            title: string;
+            /** Title Local */
+            title_local: string | null;
+            /** Body */
+            body: string;
+            /** Body Local */
+            body_local: string | null;
+            /** Is Important */
+            is_important: boolean;
+            /**
+             * Publish At
+             * Format: date-time
+             */
+            publish_at: string;
+            /** Expires At */
+            expires_at: string | null;
+            /** Attachments */
+            attachments: components["schemas"]["AttachmentOut"][];
         };
         /** ReasonIn */
         ReasonIn: {
@@ -11242,6 +11675,494 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["SummaryOut"];
+                };
+            };
+        };
+    };
+    board_api_v1_notices_board_get: {
+        parameters: {
+            query?: {
+                category?: string | null;
+                q?: string | null;
+                page?: number;
+                size?: number;
+                /** @description e.g. `name,-created_at` */
+                sort?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Page_NoticeListOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    bulletin_api_v1_notices_bulletin_pdf_get: {
+        parameters: {
+            query?: {
+                category?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    manage_list_api_v1_notices_get: {
+        parameters: {
+            query?: {
+                /** @description DRAFT, IN_REVIEW, REWORK, SCHEDULED, LIVE, EXPIRED, ARCHIVED, REJECTED */
+                state?: string | null;
+                category?: string | null;
+                q?: string | null;
+                page?: number;
+                size?: number;
+                /** @description e.g. `name,-created_at` */
+                sort?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Page_NoticeListOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_notice_api_v1_notices_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["NoticeIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NoticeOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_notice_api_v1_notices__notice_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                notice_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NoticeOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_notice_api_v1_notices__notice_id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                notice_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["NoticeIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NoticeOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_notice_api_v1_notices__notice_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                notice_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    submit_notice_api_v1_notices__notice_id__submit_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                notice_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["NoticeSubmitIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NoticeOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    publish_now_api_v1_notices__notice_id__publish_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                notice_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NoticeOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    archive_notice_api_v1_notices__notice_id__archive_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                notice_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NoticeOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    notice_pdf_api_v1_notices__notice_id__pdf_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                notice_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    notice_files_api_v1_notices__notice_id__attachments_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                notice_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AttachmentOut"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    add_notice_file_api_v1_notices__notice_id__attachments_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                notice_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["Body_add_notice_file_api_v1_notices__notice_id__attachments_post"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AttachmentOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    remove_notice_file_api_v1_notices__notice_id__attachments__file_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                notice_id: string;
+                file_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    public_notices_api_v1_public_notices_get: {
+        parameters: {
+            query?: {
+                category?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PublicNotice"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
                 };
             };
         };

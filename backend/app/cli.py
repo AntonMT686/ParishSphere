@@ -223,3 +223,14 @@ def reminders(
         typer.echo(
             f"{code}: {r['meetings']} meeting reminder(s), {r['action_items']} action item reminder(s)"
         )
+
+
+@app.command("publish-notices")
+def publish_notices(
+    only: Annotated[list[str] | None, typer.Option("--only", help="Parish code(s)")] = None,
+) -> None:
+    """Publish approved notices whose time has come (normally run every 10 minutes by Celery beat)."""
+    from app.modules.notices.tasks import run_publish_due
+
+    for code, n in run_publish_due(only).items():
+        typer.echo(f"{code}: {n} notice(s) published")

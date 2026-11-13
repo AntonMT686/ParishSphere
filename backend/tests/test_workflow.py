@@ -55,9 +55,9 @@ def calls(tenant: TenantDescriptor) -> Iterator[list[tuple[str, str]]]:
     """Record handler callbacks; afterwards switch off every workflow a test defined."""
     counter().reset()
     seen: list[tuple[str, str]] = []
-    previous = {k: registry._HANDLERS.get(k) for k in ("ACTIVITY", "FIN_TRANSACTION", "FIN_PERIOD")}
+    previous = {k: registry._HANDLERS.get(k) for k in ("ACTIVITY", "FIN_TRANSACTION", "FIN_PERIOD", "NOTICE")}
     # Engine tests use made-up records: the real finance handlers would look them up.
-    for k in ("FIN_TRANSACTION", "FIN_PERIOD"):
+    for k in ("FIN_TRANSACTION", "FIN_PERIOD", "NOTICE"):
         register_handler(k, WorkflowHandler())
 
     def cb(name: str):  # type: ignore[no-untyped-def]
@@ -594,7 +594,7 @@ def test_seeded_activity_workflow_end_to_end(master_db: None) -> None:
     with tenant_session_scope(t) as s:
         codes = set(s.scalars(select(WorkflowDefinition.code)))
     assert codes == {"ACTIVITY_DEFAULT", "MINUTES_DEFAULT", "FIN_TXN_DEFAULT", "FIN_TXN_LARGE",
-                     "FIN_PERIOD_DEFAULT", "NOTICE_DEFAULT"}  # fmt: skip
+                     "FIN_PERIOD_DEFAULT", "NOTICE_DEFAULT", "NOTICE_EMERGENCY"}  # fmt: skip
     society = make_org_unit(t, "SOCIETY", "Youth Society")
     secretary_of_society = make_user(t)
     president = make_user(t)

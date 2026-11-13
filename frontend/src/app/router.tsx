@@ -9,6 +9,9 @@ import { CalendarPage } from '@/features/activities/CalendarPage';
 import { MeetingDetailPage } from '@/features/activities/MeetingDetailPage';
 import { MeetingsPage } from '@/features/activities/MeetingsPage';
 import { AuditLogPage } from '@/features/admin/AuditLogPage';
+import { NoticeDetailPage } from '@/features/notices/NoticeDetailPage';
+import { NoticeFormPage } from '@/features/notices/NoticeFormPage';
+import { NoticesPage } from '@/features/notices/NoticesPage';
 import { AccountsPage } from '@/features/finance/AccountsPage';
 import { StatementPage } from '@/features/finance/StatementPage';
 import { StatementsPage } from '@/features/finance/StatementsPage';
@@ -91,6 +94,10 @@ export const routes: RouteObject[] = [
           { path: '/finance/accounts', element: guarded(['finance.view', 'finance.configure'], <AccountsPage />) },
           { path: '/finance/statements', element: guarded('finance_period.view', <StatementsPage />) },
           { path: '/finance/statements/:periodKey', element: guarded('finance_period.view', <StatementPage />) },
+          { path: '/notices', element: guarded('notice.view', <NoticesPage />) },
+          { path: '/notices/new', element: guarded('notice.create', <NoticeFormPage />) },
+          { path: '/notices/:noticeId', element: guarded('notice.view', <NoticeDetailPage />) },
+          { path: '/notices/:noticeId/edit', element: guarded('notice.update', <NoticeFormPage />) },
           { path: '/approvals', element: <MyApprovalsPage /> },
           { path: '/approvals/submitted', element: <SubmittedPage /> },
           { path: '/approvals/:instanceId', element: <ApprovalDetailPage /> },

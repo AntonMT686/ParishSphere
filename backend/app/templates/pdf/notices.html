@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block style %}
+  .notice { border: 1px solid #C9CDE6; border-radius: 6px; padding: 10px 12px; margin-bottom: 10px; page-break-inside: avoid; }
+  .notice.important { border: 2px solid #B3261E; }
+  .notice h2 { font-size: 12pt; margin: 2px 0 4px; color: #1B1F3B; }
+  .notice .local { font-size: 10.5pt; color: #2F3E9E; margin: 0 0 4px; }
+  .tag { display: inline-block; font-size: 7.5pt; padding: 1px 6px; border-radius: 8px; background: #EEF0FA; color: #2F3E9E; margin-right: 4px; }
+  .tag.red { background: #FCE8E6; color: #B3261E; }
+  .body { white-space: pre-line; line-height: 1.45; font-size: 9.5pt; }
+  .when { font-size: 7.5pt; color: #5B6075; margin-top: 4px; }
+  hr { border: 0; border-top: 1px dashed #C9CDE6; margin: 8px 0; }
+{% endblock %}
+{% block content %}
+{% for n in notices %}
+<div class="notice{% if n.is_important %} important{% endif %}">
+  <span class="tag">{{ n.category|title }}</span>{% if n.is_important %}<span class="tag red">Important</span>{% endif %}
+  <h2>{{ n.title }}</h2>
+  {% if n.title_local %}<p class="local">{{ n.title_local }}</p>{% endif %}
+  <div class="body">{{ n.body }}</div>
+  {% if n.body_local %}<hr><div class="body">{{ n.body_local }}</div>{% endif %}
+  <div class="when">{{ n.code }} · from {{ n.publish_at.strftime('%d %b %Y') }}{% if n.expires_at %} until {{ n.expires_at.strftime('%d %b %Y') }}{% endif %}</div>
+</div>
+{% else %}
+<div class="empty">No notices at the moment.</div>
+{% endfor %}
+{% endblock %}

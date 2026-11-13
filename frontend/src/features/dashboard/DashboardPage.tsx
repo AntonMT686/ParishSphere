@@ -17,6 +17,7 @@ import { EmptyState, PageHeader, StatCard } from '@/design-system';
 import { useClergy } from '@/features/parish/api';
 import { DashboardAgenda } from './DashboardAgenda';
 import { DashboardFinance } from './DashboardFinance';
+import { DashboardNotices } from './DashboardNotices';
 
 /** Role-based dashboard shell; live widgets are wired in T14 once module APIs exist. */
 export function DashboardPage() {
@@ -64,6 +65,7 @@ export function DashboardPage() {
             <StatCard label={t(`dashboard.${s.key}`)} value="—" icon={s.icon} tone={s.tone} loading={isLoading} />
           </Grid>
         ))}
+        <DashboardNotices />
         <DashboardAgenda />
         <DashboardFinance />
         <Grid size={12}>

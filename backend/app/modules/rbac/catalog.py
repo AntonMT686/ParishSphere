@@ -256,6 +256,7 @@ SYSTEM_ROLES: tuple[RoleDef, ...] = (
             "activity.submit",
             "activity.delete",
             "notice.view",
+            "notice.publish",
             "notice.create",
             "notice.update",
             "notice.delete",

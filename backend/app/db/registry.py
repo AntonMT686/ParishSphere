@@ -12,6 +12,9 @@ import app.modules.finance.models
 import app.modules.finance.seeds  # default categories & cash account
 import app.modules.finance.service  # workflow handlers
 import app.modules.identity.models
+import app.modules.notices.models
+import app.modules.notices.seeds  # emergency workflow
+import app.modules.notices.service  # workflow handler
 import app.modules.notifications.models
 import app.modules.notifications.service  # after_commit delivery hooks
 import app.modules.org_units.models
@@ -35,6 +38,9 @@ LOADED_MODULES = (
     app.modules.finance.seeds,
     app.modules.finance.service,
     app.modules.identity.models,
+    app.modules.notices.models,
+    app.modules.notices.seeds,
+    app.modules.notices.service,
     app.modules.notifications.models,
     app.modules.notifications.service,
     app.modules.org_units.models,

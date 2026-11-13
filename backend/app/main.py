@@ -23,6 +23,8 @@ from app.modules.activities.router import actions_router, activities_router, cal
 from app.modules.audit.router import router as audit_router
 from app.modules.finance.router import router as finance_router
 from app.modules.identity.router import router as auth_router
+from app.modules.notices.router import public_router as public_notices_router
+from app.modules.notices.router import router as notices_router
 from app.modules.notifications.router import router as notifications_router
 from app.modules.org_units.router import types_router as org_types_router
 from app.modules.org_units.router import units_router as org_units_router
@@ -135,6 +137,8 @@ def create_app() -> FastAPI:
     app.include_router(priests_router, prefix=API_PREFIX)
     app.include_router(workflow_router, prefix=API_PREFIX)
     app.include_router(finance_router, prefix=API_PREFIX)
+    app.include_router(notices_router, prefix=API_PREFIX)
+    app.include_router(public_notices_router, prefix=API_PREFIX)
     for r in (activities_router, meetings_router, actions_router, calendar_router):
         app.include_router(r, prefix=API_PREFIX)
     app.include_router(files_router, prefix=API_PREFIX)

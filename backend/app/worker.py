@@ -13,7 +13,12 @@ celery_app = Celery(
     "parishsphere",
     broker=_broker,
     backend=_settings.redis_url or None,
-    include=["app.modules.notifications.tasks", "app.modules.workflow.tasks", "app.modules.activities.tasks"],
+    include=[
+        "app.modules.notifications.tasks",
+        "app.modules.workflow.tasks",
+        "app.modules.activities.tasks",
+        "app.modules.notices.tasks",
+    ],
 )
 celery_app.conf.update(
     task_serializer="json",
@@ -35,6 +40,8 @@ celery_app.conf.update(
         "workflow-sla": {"task": "app.tasks.workflow.sla_sweep", "schedule": 15 * 60},
         # Meeting reminders (~24 h ahead) and due / overdue action items.
         "reminders": {"task": "app.tasks.maintenance.reminders", "schedule": 60 * 60},
+        # Scheduled notices: publish and notify their audience.
+        "publish-notices": {"task": "app.tasks.maintenance.publish_notices", "schedule": 10 * 60},
     },
 )
 

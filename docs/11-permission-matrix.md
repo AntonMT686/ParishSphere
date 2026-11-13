@@ -110,7 +110,7 @@ Scope: **PARISH** = parish-wide only; **ORG_UNIT** = assigned for one organisati
 | `notice.review` — Review notices |  | ✓ | ✓ | ✓ |  |  |  |  |  |  |  | ✓ |  |  |  |
 | `notice.approve` — Approve notices |  | ✓ |  |  |  |  |  |  |  |  |  |  | ✓ |  |  |
 | `notice.reject` — Reject notices |  | ✓ |  |  |  |  |  |  |  |  |  |  | ✓ |  |  |
-| `notice.publish` — Publish and archive notices |  | ✓ |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| `notice.publish` — Publish and archive notices |  | ✓ |  | ✓ |  |  |  |  |  |  |  |  |  |  |  |
 | `document.view` — View documents | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |  |  |
 | `document.view_confidential` — View confidential documents |  | ✓ |  |  |  |  |  |  |  |  |  |  |  |  |  |
 | `document.create` — Upload documents | ✓ | ✓ |  | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |  |  |  |  |

@@ -80,7 +80,7 @@ export const NAVIGATION: NavSection[] = [
   {
     key: 'content',
     items: [
-      { key: 'notices', path: '/notices', icon: <CampaignIcon />, task: 'T13', permission: 'notice.view' },
+      { key: 'notices', path: '/notices', icon: <CampaignIcon />, permission: 'notice.view' },
       { key: 'documents', path: '/documents', icon: <DescriptionIcon />, task: 'T20', permission: 'document.view' },
     ],
   },

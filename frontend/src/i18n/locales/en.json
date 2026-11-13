@@ -84,7 +84,8 @@
     "upcomingMeetings": "Upcoming meetings",
     "viewAll": "View all",
     "finance": "Finance",
-    "lastReleased": "Last released statement: {{month}}"
+    "lastReleased": "Last released statement: {{month}}",
+    "notices": "Latest notices"
   },
   "common": {
     "search": "Search…",
@@ -153,7 +154,10 @@
     "DONE": "Done",
     "UNDER_REVIEW": "Under review",
     "RELEASED": "Released",
-    "VOID": "Void"
+    "VOID": "Void",
+    "LIVE": "On the board",
+    "EXPIRED": "Expired",
+    "ARCHIVED": "Archived"
   },
   "errors": {
     "INVALID_CREDENTIALS": "Incorrect username or password.",
@@ -217,7 +221,8 @@
     "PENDING_ENTRIES": "Some entries of the month still need a decision.",
     "LATER_PERIOD_CLOSED": "A later month is already closed; correct in the latest month.",
     "NO_RECEIPT": "Receipts are issued for approved income only.",
-    "CODE_EXISTS": "This code is already used."
+    "CODE_EXISTS": "This code is already used.",
+    "NOTICE_EXPIRED": "The expiry date has already passed."
   },
   "session": {
     "expiringTitle": "Your session is about to expire",
@@ -1089,5 +1094,74 @@
     "versionN": "Version {{n}}",
     "versionsN_one": "{{count}} version",
     "versionsN_other": "{{count}} versions"
+  },
+  "notices": {
+    "addOrg": "Add an organisation",
+    "archive": "Archive",
+    "archiveConfirm": "Archive this notice?",
+    "archiveHint": "It disappears from the notice board and the portal.",
+    "audience": "Audience",
+    "body": "Notice",
+    "bodyLocal": "Notice in Tamil (optional)",
+    "board": "Notice board",
+    "categoryLabel": "Category",
+    "category": {
+      "WEEKLY": "Weekly notice",
+      "ANNOUNCEMENT": "Announcement",
+      "EVENT": "Event",
+      "EMERGENCY": "Emergency",
+      "DIOCESE": "Diocese",
+      "NEWS": "News"
+    },
+    "content": "Content",
+    "deleteConfirm": "Delete this draft notice?",
+    "done": {
+      "submit": "Sent for approval",
+      "publish": "Published",
+      "archive": "Archived"
+    },
+    "edit": "Edit notice",
+    "everyone": "Everyone in the parish",
+    "expiredBanner": "This notice has expired and is no longer on the board.",
+    "expiresAt": "Remove from the board on (optional)",
+    "hasFiles": "Has attachments",
+    "important": "Important",
+    "language": "Language",
+    "localHint": "Readers who use ParishSphere in Tamil see this version.",
+    "manage": "Prepare & approve",
+    "markImportant": "Important (highlighted and emailed)",
+    "new": "New notice",
+    "noneManaged": "No notices yet",
+    "notFound": "Notice not found",
+    "nothing": "No notices right now",
+    "nothingHint": "Approved notices appear here from their publication time until they expire.",
+    "onPortal": "On the public portal",
+    "preparedBy": "Prepared by",
+    "preparedByHint": "The parish office or an organisation you act for.",
+    "preparedByName": "prepared by {{name}}",
+    "print": "Print bulletin",
+    "printOne": "PDF",
+    "publicPortal": "Show on the public / member portal",
+    "publishAt": "Publish on",
+    "publishHint": "Leave empty to publish as soon as it is approved.",
+    "publishNow": "Publish now",
+    "publishedFor": "Published {{when}}",
+    "scheduledBanner": "Approved – it will appear on the board on {{when}}.",
+    "someOrgs": "Only selected organisations",
+    "state": {
+      "DRAFT": "Draft",
+      "IN_REVIEW": "In review",
+      "REWORK": "Returned",
+      "SCHEDULED": "Scheduled",
+      "LIVE": "On the board",
+      "EXPIRED": "Expired",
+      "ARCHIVED": "Archived",
+      "REJECTED": "Rejected"
+    },
+    "subtitle": "Weekly notices, announcements, events and parish news – prepared, approved and published.",
+    "title": "Title",
+    "titleLocal": "Title in Tamil (optional)",
+    "until": "until {{when}}",
+    "when": "Publication"
   }
 }

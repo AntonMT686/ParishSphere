@@ -66,3 +66,5 @@ export type FinTxn = S['TxnOut'];
 export type FinPeriodListItem = S['PeriodListOut'];
 export type FinPeriod = S['PeriodOut'];
 export type FinSummary = S['SummaryOut'];
+export type NoticeListItem = S['NoticeListOut'];
+export type Notice = S['NoticeOut'];
