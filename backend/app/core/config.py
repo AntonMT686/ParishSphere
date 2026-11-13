@@ -100,11 +100,16 @@ class Settings(BaseSettings):
     # --- infrastructure ---
     redis_url: str | None = None
     cors_origins: list[str] = Field(default_factory=lambda: ["http://localhost:5173"])
-    expose_docs: bool = True
+    # API docs (/api/v1/docs): on by default in development/test, off in UAT/production unless set.
+    expose_docs: bool | None = None
 
     @property
     def is_production(self) -> bool:
         return self.env in ("production", "uat")
+
+    @property
+    def docs_enabled(self) -> bool:
+        return (not self.is_production) if self.expose_docs is None else self.expose_docs
 
     @property
     def use_celery(self) -> bool:

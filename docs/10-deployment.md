@@ -4,9 +4,10 @@
 
 | Service | Image | Notes |
 |---|---|---|
-| `nginx` | nginx:1.27-alpine | TLS termination, HTTP→HTTPS, gzip, security headers, SPA static files, `/api` proxy, rate limits |
-| `api` | `parishsphere/backend` | `uvicorn app.main:app` (gunicorn + uvicorn workers in prod), N replicas |
-| `worker` | same image | `celery -A app.worker worker -Q notifications,documents,workflow,maintenance` |
+| `web` | `parishsphere/web` (nginx:1.27-alpine + built frontend) | TLS termination, HTTP→HTTPS, gzip, security headers, SPA static files, `/api` proxy, rate limits. Config rendered from `infra/nginx/templates/{https,http}.conf.template` with `PS_DOMAIN` |
+| `migrate` | `parishsphere/backend` | One-shot on every start: `ps-admin migrate-master && ps-admin migrate-tenants`; the API waits for it |
+| `api` | `parishsphere/backend` | `uvicorn app.main:app --workers $WEB_CONCURRENCY`, health-checked on `/health/ready` |
+| `worker` | same image | `celery -A app.worker worker -Q default,notifications,documents,workflow,maintenance` |
 | `beat` | same image | `celery -A app.worker beat` (single instance) |
 | `mysql` | mysql:8.4 | master + parish DBs (prod: managed MySQL / dedicated hosts) |
 | `redis` | redis:7-alpine | cache, broker, rate limits |
@@ -22,7 +23,9 @@
 | UAT | pilot parish validation | prod-like, anonymised data, TLS |
 | production | live | TLS, per-tenant DB users, managed backups, monitoring |
 
-Configuration exclusively via environment variables (`PS_*`), documented in `backend/.env.example`. Secrets from the platform secret store.
+Configuration exclusively via environment variables (`PS_*`), documented in `backend/.env.example` (development) and `infra/prod.env.example` (production stack, copied to `infra/.env`). Secrets from the platform secret store.
+
+Production stack: [`infra/docker-compose.prod.yml`](../infra/docker-compose.prod.yml). Step-by-step installation, upgrades, backups and restore: [21 — Installation & Operations](21-installation.md).
 
 ## 3. HTTPS
 
@@ -48,4 +51,4 @@ Configuration exclusively via environment variables (`PS_*`), documented in `bac
 
 ## 6. Backup & restore
 
-See [03 §9](03-multi-tenant-architecture.md#9-backup--recovery). Backups are scheduled by Celery beat (`maintenance` queue) or host cron; restore drills monthly.
+See [03 §9](03-multi-tenant-architecture.md#9-backup--recovery). `scripts/backup.sh` (`make backup`) dumps the master and every parish database plus uploaded files, keeping 14 copies; schedule it from host cron and copy it off the server. Restore drills monthly ([21 §3](21-installation.md#3-operations)).

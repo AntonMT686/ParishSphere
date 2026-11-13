@@ -24,5 +24,6 @@
 | 18 | [Notices & News](18-notices.md) | Prepare → approve → scheduled publish → archive, audiences, emergency route, bulletin PDF, public feed |
 | 19 | [Role Dashboards](19-dashboards.md) | Permission-driven dashboard sections, scoped figures, charts, member view |
 | 20 | [Search, Reports & Audit](20-search-reports-audit.md) | Scoped global search, 21 MVP reports with CSV/Excel/PDF export, audit viewer filters |
+| 21 | [Installation & Operations](21-installation.md) | Laptop demo, demo users & story, server install (Docker, TLS, first parish), upgrades, backups/restore, security checklist, troubleshooting, e2e |
 
 Living documents: update them in the same PR as the code that changes the behaviour they describe.

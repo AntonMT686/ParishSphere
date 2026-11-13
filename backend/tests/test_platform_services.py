@@ -510,3 +510,33 @@ def test_users_with_permission_scope(tenant: TenantDescriptor) -> None:
         assert {u.id for u in users_with_permission(s, "activity.approve", role_code="PARISH_PRIEST")} >= {
             priest.id
         }
+
+
+def test_audit_log_is_append_only(tenant) -> None:  # type: ignore[no-untyped-def]
+    """No code path may rewrite history: ORM updates, deletes and bulk statements are all refused."""
+    from sqlalchemy import delete, select, update
+
+    from app.common.audit import AuditTamperError, record_audit
+    from app.db.tenant import tenant_session_scope
+    from app.modules.core.models import AuditLog
+
+    with tenant_session_scope(tenant) as s:
+        row = record_audit(s, action="TEST", module="tests", remarks="original")
+        s.flush()
+        rid = row.id
+    for attempt in ("modify", "delete", "bulk_update", "bulk_delete"):
+        with pytest.raises(AuditTamperError), tenant_session_scope(tenant) as s:
+            log = s.get(AuditLog, rid)
+            assert log is not None
+            if attempt == "modify":
+                log.remarks = "rewritten"
+                s.flush()
+            elif attempt == "delete":
+                s.delete(log)
+                s.flush()
+            elif attempt == "bulk_update":
+                s.execute(update(AuditLog).where(AuditLog.id == rid).values(remarks="x"))
+            else:
+                s.execute(delete(AuditLog).where(AuditLog.id == rid))
+    with tenant_session_scope(tenant) as s:
+        assert s.scalar(select(AuditLog.remarks).where(AuditLog.id == rid)) == "original"

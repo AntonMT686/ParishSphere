@@ -12,7 +12,7 @@ from datetime import date
 from typing import Annotated, Any
 
 from fastapi import APIRouter, Depends, Query, Request, Response, status
-from sqlalchemy import Select, exists, func, or_, select
+from sqlalchemy import Select, func, or_, select
 from sqlalchemy.orm import Session
 
 from app.common.audit import changes, record_audit
@@ -254,10 +254,14 @@ def _family_query(
             Family.code.ilike(like),
             Family.search_name.like(name),
             Family.family_name_local.ilike(like),
-            exists().where(
-                Member.family_id == Family.id,
-                Member.is_deleted.is_(False),
-                or_(Member.search_name.like(name), Member.name_local.ilike(like), Member.code.ilike(like)),
+            # Uncorrelated: the matching members are found once, not re-scanned for every family.
+            Family.id.in_(
+                select(Member.family_id).where(
+                    Member.is_deleted.is_(False),
+                    or_(
+                        Member.search_name.like(name), Member.name_local.ilike(like), Member.code.ilike(like)
+                    ),
+                )
             ),
         ]
         if digits:

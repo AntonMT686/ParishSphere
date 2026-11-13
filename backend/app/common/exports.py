@@ -109,7 +109,7 @@ def to_xlsx(matrix: list[list[Any]], columns: Sequence[Column], title: str) -> b
         cell.font = Font(bold=True)
         cell.fill = PatternFill("solid", fgColor="EEF0FA")
         cell.alignment = Alignment(vertical="center")
-    for row in matrix:
+    for row_no, row in enumerate(matrix, start=2):  # row 1 is the header
         values: list[Any] = []
         for c, v in zip(columns, row, strict=True):
             if c.numeric and isinstance(v, str):
@@ -117,9 +117,10 @@ def to_xlsx(matrix: list[list[Any]], columns: Sequence[Column], title: str) -> b
                     v = float(v)
             values.append(v)
         ws.append(values)
-        for cell in ws[ws.max_row]:
-            if isinstance(cell.value, str) and cell.value[:1] in ("=", "+", "-", "@"):
-                cell.data_type = "s"  # store as text, never as a formula
+        # Address cells directly: ``ws[ws.max_row]`` rescans the whole sheet per row (quadratic).
+        for col_no, v in enumerate(values, start=1):
+            if isinstance(v, str) and v[:1] in ("=", "+", "-", "@"):
+                ws.cell(row=row_no, column=col_no).data_type = "s"  # store as text, never as a formula
     for idx, c in enumerate(columns, start=1):
         letter = get_column_letter(idx)
         longest = max([len(str(c.header))] + [len(str(r[idx - 1])) for r in matrix[:500]] or [10])

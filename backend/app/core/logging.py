@@ -38,3 +38,9 @@ def configure_logging(level: str = "INFO", json_logs: bool = False) -> None:
         cache_logger_on_first_use=True,
     )
     logging.basicConfig(level=level.upper(), stream=sys.stdout, format="%(levelname)s %(name)s %(message)s")
+    # PDF rendering libraries log every glyph table at DEBUG/INFO; keep them out of application logs.
+    # WeasyPrint briefly raises fontTools to DEBUG while subsetting fonts (and reports problems itself),
+    # so fontTools records must not reach our handlers at all.
+    for noisy in ("fontTools", "weasyprint", "PIL"):
+        logging.getLogger(noisy).setLevel(logging.WARNING)
+    logging.getLogger("fontTools").propagate = False

@@ -17,6 +17,7 @@ from typing import Annotated
 import typer
 from sqlalchemy import select
 
+from app.core.config import get_settings
 from app.core.errors import AppError
 from app.core.logging import configure_logging
 from app.core.security import generate_token
@@ -195,6 +196,45 @@ def create_parish_user(
     if not password and not email:
         raise typer.BadParameter("Provide --password or --email")
     _create_admin(parish, username, full_name, email, password, roles=[r.upper() for r in role or []])
+
+
+@app.command("seed-demo")
+def seed_demo_cmd(
+    parish: Annotated[str, typer.Option(help="Parish code")] = "STMARYS",
+    name: Annotated[str, typer.Option(help="Parish name (when it does not exist yet)")] = "St. Mary's Church",
+    diocese: Annotated[str, typer.Option(help="Diocese code (created when missing)")] = "CHN",
+    diocese_name: Annotated[str, typer.Option()] = "Archdiocese of Madras-Mylapore",
+    admin_username: Annotated[str, typer.Option()] = "admin",
+    password: Annotated[
+        str, typer.Option(help="Password for the admin and every demo user")
+    ] = "ChangeMe-Now1",  # noqa: S107  (documented demo password)
+) -> None:
+    """Create (if needed) and fill a demo parish with realistic data. Never use on a live parish."""
+    from app.demo import DEMO_USERS, DemoError, seed_demo
+
+    if get_settings().is_production and not typer.confirm(
+        "PS_ENV is production. Add demo data to this installation?", default=False
+    ):
+        raise typer.Abort()
+    with master_session() as session:
+        if session.scalar(select(Diocese).where(Diocese.code == diocese.upper())) is None:
+            session.add(Diocese(code=diocese.upper(), name=diocese_name))
+            session.commit()
+            typer.echo(f"diocese {diocese.upper()} created")
+    if resolve_tenant(code=parish) is None:
+        provision(
+            diocese=diocese, code=parish, name=name, admin_username=admin_username, admin_password=password
+        )
+    tenant = resolve_tenant(code=parish)
+    assert tenant is not None
+    try:
+        added = seed_demo(tenant, admin_username, password, log=typer.echo)
+    except DemoError as exc:
+        raise typer.BadParameter(str(exc)) from exc
+    if added:
+        typer.echo("\nDemo users (password: the one given with --password):")
+        for user, role in (("admin", "Parish Administrator – users, roles, settings"), *DEMO_USERS):
+            typer.echo(f"  {user:<10} {role}")
 
 
 if __name__ == "__main__":

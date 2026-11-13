@@ -1,0 +1,107 @@
+# Production / UAT stack on one server.
+#   cp infra/prod.env.example infra/.env      # fill it in
+#   docker compose -f infra/docker-compose.prod.yml up -d --build
+# See docs/21-installation.md.
+name: parishsphere
+
+x-app: &app
+  build: ../backend
+  image: parishsphere/backend:${PS_VERSION:-latest}
+  restart: unless-stopped
+  env_file: .env
+  environment:
+    PS_MASTER_DATABASE_URL: mysql+pymysql://ps_admin:${PS_DB_ADMIN_PASSWORD}@mysql:3306/ps_master?charset=utf8mb4
+    PS_TENANT_DB_DRIVER: mysql
+    PS_TENANT_DB_HOST: mysql
+    PS_TENANT_DB_PORT: "3306"
+    PS_TENANT_DB_ADMIN_USER: ps_admin
+    PS_TENANT_DB_ADMIN_PASSWORD: ${PS_DB_ADMIN_PASSWORD}
+    PS_TENANT_DB_SHARED_CREDENTIALS: "false"
+    PS_REDIS_URL: redis://redis:6379/0
+    PS_BASE_DOMAIN: ${PS_DOMAIN}
+    PS_APP_URL_TEMPLATE: ${PS_NGINX_TEMPLATE:-https}://{subdomain}.${PS_DOMAIN}
+    PS_CORS_ORIGINS: '["${PS_NGINX_TEMPLATE:-https}://${PS_DOMAIN}"]'
+    PS_STORAGE_LOCAL_DIR: /data/files
+  volumes: ["files:/data/files"]
+  depends_on:
+    mysql: { condition: service_healthy }
+    redis: { condition: service_healthy }
+
+services:
+  mysql:
+    image: mysql:8.4
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      PS_DB_ADMIN_PASSWORD: ${PS_DB_ADMIN_PASSWORD}
+    command: ["--character-set-server=utf8mb4", "--collation-server=utf8mb4_0900_ai_ci", "--max-connections=500"]
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./mysql/prod-init.sh:/docker-entrypoint-initdb.d/00-init.sh:ro
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -uroot -p\"$$MYSQL_ROOT_PASSWORD\" --silent"]
+      interval: 10s
+      retries: 30
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes: ["redis-data:/data"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      retries: 10
+
+  # Runs on every `up`: upgrades the master database and every parish database, then exits.
+  migrate:
+    <<: *app
+    restart: "no"
+    command: sh -c "ps-admin migrate-master && ps-admin migrate-tenants --parallel 4"
+    healthcheck: { disable: true }
+
+  api:
+    <<: *app
+    command: sh -c "exec uvicorn app.main:app --host 0.0.0.0 --port 8000 --proxy-headers --forwarded-allow-ips '*' --workers $${WEB_CONCURRENCY:-2}"
+    depends_on:
+      migrate: { condition: service_completed_successfully }
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request,sys;sys.exit(0 if urllib.request.urlopen('http://localhost:8000/api/v1/health/ready',timeout=5).status==200 else 1)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+
+  worker:
+    <<: *app
+    command: celery -A app.worker worker -l info -Q default,notifications,documents,workflow,maintenance --concurrency 2
+    healthcheck: { disable: true }
+    depends_on:
+      migrate: { condition: service_completed_successfully }
+
+  # Scheduler (SLA escalations, meeting and action-item reminders, notice publishing). Exactly one.
+  beat:
+    <<: *app
+    command: celery -A app.worker beat -l info -s /tmp/celerybeat-schedule
+    healthcheck: { disable: true }
+    depends_on:
+      migrate: { condition: service_completed_successfully }
+
+  web:
+    build: ../frontend
+    image: parishsphere/web:${PS_VERSION:-latest}
+    restart: unless-stopped
+    environment:
+      PS_DOMAIN: ${PS_DOMAIN}
+    volumes:
+      - ./nginx/templates/${PS_NGINX_TEMPLATE:-https}.conf.template:/etc/nginx/templates/default.conf.template:ro
+      - ./nginx/proxy_params.conf:/etc/nginx/proxy_params.conf:ro
+      - ./certs:/etc/nginx/certs:ro
+    ports: ["80:80", "443:443"]
+    depends_on:
+      api: { condition: service_healthy }
+
+volumes:
+  mysql-data:
+  redis-data:
+  files:

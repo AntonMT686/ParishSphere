@@ -18,3 +18,10 @@ frontend/dist/
 .idea/
 .vscode/
 celerybeat-schedule*
+
+# Production secrets and certificates
+infra/certs/
+# Playwright
+frontend/test-results/
+frontend/playwright-report/
+backups/

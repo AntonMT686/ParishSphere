@@ -6,6 +6,7 @@ from datetime import date
 from typing import Any
 
 from sqlalchemy import select
+from sqlalchemy.orm import selectinload
 
 from app.modules.org_units.models import OrgUnit, OrgUnitType
 from app.modules.people import service as people
@@ -63,7 +64,8 @@ def _families(ctx: Ctx) -> list[Family]:
         stmt = stmt.where(Family.status.in_(("ACTIVE", "PENDING_ANBIYAM")))
     if (u := ctx.unit()) is not None:
         stmt = stmt.where(Family.anbiyam_id == u.id)
-    return list(ctx.db.scalars(stmt))
+    # Members are needed for every row (head, count): load them in one batch, not one query per family.
+    return list(ctx.db.scalars(stmt.options(selectinload(Family.members))))
 
 
 def _head(f: Family) -> str:

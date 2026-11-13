@@ -9,9 +9,28 @@ from __future__ import annotations
 from typing import Any
 
 from fastapi import Request
-from sqlalchemy.orm import Session
+from sqlalchemy import event
+from sqlalchemy.orm import ORMExecuteState, Session
 
 from app.modules.core.models import AuditLog
+
+
+class AuditTamperError(RuntimeError):
+    """Raised when code tries to change or delete an audit row."""
+
+
+@event.listens_for(Session, "before_flush")
+def _audit_rows_are_append_only(session: Session, _ctx: object, _instances: object) -> None:
+    for obj in (*session.dirty, *session.deleted):
+        if isinstance(obj, AuditLog) and (obj in session.deleted or session.is_modified(obj)):
+            raise AuditTamperError("Audit log entries cannot be changed or deleted")
+
+
+@event.listens_for(Session, "do_orm_execute")
+def _no_bulk_audit_changes(state: ORMExecuteState) -> None:
+    if (state.is_update or state.is_delete) and any(m.class_ is AuditLog for m in (state.all_mappers or ())):
+        raise AuditTamperError("Audit log entries cannot be changed or deleted")
+
 
 SENSITIVE_KEYS = {"password", "password_hash", "token", "token_hash", "refresh_token", "secret", "pin"}
 

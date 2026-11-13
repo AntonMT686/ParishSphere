@@ -51,11 +51,13 @@ Login on the parish subdomain → Priest dashboard with real numbers → registe
 | Workflow | parametrised suite | sequential, parallel ALL/ANY, optional skip, reject, return/resubmit, delegate, escalate, definition versioning |
 | Security | pytest + OWASP ZAP baseline (CI nightly) | lockout, refresh reuse, idle timeout, CSRF, headers, upload validation |
 | Frontend | Vitest + React Testing Library | components, hooks, guards, idle timer |
-| E2E | Playwright | MVP demo journey |
+| E2E | Playwright (`frontend/e2e`, `make e2e`, CI job `e2e`) | MVP demo journey on the `seed-demo` parish: 10 serial steps, ~30 s |
 | Performance | Locust | targets below with 50k members / 200k transactions seed |
 | UAT | Scripted scenarios with pilot parish | sign-off checklist |
 
 Coverage goal: ≥ 85 % on services/engine; every bug fix adds a regression test.
+
+**T16 hardening results** (SQLite, 3,000 families / 12,000 members, single process): family list 0.05 s, family search 0.05 s (was 6.4 s – correlated member subquery replaced), member list/search 0.02 s, global search 0.02–0.03 s, dashboard 0.07 s, family register report 0.47 s (was 4.5 s – members batch-loaded), Excel export of 3,000 rows 0.2 s (was 9 s – quadratic cell scan removed). Production-mode checks: API docs off, `Secure`/`HttpOnly`/`SameSite=strict` cookies, JSON logs, account lockout after 5 failures, append-only audit log enforced in the application.
 
 ## 5. Performance targets
 

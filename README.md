@@ -18,10 +18,13 @@ Multi-tenant parish management SaaS: families & members, configurable parish org
 
 ```bash
 make up          # MySQL, Redis, MailHog, API, worker, Vite, Nginx
-make seed-demo   # super admin + diocese CHN + parish STMARYS with user admin / ChangeMe-Now1
+make seed-demo   # super admin + demo parish STMARYS: staff for every role, 30 families,
+                 # 4 months of finance, activities, meetings, notices, approvals waiting
 ```
 
-Open http://stmarys.parishsphere.localhost (or http://localhost:5173 and enter parish code `STMARYS`). API docs: http://localhost:8000/api/v1/docs.
+Open http://stmarys.parishsphere.localhost (or http://localhost:5173 and enter parish code `STMARYS`). Demo users and the 10-minute demo story: [docs/21-installation.md](docs/21-installation.md#1-quick-demo-on-a-laptop). All demo passwords are `ChangeMe-Now1`. API docs: http://localhost:8000/api/v1/docs.
+
+**Production / UAT on one server:** `cp infra/prod.env.example infra/.env` (fill it in) → `make prod-up`. See the [installation & operations guide](docs/21-installation.md).
 
 Without Docker (SQLite, for quick backend work):
 
@@ -36,7 +39,10 @@ cd backend && PS_MASTER_DATABASE_URL=sqlite:///data/master.db PS_TENANT_DB_DRIVE
 | `ps-admin migrate-master` | Upgrade the master database |
 | `ps-admin provision-parish --diocese CHN --code X --name "…"` | Register + create + migrate + seed a parish DB (idempotent) |
 | `ps-admin migrate-tenants --parallel 8` | Upgrade every parish database |
+| `ps-admin seed-demo` | Create and fill the demo parish (refuses a parish that already has families) |
 | `make test` / `make lint` | Backend + frontend tests / linters |
+| `make e2e` | Playwright MVP journey on a throwaway SQLite stack |
+| `make backup` | Dump the master + every parish database and uploaded files (production stack) |
 
 ## Frontend development
 

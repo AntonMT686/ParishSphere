@@ -80,7 +80,7 @@ def _health_router() -> APIRouter:
 def create_app() -> FastAPI:
     settings = get_settings()
     configure_logging(settings.log_level, settings.log_json)
-    docs = settings.expose_docs
+    docs = settings.docs_enabled
     app = FastAPI(
         title="ParishSphere API",
         version="0.1.0",
