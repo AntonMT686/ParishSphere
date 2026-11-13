@@ -2360,6 +2360,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/dashboard": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Dashboard */
+        get: operations["dashboard_api_v1_dashboard_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/activities/categories": {
         parameters: {
             query?: never;
@@ -3728,6 +3745,239 @@ export interface components {
             min_amount?: number | null;
             /** Max Amount */
             max_amount?: number | null;
+        };
+        /** DashActivities */
+        DashActivities: {
+            /** Upcoming */
+            upcoming: components["schemas"]["DashActivityItem"][];
+            /** Recent */
+            recent: components["schemas"]["DashActivityItem"][];
+            /** Awaiting Report */
+            awaiting_report: number;
+            /** In Review */
+            in_review: number;
+            /** By Unit */
+            by_unit: components["schemas"]["DashUnitActivity"][];
+        };
+        /** DashActivityItem */
+        DashActivityItem: {
+            /** Id */
+            id: string;
+            /** Title */
+            title: string;
+            /**
+             * Date
+             * Format: date
+             */
+            date: string;
+            /** Org Unit */
+            org_unit: string | null;
+            /** Status */
+            status: string;
+        };
+        /** DashAnbiyamStat */
+        DashAnbiyamStat: {
+            /** Name */
+            name: string;
+            /** Families */
+            families: number;
+            /** Members */
+            members: number;
+        };
+        /** DashApprovals */
+        DashApprovals: {
+            /** Pending */
+            pending: number;
+            /** Overdue */
+            overdue: number;
+            /** Finance */
+            finance: number;
+            /** By Type */
+            by_type: components["schemas"]["DashCount"][];
+            /** Items */
+            items: components["schemas"]["DashTaskItem"][];
+        };
+        /** DashCategoryAmount */
+        DashCategoryAmount: {
+            /** Name */
+            name: string;
+            /** Amount */
+            amount: string;
+        };
+        /** DashCount */
+        DashCount: {
+            /** Key */
+            key: string;
+            /** Label */
+            label: string;
+            /** Value */
+            value: number;
+        };
+        /** DashDonation */
+        DashDonation: {
+            /**
+             * Date
+             * Format: date
+             */
+            date: string;
+            /** Category */
+            category: string | null;
+            /** Amount */
+            amount: string;
+            /** Code */
+            code: string;
+        };
+        /** DashFinance */
+        DashFinance: {
+            /** Fy Label */
+            fy_label: string;
+            /** Months */
+            months: components["schemas"]["DashMonthPoint"][];
+            /** Income By Category */
+            income_by_category: components["schemas"]["DashCategoryAmount"][];
+            /** Expense By Category */
+            expense_by_category: components["schemas"]["DashCategoryAmount"][];
+            /** Donations Month */
+            donations_month: string;
+            /** Donations Fy */
+            donations_fy: string;
+            /** Pending Entries */
+            pending_entries: number;
+            /** Periods */
+            periods: components["schemas"]["DashPeriodStat"][];
+        };
+        /** DashHouseholdMember */
+        DashHouseholdMember: {
+            /** Name */
+            name: string;
+            /** Relationship */
+            relationship: string;
+            /** Age */
+            age: number | null;
+        };
+        /** DashMe */
+        DashMe: {
+            /** Member Code */
+            member_code: string;
+            /** Name */
+            name: string;
+            family: components["schemas"]["DashRef"] | null;
+            /** Family Code */
+            family_code: string | null;
+            /** Anbiyam */
+            anbiyam: string | null;
+            /** Household */
+            household: components["schemas"]["DashHouseholdMember"][];
+            /** Memberships */
+            memberships: string[];
+            /** Donations */
+            donations: components["schemas"]["DashDonation"][];
+            /** Donations Fy */
+            donations_fy: string;
+        };
+        /** DashMeetings */
+        DashMeetings: {
+            /** Upcoming */
+            upcoming: number;
+            /** Minutes In Review */
+            minutes_in_review: number;
+        };
+        /** DashMonthPoint */
+        DashMonthPoint: {
+            /** Key */
+            key: string;
+            /** Income */
+            income: string;
+            /** Expense */
+            expense: string;
+        };
+        /** DashOrgTypeStat */
+        DashOrgTypeStat: {
+            /** Code */
+            code: string;
+            /** Name */
+            name: string;
+            /** Units */
+            units: number;
+            /** Members */
+            members: number;
+            /** Member Kind */
+            member_kind: string;
+        };
+        /** DashPeople */
+        DashPeople: {
+            /** Families */
+            families: number;
+            /** Members */
+            members: number;
+            /** New Families Month */
+            new_families_month: number;
+            /** Pending Anbiyam */
+            pending_anbiyam: number;
+            /** By Anbiyam */
+            by_anbiyam: components["schemas"]["DashAnbiyamStat"][];
+            /** Age Bands */
+            age_bands: components["schemas"]["DashCount"][];
+            /** Gender */
+            gender: components["schemas"]["DashCount"][];
+        };
+        /** DashPeriodStat */
+        DashPeriodStat: {
+            /** Key */
+            key: string;
+            /** Status */
+            status: string;
+        };
+        /** DashRef */
+        DashRef: {
+            /** Id */
+            id: string;
+            /** Name */
+            name: string;
+        };
+        /** DashTaskItem */
+        DashTaskItem: {
+            /** Title */
+            title: string;
+            /** Entity Type */
+            entity_type: string;
+            /** Entity Label */
+            entity_label: string;
+            /** Stage */
+            stage: string | null;
+            /** Link */
+            link: string | null;
+            /** Amount */
+            amount: number | null;
+            /** Due At */
+            due_at: string | null;
+            /** Overdue */
+            overdue: boolean;
+        };
+        /** DashUnitActivity */
+        DashUnitActivity: {
+            /** Name */
+            name: string;
+            /** Completed */
+            completed: number;
+            /** Planned */
+            planned: number;
+        };
+        /** DashboardOut */
+        DashboardOut: {
+            approvals: components["schemas"]["DashApprovals"];
+            people?: components["schemas"]["DashPeople"] | null;
+            /** Organisations */
+            organisations?: components["schemas"]["DashOrgTypeStat"][] | null;
+            finance?: components["schemas"]["DashFinance"] | null;
+            activities?: components["schemas"]["DashActivities"] | null;
+            /**
+             * Events
+             * @default []
+             */
+            events: components["schemas"]["DashActivityItem"][];
+            meetings?: components["schemas"]["DashMeetings"] | null;
+            me?: components["schemas"]["DashMe"] | null;
         };
         /** DeceasedIn */
         DeceasedIn: {
@@ -12163,6 +12413,26 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    dashboard_api_v1_dashboard_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DashboardOut"];
                 };
             };
         };

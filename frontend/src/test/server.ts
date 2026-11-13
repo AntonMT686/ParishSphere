@@ -35,6 +35,7 @@ export const defaultHandlers = [
   http.get(`${API}/notices/board`, () => HttpResponse.json({ items: [], page: 1, size: 3, total: 0, pages: 0 })),
   http.get(`${API}/action-items`, () => HttpResponse.json({ items: [], page: 1, size: 50, total: 0, pages: 0 })),
   http.get(`${API}/parish/clergy`, () => HttpResponse.json({ parish_priest: null, others: [] })),
+  http.get(`${API}/dashboard`, () => HttpResponse.json({ approvals: { pending: 0, overdue: 0, finance: 0, by_type: [], items: [] }, events: [] })),
   http.get(`${API}/notifications/unread-count`, () => HttpResponse.json({ unread: 2 })),
   http.get(`${API}/notifications`, () =>
     HttpResponse.json({

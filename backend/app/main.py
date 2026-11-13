@@ -21,6 +21,7 @@ from app.db.master import get_master_engine
 from app.master.router import router as platform_router
 from app.modules.activities.router import actions_router, activities_router, calendar_router, meetings_router
 from app.modules.audit.router import router as audit_router
+from app.modules.dashboard.router import router as dashboard_router
 from app.modules.finance.router import router as finance_router
 from app.modules.identity.router import router as auth_router
 from app.modules.notices.router import public_router as public_notices_router
@@ -139,6 +140,7 @@ def create_app() -> FastAPI:
     app.include_router(finance_router, prefix=API_PREFIX)
     app.include_router(notices_router, prefix=API_PREFIX)
     app.include_router(public_notices_router, prefix=API_PREFIX)
+    app.include_router(dashboard_router, prefix=API_PREFIX)
     for r in (activities_router, meetings_router, actions_router, calendar_router):
         app.include_router(r, prefix=API_PREFIX)
     app.include_router(files_router, prefix=API_PREFIX)

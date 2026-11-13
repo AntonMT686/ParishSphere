@@ -10014,6 +10014,32 @@
         }
       }
     },
+    "/api/v1/dashboard": {
+      "get": {
+        "tags": [
+          "dashboard"
+        ],
+        "summary": "Dashboard",
+        "operationId": "dashboard_api_v1_dashboard_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DashboardOut"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
     "/api/v1/activities/categories": {
       "get": {
         "tags": [
@@ -15645,6 +15671,746 @@
         },
         "type": "object",
         "title": "Conditions"
+      },
+      "DashActivities": {
+        "properties": {
+          "upcoming": {
+            "items": {
+              "$ref": "#/components/schemas/DashActivityItem"
+            },
+            "type": "array",
+            "title": "Upcoming"
+          },
+          "recent": {
+            "items": {
+              "$ref": "#/components/schemas/DashActivityItem"
+            },
+            "type": "array",
+            "title": "Recent"
+          },
+          "awaiting_report": {
+            "type": "integer",
+            "title": "Awaiting Report"
+          },
+          "in_review": {
+            "type": "integer",
+            "title": "In Review"
+          },
+          "by_unit": {
+            "items": {
+              "$ref": "#/components/schemas/DashUnitActivity"
+            },
+            "type": "array",
+            "title": "By Unit"
+          }
+        },
+        "type": "object",
+        "required": [
+          "upcoming",
+          "recent",
+          "awaiting_report",
+          "in_review",
+          "by_unit"
+        ],
+        "title": "DashActivities"
+      },
+      "DashActivityItem": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "date": {
+            "type": "string",
+            "format": "date",
+            "title": "Date"
+          },
+          "org_unit": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Org Unit"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "title",
+          "date",
+          "org_unit",
+          "status"
+        ],
+        "title": "DashActivityItem"
+      },
+      "DashAnbiyamStat": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "families": {
+            "type": "integer",
+            "title": "Families"
+          },
+          "members": {
+            "type": "integer",
+            "title": "Members"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name",
+          "families",
+          "members"
+        ],
+        "title": "DashAnbiyamStat"
+      },
+      "DashApprovals": {
+        "properties": {
+          "pending": {
+            "type": "integer",
+            "title": "Pending"
+          },
+          "overdue": {
+            "type": "integer",
+            "title": "Overdue"
+          },
+          "finance": {
+            "type": "integer",
+            "title": "Finance"
+          },
+          "by_type": {
+            "items": {
+              "$ref": "#/components/schemas/DashCount"
+            },
+            "type": "array",
+            "title": "By Type"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/DashTaskItem"
+            },
+            "type": "array",
+            "title": "Items"
+          }
+        },
+        "type": "object",
+        "required": [
+          "pending",
+          "overdue",
+          "finance",
+          "by_type",
+          "items"
+        ],
+        "title": "DashApprovals"
+      },
+      "DashCategoryAmount": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "amount": {
+            "type": "string",
+            "title": "Amount"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name",
+          "amount"
+        ],
+        "title": "DashCategoryAmount"
+      },
+      "DashCount": {
+        "properties": {
+          "key": {
+            "type": "string",
+            "title": "Key"
+          },
+          "label": {
+            "type": "string",
+            "title": "Label"
+          },
+          "value": {
+            "type": "integer",
+            "title": "Value"
+          }
+        },
+        "type": "object",
+        "required": [
+          "key",
+          "label",
+          "value"
+        ],
+        "title": "DashCount"
+      },
+      "DashDonation": {
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date",
+            "title": "Date"
+          },
+          "category": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Category"
+          },
+          "amount": {
+            "type": "string",
+            "title": "Amount"
+          },
+          "code": {
+            "type": "string",
+            "title": "Code"
+          }
+        },
+        "type": "object",
+        "required": [
+          "date",
+          "category",
+          "amount",
+          "code"
+        ],
+        "title": "DashDonation"
+      },
+      "DashFinance": {
+        "properties": {
+          "fy_label": {
+            "type": "string",
+            "title": "Fy Label"
+          },
+          "months": {
+            "items": {
+              "$ref": "#/components/schemas/DashMonthPoint"
+            },
+            "type": "array",
+            "title": "Months"
+          },
+          "income_by_category": {
+            "items": {
+              "$ref": "#/components/schemas/DashCategoryAmount"
+            },
+            "type": "array",
+            "title": "Income By Category"
+          },
+          "expense_by_category": {
+            "items": {
+              "$ref": "#/components/schemas/DashCategoryAmount"
+            },
+            "type": "array",
+            "title": "Expense By Category"
+          },
+          "donations_month": {
+            "type": "string",
+            "title": "Donations Month"
+          },
+          "donations_fy": {
+            "type": "string",
+            "title": "Donations Fy"
+          },
+          "pending_entries": {
+            "type": "integer",
+            "title": "Pending Entries"
+          },
+          "periods": {
+            "items": {
+              "$ref": "#/components/schemas/DashPeriodStat"
+            },
+            "type": "array",
+            "title": "Periods"
+          }
+        },
+        "type": "object",
+        "required": [
+          "fy_label",
+          "months",
+          "income_by_category",
+          "expense_by_category",
+          "donations_month",
+          "donations_fy",
+          "pending_entries",
+          "periods"
+        ],
+        "title": "DashFinance"
+      },
+      "DashHouseholdMember": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "relationship": {
+            "type": "string",
+            "title": "Relationship"
+          },
+          "age": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Age"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name",
+          "relationship",
+          "age"
+        ],
+        "title": "DashHouseholdMember"
+      },
+      "DashMe": {
+        "properties": {
+          "member_code": {
+            "type": "string",
+            "title": "Member Code"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "family": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DashRef"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "family_code": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Family Code"
+          },
+          "anbiyam": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Anbiyam"
+          },
+          "household": {
+            "items": {
+              "$ref": "#/components/schemas/DashHouseholdMember"
+            },
+            "type": "array",
+            "title": "Household"
+          },
+          "memberships": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Memberships"
+          },
+          "donations": {
+            "items": {
+              "$ref": "#/components/schemas/DashDonation"
+            },
+            "type": "array",
+            "title": "Donations"
+          },
+          "donations_fy": {
+            "type": "string",
+            "title": "Donations Fy"
+          }
+        },
+        "type": "object",
+        "required": [
+          "member_code",
+          "name",
+          "family",
+          "family_code",
+          "anbiyam",
+          "household",
+          "memberships",
+          "donations",
+          "donations_fy"
+        ],
+        "title": "DashMe"
+      },
+      "DashMeetings": {
+        "properties": {
+          "upcoming": {
+            "type": "integer",
+            "title": "Upcoming"
+          },
+          "minutes_in_review": {
+            "type": "integer",
+            "title": "Minutes In Review"
+          }
+        },
+        "type": "object",
+        "required": [
+          "upcoming",
+          "minutes_in_review"
+        ],
+        "title": "DashMeetings"
+      },
+      "DashMonthPoint": {
+        "properties": {
+          "key": {
+            "type": "string",
+            "title": "Key"
+          },
+          "income": {
+            "type": "string",
+            "title": "Income"
+          },
+          "expense": {
+            "type": "string",
+            "title": "Expense"
+          }
+        },
+        "type": "object",
+        "required": [
+          "key",
+          "income",
+          "expense"
+        ],
+        "title": "DashMonthPoint"
+      },
+      "DashOrgTypeStat": {
+        "properties": {
+          "code": {
+            "type": "string",
+            "title": "Code"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "units": {
+            "type": "integer",
+            "title": "Units"
+          },
+          "members": {
+            "type": "integer",
+            "title": "Members"
+          },
+          "member_kind": {
+            "type": "string",
+            "title": "Member Kind"
+          }
+        },
+        "type": "object",
+        "required": [
+          "code",
+          "name",
+          "units",
+          "members",
+          "member_kind"
+        ],
+        "title": "DashOrgTypeStat"
+      },
+      "DashPeople": {
+        "properties": {
+          "families": {
+            "type": "integer",
+            "title": "Families"
+          },
+          "members": {
+            "type": "integer",
+            "title": "Members"
+          },
+          "new_families_month": {
+            "type": "integer",
+            "title": "New Families Month"
+          },
+          "pending_anbiyam": {
+            "type": "integer",
+            "title": "Pending Anbiyam"
+          },
+          "by_anbiyam": {
+            "items": {
+              "$ref": "#/components/schemas/DashAnbiyamStat"
+            },
+            "type": "array",
+            "title": "By Anbiyam"
+          },
+          "age_bands": {
+            "items": {
+              "$ref": "#/components/schemas/DashCount"
+            },
+            "type": "array",
+            "title": "Age Bands"
+          },
+          "gender": {
+            "items": {
+              "$ref": "#/components/schemas/DashCount"
+            },
+            "type": "array",
+            "title": "Gender"
+          }
+        },
+        "type": "object",
+        "required": [
+          "families",
+          "members",
+          "new_families_month",
+          "pending_anbiyam",
+          "by_anbiyam",
+          "age_bands",
+          "gender"
+        ],
+        "title": "DashPeople"
+      },
+      "DashPeriodStat": {
+        "properties": {
+          "key": {
+            "type": "string",
+            "title": "Key"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          }
+        },
+        "type": "object",
+        "required": [
+          "key",
+          "status"
+        ],
+        "title": "DashPeriodStat"
+      },
+      "DashRef": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name"
+        ],
+        "title": "DashRef"
+      },
+      "DashTaskItem": {
+        "properties": {
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "entity_type": {
+            "type": "string",
+            "title": "Entity Type"
+          },
+          "entity_label": {
+            "type": "string",
+            "title": "Entity Label"
+          },
+          "stage": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Stage"
+          },
+          "link": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Link"
+          },
+          "amount": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Amount"
+          },
+          "due_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Due At"
+          },
+          "overdue": {
+            "type": "boolean",
+            "title": "Overdue"
+          }
+        },
+        "type": "object",
+        "required": [
+          "title",
+          "entity_type",
+          "entity_label",
+          "stage",
+          "link",
+          "amount",
+          "due_at",
+          "overdue"
+        ],
+        "title": "DashTaskItem"
+      },
+      "DashUnitActivity": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "completed": {
+            "type": "integer",
+            "title": "Completed"
+          },
+          "planned": {
+            "type": "integer",
+            "title": "Planned"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name",
+          "completed",
+          "planned"
+        ],
+        "title": "DashUnitActivity"
+      },
+      "DashboardOut": {
+        "properties": {
+          "approvals": {
+            "$ref": "#/components/schemas/DashApprovals"
+          },
+          "people": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DashPeople"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "organisations": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/DashOrgTypeStat"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Organisations"
+          },
+          "finance": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DashFinance"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "activities": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DashActivities"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "events": {
+            "items": {
+              "$ref": "#/components/schemas/DashActivityItem"
+            },
+            "type": "array",
+            "title": "Events",
+            "default": []
+          },
+          "meetings": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DashMeetings"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "me": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DashMe"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "approvals"
+        ],
+        "title": "DashboardOut"
       },
       "DeceasedIn": {
         "properties": {

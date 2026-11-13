@@ -68,3 +68,5 @@ export type FinPeriod = S['PeriodOut'];
 export type FinSummary = S['SummaryOut'];
 export type NoticeListItem = S['NoticeListOut'];
 export type Notice = S['NoticeOut'];
+export type Dashboard = S['DashboardOut'];
+export type DashFinance = S['DashFinance'];
